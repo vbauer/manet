@@ -3,6 +3,11 @@
     "description": "Website screenshot service powered by Node.js and SlimerJS",
     "version": "1.0.0",
     "repository": "https://github.com/vbauer/manet",
+    "author": {
+        "name": "Vladislav Bauer",
+        "email": "bauer.vlad@gmail.com",
+        "url": "https://github.com/vbauer"
+    },
     "engines": {
         "node": ">=0.10.33"
     },
@@ -11,7 +16,6 @@
         "connect-nocache": "1.1.0",
         "config": "1.7.0",
         "js-yaml": "3.2.3",
-        "btoa": "1.1.2",
         "lodash": "2.4.1",
         "colors": "1.0.3"
     }

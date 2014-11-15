@@ -61,7 +61,7 @@
             var options = parseOptions(base64),
                 page = createPage(options);
 
-            page.open(options.url, function (/* status */) {
+            page.open(options.url, function () {
                 try {
                     renderScreenshotFile(page, options, outputFile);
                 } catch (e) {
