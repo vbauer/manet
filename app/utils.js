@@ -8,6 +8,8 @@
         childProcess = require('child_process');
 
 
+    /* Lo-Dash plugins */
+
     _.mixin({
         compactObject: function (o) {
             var clone = _.clone(o);
@@ -33,9 +35,14 @@
     });
 
 
+    /* Functions to work with FS */
+
     function filePath(file) {
         return path.normalize(path.join(__dirname, file));
     }
+
+
+    /* Functions to work with processes */
 
     function execProcess(cmd, args, onClose) {
         var proc = childProcess.spawn(cmd, args),

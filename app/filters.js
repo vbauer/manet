@@ -11,6 +11,8 @@
     }
 
 
+    /* Export functions */
+
     module.exports.usage = usage;
 
 })();
