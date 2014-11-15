@@ -1,6 +1,5 @@
 
 {
-    "output": "public/images",
     "command": {
         "linux": "xvfb-run -a slimerjs",
         "win32": "slimerjs"

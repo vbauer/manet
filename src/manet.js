@@ -4,6 +4,8 @@
 var nconf = require('nconf'),
     express = require('express'),
     logger = require('winston'),
+    path = require('path'),
+    os = require('os'),
     nocache = require('connect-nocache')(),
     routes = require('./routes'),
     filters = require('./filters'),
@@ -13,12 +15,16 @@ var nconf = require('nconf'),
 /* Read configuration system */
 
 function readConfiguration() {
-    return nconf.argv()
+    var conf = nconf.argv()
         .env()
         .file({
             file: utils.filePath('config/default.json')
         })
         .get();
+
+    conf['output'] = path.resolve(conf.output || os.tmpdir());
+
+    return conf;
 }
 
 
@@ -82,6 +88,6 @@ function main() {
 }
 
 
-/* Export functions */
+/* Fire starter */
 
-module.exports.main = main;
+main();

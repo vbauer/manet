@@ -1,5 +1,3 @@
 #!/usr/bin/env node
 
-var manet = require("../src/manet.js");
-
-manet.main();
+require("../src/manet.js");
