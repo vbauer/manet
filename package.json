@@ -1,22 +1,54 @@
 {
     "name": "manet",
-    "description": "Website screenshot service powered by Node.js and SlimerJS",
     "version": "1.0.0",
+    "description": "Website screenshot service powered by Node.js and SlimerJS",
+    "license": "MIT",
+
     "repository": "https://github.com/vbauer/manet",
+    "homepage": "https://github.com/vbauer/manet",
+    "bugs": "https://github.com/vbauer/manet/issues",
+
+    "main": "./src/manet.js",
+
+    "bin": {
+        "manet": "./bin/manet"
+    },
+
     "author": {
         "name": "Vladislav Bauer",
         "email": "bauer.vlad@gmail.com",
         "url": "https://github.com/vbauer"
     },
+
+    "keywords": [
+        "slimerjs",
+        "screenshot",
+        "thumbnail",
+        "picture",
+        "image",
+        "scr",
+        "service"
+    ],
+
     "engines": {
-        "node": ">=0.10.33"
+        "node": ">=0.10.0",
+        "npm": ">=1.4.0"
     },
+
+    "scripts": {
+        "lint": "jshint app.js app"
+    },
+
     "dependencies": {
-        "express": "4.10.2",
-        "connect-nocache": "1.1.0",
-        "config": "1.7.0",
-        "js-yaml": "3.2.3",
-        "lodash": "2.4.1",
-        "winston": "0.8.3"
+        "express": "^4.10.2",
+        "connect-nocache": "^1.1.0",
+        "config": "^1.7.0",
+        "js-yaml": "^3.2.3",
+        "lodash": "^2.4.1",
+        "winston": "^0.8.3"
+    },
+
+    "devDependencies": {
+        "jshint": "^2.5.10"
     }
 }

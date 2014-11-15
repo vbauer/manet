@@ -55,7 +55,7 @@ function execProcess(cmd, args, onClose) {
     });
     proc.on('close', function() {
         var procEnd = process.hrtime(procStart);
-        logger.debug('Execution time: %s', procEnd);
+        logger.debug('Execution time: ' + procEnd);
         onClose();
     });
 }

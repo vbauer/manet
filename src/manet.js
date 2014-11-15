@@ -5,8 +5,8 @@ var config = require('config'),
     express = require('express'),
     logger = require('winston'),
     nocache = require('connect-nocache')(),
-    routes = require('./app/routes'),
-    filters = require('./app/filters');
+    routes = require('./routes'),
+    filters = require('./filters');
 
 
 // Logging system

@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+
+require("../src/manet.js").interpret(process.argv);

@@ -39,7 +39,7 @@ function outputFile(conf, base64) {
 /* Screenshot capturing runner */
 
 function runScreenshotCapturingProcess(outputFile, base64, options, conf, onFinish) {
-    var scriptFile = utils.filePath('../scripts/screenshot.js'),
+    var scriptFile = utils.filePath('scripts/screenshot.js'),
         command = (conf.command[process.platform] || 'slimerjs').split(/[ ]+/),
         cmd = _.first(command),
         args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
