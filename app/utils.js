@@ -3,7 +3,7 @@
 
 var _ = require('lodash'),
     path = require('path'),
-    colors = require('colors/safe'),
+    logger = require('winston'),
     childProcess = require('child_process');
 
 
@@ -48,14 +48,14 @@ function execProcess(cmd, args, onClose) {
         procStart = process.hrtime();
 
     proc.stdout.on('data', function (data) {
-        console.log('Output: %s', data);
+        logger.debug('Output: %s', data.toString());
     });
     proc.stderr.on('data', function (data) {
-        console.log(colors.error('Error: %s'), data);
+        logger.error('Error: %s', data.toString());
     });
     proc.on('close', function() {
         var procEnd = process.hrtime(procStart);
-        console.log(colors.debug('Execution time: %s'), procEnd);
+        logger.debug('Execution time: %s', procEnd);
         onClose();
     });
 }
@@ -65,5 +65,5 @@ function execProcess(cmd, args, onClose) {
 
 module.exports = {
     filePath: filePath,
-    execProcess: execProcess,
+    execProcess: execProcess
 };

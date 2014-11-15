@@ -8,7 +8,7 @@
  */
 
 var _ = require('lodash'),
-    colors = require('colors/safe'),
+    logger = require('winston'),
     fs = require('fs'),
     util = require('util'),
     utils = require('./utils');
@@ -44,7 +44,7 @@ function runScreenshotCapturingProcess(outputFile, base64, options, conf, onFini
         cmd = _.first(command),
         args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
 
-    console.log(colors.debug('Options for SlimerJS script: %j, base64: %s'), options, base64);
+    logger.debug('Options for SlimerJS script: %j, base64: %s', options, base64);
     utils.execProcess(cmd, args, onFinish);
 }
 
@@ -52,15 +52,15 @@ function captureScreenshot(options, conf, force, onFinish) {
     var base64 = encodeOptions(options),
         file = outputFile(conf, base64);
 
-    console.log(colors.info('Capture site screenshot: %s'), options.url);
+    logger.info('Capture site screenshot: %s', options.url);
 
     if (force || !fs.existsSync(file)) {
         runScreenshotCapturingProcess(file, base64, options, conf, function () {
-            console.log(colors.info('SlimerJS process finished work: %s'), base64);
+            logger.info('SlimerJS process finished work: %s', base64);
             return onFinish(file);
         });
     } else {
-        console.log(colors.debug('Take screenshot from file storage: %s'), base64);
+        logger.debug('Take screenshot from file storage: %s', base64);
         return onFinish(file);
     }
 }
