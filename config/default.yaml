@@ -1,0 +1,8 @@
+
+manet:
+    output:
+        directory: public/images
+    command:
+        linux: xvfb-run -a slimerjs
+        win32: slimerjs
+    port: 8891
