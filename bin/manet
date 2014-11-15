@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-require("../src/manet.js").interpret(process.argv);
+var manet = require("../src/manet.js");
+
+manet.main();

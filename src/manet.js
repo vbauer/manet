@@ -1,15 +1,29 @@
 
 "use strict";
 
-var config = require('config'),
+var nconf = require('nconf'),
     express = require('express'),
     logger = require('winston'),
     nocache = require('connect-nocache')(),
     routes = require('./routes'),
-    filters = require('./filters');
+    filters = require('./filters'),
+    utils = require('./utils');
 
 
-// Logging system
+/* Read configuration system */
+
+function readConfiguration() {
+    return nconf.argv()
+        .env()
+        .file({
+            file: utils.filePath('config/default.json')
+        })
+        .get();
+}
+
+
+/* Logging system */
+
 function initLogging() {
     logger.setLevels({
         debug: 0,
@@ -20,21 +34,22 @@ function initLogging() {
     });
     logger.addColors({
         debug: 'green',
-        info:  'cyan',
+        info: 'cyan',
         silly: 'magenta',
-        warn:  'yellow',
+        warn: 'yellow',
         error: 'red'
     });
 
     logger.remove(logger.transports.Console);
     logger.add(logger.transports.Console, {
         level: 'debug',
-        colorize:true
+        colorize: true
     });
 }
 
 
-// Termination & Errors handling
+/* Termination & Errors handling */
+
 function initExitHandling() {
     var onExit = function () {
         process.exit(0);
@@ -44,23 +59,29 @@ function initExitHandling() {
 }
 
 
-// Web service
-function initWebServer() {
-    var conf = config.get('manet'),
+/* Web service */
+
+function runWebServer() {
+    var conf = readConfiguration(),
         app = express();
 
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '../public'));
     app.get('/', nocache, filters.usage, routes.index(conf));
     app.listen(conf.port);
 
-    logger.info(
-        'Manet server started on %s with configuration: %s',
-        process.platform, JSON.stringify(conf, null, '\t')
-    );
+    logger.info('Manet server started on port %d', conf.port);
 }
 
 
 /* Initialize and run server */
-initLogging();
-initExitHandling();
-initWebServer();
+
+function main() {
+    initLogging();
+    initExitHandling();
+    runWebServer();
+}
+
+
+/* Export functions */
+
+module.exports.main = main;

@@ -32,7 +32,7 @@ function encodeOptions(options) {
 }
 
 function outputFile(conf, base64) {
-    return utils.filePath(util.format('../%s/%s.png', conf.output.directory, base64));
+    return utils.filePath(util.format('../%s/%s.png', conf.output, base64));
 }
 
 
