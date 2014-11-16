@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/pure-nr-min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
 
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
 </head>
 
@@ -25,6 +26,14 @@
 
         <form class="pure-form pure-form-aligned" method="get" action="/">
             <fieldset>
+
+                <div class="pure-control-group">
+                    <label for="url">
+                        <button id="open" name="open" class="pure-button pure-button-primary">Open</button>
+                    </label>
+                    <input id="address" name="address" type="text" readonly>
+                </div>
+
                 <div class="pure-control-group">
                     <label for="url">Site address</label>
                     <input id="url" name="url" type="text" placeholder="URL" value="google.com">
@@ -46,11 +55,6 @@
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="agent">User agent</label>
-                    <input id="agent" name="agent" type="text" placeholder="User-Agent">
-                </div>
-
-                <div class="pure-control-group">
                     <label for="delay">Delay (ms)</label>
                     <input id="delay" name="delay" type="number" placeholder="Delay">
                 </div>
@@ -63,6 +67,11 @@
                         <option value="jpeg">JPEG</option>
                         <option value="pdf">PDF</option>
                     </select>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="agent">User agent</label>
+                    <input id="agent" name="agent" type="text" placeholder="User-Agent">
                 </div>
 
                 <div class="pure-control-group">
@@ -85,11 +94,11 @@
                     <input id="images" name="images" type="checkbox" checked>
                 </div>
 
-                <div class="pure-controls">
-                    <button type="submit" class="pure-button pure-button-primary">
-                        Generate URL
-                    </button>
+                <div class="pure-control-group">
+                    <label for="force" class="pure-checkbox">Force reload</label>
+                    <input id="force" name="force" type="checkbox">
                 </div>
+
             </fieldset>
         </form>
 

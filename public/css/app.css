@@ -37,9 +37,13 @@ body {
 /* PureCSS */
 
 .pure-form-aligned .pure-control-group label {
-    width: 20em;
+    width: 15em;
 }
 
 .pure-form-aligned .pure-controls {
     margin: 1.5em 0 0 20em;
+}
+
+input[type='text'], input[type='number'], select {
+    width: 25em;
 }

@@ -85,7 +85,8 @@
     // Custom Globals
     "globals": {                // additional predefined global variables
         "phantom"   : true,
-        "slimer"    : true
+        "slimer"    : true,
+        "$"         : true
     }
 
 }

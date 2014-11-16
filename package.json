@@ -36,7 +36,7 @@
     },
 
     "scripts": {
-        "lint": "jshint src"
+        "lint": "jshint src public/js/app.js"
     },
 
     "dependencies": {
