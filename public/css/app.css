@@ -33,6 +33,10 @@ body {
     color: #666;
 }
 
+a {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+}
 
 /* PureCSS */
 

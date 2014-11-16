@@ -9,9 +9,11 @@ var _ = require('lodash'),
 
 describe('utils', function () {
 
+    common.silentLogger();
+
     describe('lodash plugins', function () {
 
-        it('compactObject', function () {
+        it('check compactObject', function () {
             assert.deepEqual({}, _.compactObject());
             assert.deepEqual({}, _.compactObject({}));
             assert.deepEqual({}, _.compactObject({d: null}));
@@ -22,7 +24,7 @@ describe('utils', function () {
             assert.deepEqual({d: 't', e: 'f'}, _.compactObject({d: 't', e: 'f'}));
         });
 
-        it('filterByCollection', function () {
+        it('check filterByCollection', function () {
             assert.deepEqual({}, _.filterByCollection());
             assert.deepEqual({}, _.filterByCollection({}));
             assert.deepEqual({}, _.filterByCollection({}, []));
@@ -80,13 +82,13 @@ describe('utils', function () {
 
     describe('runFsWatchdog', function () {
 
-        it('shouldn not start', function () {
+        it('should not start fs watch dog', function () {
             assert.equal(null, utils.runFsWatchdog(null, 0, null));
             assert.equal(null, utils.runFsWatchdog(null, 60, null));
             assert.equal(null, utils.runFsWatchdog('/tmp', 0, null));
         });
 
-        it('should start correctly', function () {
+        it('should start fs watch dog correctly', function () {
             var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function() {});
             assert.notEqual(null, watchdog);
             clearInterval(watchdog);
@@ -96,9 +98,8 @@ describe('utils', function () {
 
 
     describe('execProcess', function () {
-        common.silentLogger();
 
-        it('ls', function () {
+        it('execute "ls"', function () {
             utils.execProcess('ls', null, function(code) {
                 assert.equal(0, code);
             });
@@ -107,13 +108,13 @@ describe('utils', function () {
             });
         });
 
-        it('ls -la', function () {
+        it('execute "ls -la"', function () {
             utils.execProcess('ls', ['-la'], function(code) {
                 assert.equal(0, code);
             });
         });
 
-        it('ls -l -a', function () {
+        it('execute "ls -l -a"', function () {
             utils.execProcess('ls', ['-l', '-a'], function(code) {
                 assert.equal(0, code);
             });

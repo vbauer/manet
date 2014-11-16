@@ -14,4 +14,6 @@ function usage(req, res, next) {
 
 /* Export functions */
 
-module.exports.usage = usage;
+module.exports = {
+    usage: usage
+}
