@@ -4,7 +4,7 @@
 
     var MANET_OPTIONS = [
         'url', 'agent', 'delay', 'format',
-        'width', 'height', 'zoom',
+        'width', 'height', 'zoom', 'quality',
         'js', 'images',
         'user', 'password',
         'force'
@@ -16,22 +16,24 @@
             var element = $('#' + opt),
                 value = element.val();
 
-            if (element.attr('type') === 'checkbox') {
-                value = element.attr('checked');
-                if ((value && (opt === 'js' || opt === 'images')) || (!value && opt === 'force')) {
-                    value = null;
+            if (typeof(value) !== 'undefined') {
+                if (element.attr('type') === 'checkbox') {
+                    value = element.attr('checked');
+                    if ((value && (opt === 'js' || opt === 'images')) || (!value && opt === 'force')) {
+                        value = null;
+                    }
                 }
-            }
 
-            if (value !== null && value !== '') {
-                options[opt] = value;
+                if (value !== null && value !== '') {
+                    options[opt] = value;
+                }
             }
         });
         return options;
     }
 
     function generateUrl() {
-        return '/' + $.param(readOptions());
+        return '/?' + $.param(readOptions());
     }
 
     function updateAddress() {
@@ -50,8 +52,9 @@
             }
         });
 
-        $('#open').click(function() {
+        $('#open').click(function(event) {
             window.location = generateUrl();
+            event.preventDefault();
         });
 
         updateAddress();

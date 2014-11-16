@@ -20,7 +20,7 @@ function readOptions(req) {
     return _.compactObject(
         _.filterByCollection(req.query, [
             'url', 'agent', 'delay', 'format',
-            'width', 'height', 'zoom',
+            'width', 'height', 'zoom', 'quality',
             'js', 'images',
             'user', 'password'
         ])
