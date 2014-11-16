@@ -10,6 +10,11 @@
         'force'
     ];
 
+    function cleanBoolValue(name, value) {
+        return ((value && (name === 'js' || name === 'images')) ||
+                (!value && name === 'force')) ? null : value;
+    }
+
     function readOptions() {
         var options = {};
         MANET_OPTIONS.forEach(function(opt) {
@@ -18,10 +23,7 @@
 
             if (typeof(value) !== 'undefined') {
                 if (element.attr('type') === 'checkbox') {
-                    value = element.attr('checked');
-                    if ((value && (opt === 'js' || opt === 'images')) || (!value && opt === 'force')) {
-                        value = null;
-                    }
+                    value = cleanBoolValue(opt, element.attr('checked'));
                 }
 
                 if (value !== null && value !== '') {
@@ -46,7 +48,6 @@
 
             element.keyup(updateAddress);
             element.change(updateAddress);
-
             if (element.attr('type') === 'select') {
                 element.select(updateAddress);
             }

@@ -106,6 +106,31 @@ REST API is available on "/" by direct GET request with `"url"` query parameter.
 TODO
 
 
+### Query examples
+
+Just some query examples that could be executed by any REST API client (ex: `curl`):
+
+```
+# Take a screenshot of the github.com.
+GET /?url=github.com
+
+# Custom viewport size. Return a 800x600 PNG screenshot of the github.com homepage.
+GET /?url=github.com&width=800&height=600
+
+# Disable JavaScript. Return a screenshot with no JavaScript executed.
+GET /?url=github.com&js=false
+
+# Custom User Agent.
+GET /?url=github.com&agent=Mozilla%2F5.0+(X11%3B+Linux+x86_64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F34.0.1847.132+Safari%2F537.36
+
+# HTTP Basic Authentication. Return a screenshot of a website requiring basic authentication.
+GET /?url=mysite.com&user=john&password=smith
+
+# Screenshot delay. Return a screenshot of the github.com homepage 1 second after it's loaded.
+GET /?url=github.com&delay=1000
+```
+
+
 ## Sandbox UI
 
 Sandbox UI is available on "/" by direct GET request without `"url"` query parameter.
