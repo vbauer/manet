@@ -4,7 +4,7 @@
     "description": "Website screenshot service powered by Node.js and SlimerJS",
     "license": "MIT",
 
-    "repository": "https://github.com/vbauer/manet",
+    "repository": "vbauer/manet",
     "homepage": "https://github.com/vbauer/manet",
     "bugs": "https://github.com/vbauer/manet/issues",
 
@@ -21,13 +21,19 @@
     },
 
     "keywords": [
+        "slimer",
         "slimerjs",
         "screenshot",
         "thumbnail",
         "picture",
         "image",
+        "website",
+        "screen",
+        "site",
+        "page",
         "scr",
-        "service"
+        "service",
+        "server"
     ],
 
     "engines": {
