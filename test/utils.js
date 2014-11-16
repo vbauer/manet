@@ -1,10 +1,37 @@
 'use strict';
 
-var assert = require('assert'),
+var _ = require('lodash'),
+    assert = require('assert'),
+    os = require('os'),
     utils = require('../src/utils');
 
 
 describe('utils', function () {
+
+    describe('lodash plugins', function () {
+
+        it('compactObject', function () {
+            assert.deepEqual({}, _.compactObject());
+            assert.deepEqual({}, _.compactObject({}));
+            assert.deepEqual({}, _.compactObject({d: null}));
+            assert.deepEqual({d: 't'}, _.compactObject({d: 't'}));
+            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: ''}));
+            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: null}));
+            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: null}));
+            assert.deepEqual({d: 't', e: 'f'}, _.compactObject({d: 't', e: 'f'}));
+        });
+
+        it('filterByCollection', function () {
+            assert.deepEqual({}, _.filterByCollection());
+            assert.deepEqual({}, _.filterByCollection({}));
+            assert.deepEqual({}, _.filterByCollection({}, []));
+            assert.deepEqual({}, _.filterByCollection({}, ['d']));
+            assert.deepEqual({}, _.filterByCollection({d: 't'}, ['e']));
+            assert.deepEqual({d: 't'}, _.filterByCollection({d: 't'}, ['d']));
+            assert.deepEqual({d: 't', e: 'f'}, _.filterByCollection({d: 't', e: 'f'}, ['d', 'e']));
+        });
+
+    });
 
     describe('encodeBase64', function () {
 
@@ -39,6 +66,33 @@ describe('utils', function () {
         });
 
     });
+
+    describe('filePath', function () {
+
+        it('not null', function () {
+            var file = utils.filePath('.');
+            assert.notEqual(null, file);
+            assert.notEqual('', file);
+        });
+
+    });
+
+    describe('runFsWatchdog', function () {
+
+        it('don\'t start', function () {
+            assert.equal(null, utils.runFsWatchdog(null, 0, null));
+            assert.equal(null, utils.runFsWatchdog(null, 60, null));
+            assert.equal(null, utils.runFsWatchdog('/tmp', 0, null));
+        });
+
+        it('start correctly', function () {
+            var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function() {});
+            assert.notEqual(null, watchdog);
+            clearInterval(watchdog);
+        });
+
+    });
+
 
     describe('execProcess', function () {
 

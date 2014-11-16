@@ -12,13 +12,13 @@ var _ = require('lodash'),
 
 _.mixin({
     compactObject: function (o) {
-        var clone = _.clone(o);
-        _.each(clone, function (v, k) {
-            if (!v) {
-                delete clone[k];
+        var res = {};
+        _.each(o, function (v, k) {
+            if (v) {
+                res[k] = v;
             }
         });
-        return clone;
+        return res;
     }
 });
 
@@ -49,8 +49,8 @@ function filePath(file) {
 }
 
 function runFsWatchdog(dir, timeout, callback) {
-    if (timeout > 0) {
-        setInterval(function () {
+    if (dir && (timeout > 0)) {
+        return setInterval(function () {
             fs.readdir(dir, function (err, files) {
                 files.forEach(function (file) {
                     var filePath = path.join(dir, file);
@@ -69,6 +69,7 @@ function runFsWatchdog(dir, timeout, callback) {
             });
         }, timeout);
     }
+    return null;
 }
 
 
