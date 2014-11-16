@@ -5,9 +5,11 @@
 
 <img align="right" style="margin-left: 15px" src="misc/manet.jpg">
 
-Manet is a service with REST API to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
+Manet is a REST API server which allows to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
 
-Manet uses SlimerJS under the hood, which is very similar to PhantomJs, except that it runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko), the browser engine of [Mozilla Firefox](https://www.mozilla.org). This is a conscious choice to be more stable.
+Manet uses [SlimerJS](http://slimerjs.org) under the hood, which is very similar to [PhantomJs](http://phantomjs.org), except that it runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko) (the browser engine of [Mozilla Firefox](https://www.mozilla.org)) and [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey) (the JavaScript engine of Firefox). This is a conscious choice to be more stable and predictable.
+
+You can find additional useful information in SlimerJS [documentation](http://docs.slimerjs.org/current/).
 
 *Project is named in honor of Édouard Manet, French painter (1832-1883).*
 
@@ -18,31 +20,104 @@ Manet uses SlimerJS under the hood, which is very similar to PhantomJs, except t
 * Flexible REST API
 * File caching
 * Various image formats
+* Sandbox UI
 
-# Setup
 
-First install SlimerJS():
+## Setup
 
-* You can download it from the [official site](http://slimerjs.org/download.html).
-* Or using [NPM](https://www.npmjs.org/):
+### Preset
+First install SlimerJS:
+
+* You can download it from the [official site](http://slimerjs.org/download.html) and install manually.
+* or you can use the power of [NPM](https://www.npmjs.org/):
 ```bash
 npm install -g slimerjs
 ```
 
-Gecko, the rendering engine of Firefox, cannot render web content without a graphical window,
-but you can launch SlimerJS with xvfb if you are under linux or MacOSx, to have a headless SlimerJS.
-
-So, it is also necessary to install [Xvfb](http://en.wikipedia.org/wiki/Xvfb) (X virtual framebuffer) for *nix or OS X systems.
+Gecko, the rendering engine of Firefox, cannot render web content without a graphical window, but you can launch SlimerJS with xvfb if you are under linux or MacOSx, to have a headless SlimerJS, so it is also necessary to install [Xvfb](http://en.wikipedia.org/wiki/Xvfb) (X virtual framebuffer) for *nix or OS X systems.
 
 For example, you can use **apt-get** to install **xvfb** on Ubuntu:
 ```bash
-sudo apt-get install xvfb-run
+sudo apt-get install xvfb
+```
+
+### Installation
+
+After preliminaries operations you can install Manet using NPM:
+```bash
+npm install -g manet
+```
+
+That is all, now you can start and use Manet server. As you can see, it is unnecessary to clone Git repository or something else.
+
+
+## Server launching
+
+Server launching is a simple as possible:
+```bash
+manet
+```
+
+If everything is OK, you should see the following message:
+```
+info: Manet server started on port 8891
+```
+
+## Server configuration
+
+Manet server uses hierarchical configurations to cover differnet usage use-cases:
+
+* Command-line parameters
+* Environment variables
+* Built-in configuration JSON file *("config/default.json")*
+
+Each configuration level could be overridden by another level.
+The most-priority parameters are command-line parameters.
+The less-priority parameters are stored in build-in configuration file.
+
+
+### CLI parameters
+
+TODO
+
+
+### Configuration file
+
+Built-in configuration could be found in `manet` directory.
+
+Default configuration:
+
+```json
+{
+    "command": {
+        "linux": "xvfb-run -a slimerjs",
+        "freebsd": "xvfb-run -a slimerjs",
+        "sunos": "xvfb-run -a slimerjs",
+        "darwin": "slimerjs",
+        "win32": "slimerjs.bat"
+    },
+    "port": 8891
+}
 ```
 
 
-## Parameters
+## REST API
 
-TODO: add information
+REST API is available on "/" by direct GET request with `"url"` query parameter.
+
+TODO
+
+
+## Sandbox UI
+
+Sandbox UI is available on "/" by direct GET request without `"url"` query parameter.
+
+TODO
+
+
+## Thanks to
+
+SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and other [developers](https://github.com/laurentj/slimerjs/graphs/contributors) who worked on this great project.
 
 
 ## License
