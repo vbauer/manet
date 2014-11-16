@@ -1,4 +1,3 @@
-
 "use strict";
 
 var nconf = require('nconf'),
@@ -6,6 +5,7 @@ var nconf = require('nconf'),
     logger = require('winston'),
     path = require('path'),
     os = require('os'),
+    fs = require('fs'),
     nocache = require('connect-nocache')(),
     routes = require('./routes'),
     filters = require('./filters'),
@@ -15,16 +15,16 @@ var nconf = require('nconf'),
 /* Read configuration system */
 
 function readConfiguration() {
-    var conf = nconf.argv()
+    var config = nconf.argv()
         .env()
         .file({
             file: utils.filePath('config/default.json')
         })
         .get();
 
-    conf.output = path.resolve(conf.output || os.tmpdir());
+    config.output = path.resolve(config.output || os.tmpdir());
 
-    return conf;
+    return config;
 }
 
 
@@ -67,24 +67,44 @@ function initExitHandling() {
 
 /* Web service */
 
-function runWebServer() {
-    var conf = readConfiguration(),
-        app = express();
+function runWebServer(config) {
+    var app = express();
 
     app.use(express.static(utils.filePath('../public')));
-    app.get('/', nocache, filters.usage, routes.index(conf));
-    app.listen(conf.port);
+    app.get('/', nocache, filters.usage, routes.index(config));
+    app.listen(config.port);
 
-    logger.info('Manet server started on port %d', conf.port);
+    logger.info('Manet server started on port %d', config.port);
+}
+
+
+/* Init file system watchdog */
+
+function initFsWatchdog(config) {
+    var timeout = config.cache * 1000,
+        dir = config.output;
+
+    utils.runFsWatchdog(dir, timeout, function(file) {
+        return fs.unlink(file, function (err) {
+            if (err) {
+                return logger.error(err);
+            }
+            logger.info('Deleted file: %s', file);
+        });
+    });
 }
 
 
 /* Initialize and run server */
 
 function main() {
+    var config = readConfiguration();
+
     initLogging();
     initExitHandling();
-    runWebServer();
+    initFsWatchdog(config);
+
+    runWebServer(config);
 }
 
 

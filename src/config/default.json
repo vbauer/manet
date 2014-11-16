@@ -7,5 +7,6 @@
         "darwin": "slimerjs",
         "win32": "slimerjs.bat"
     },
+    "cache": 3600,
     "port": 8891
 }
