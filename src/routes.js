@@ -33,7 +33,13 @@ function encodeOptions(options) {
 
 function outputFile(options, conf, base64) {
     var format = options.format || 'png';
-    return util.format('%s/%s.%s', conf.output, base64, format);
+    return util.format('%s/%s.%s', conf.storage, base64, format);
+}
+
+function cliCommand(conf) {
+    var command = conf.command;
+    var cmd = _.isObject(command) ? command[process.platform] : command;
+    return cmd || 'slimerjs'
 }
 
 
@@ -41,7 +47,7 @@ function outputFile(options, conf, base64) {
 
 function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFinish) {
     var scriptFile = utils.filePath('scripts/screenshot.js'),
-        command = (conf.command[process.platform] || 'slimerjs').split(/[ ]+/),
+        command = cliCommand(conf).split(/[ ]+/),
         cmd = _.first(command),
         args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
 

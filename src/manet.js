@@ -22,7 +22,7 @@ function readConfiguration() {
         })
         .get();
 
-    config.output = path.resolve(config.output || os.tmpdir());
+    config.storage = path.resolve(config.storage || os.tmpdir());
 
     return config;
 }
@@ -82,7 +82,7 @@ function runWebServer(config) {
 
 function initFsWatchdog(config) {
     var timeout = config.cache * 1000,
-        dir = config.output;
+        dir = config.storage;
 
     utils.runFsWatchdog(dir, timeout, function(file) {
         return fs.unlink(file, function (err) {

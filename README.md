@@ -76,8 +76,21 @@ The less-priority parameters are stored in build-in configuration file.
 
 ### CLI parameters
 
-TODO
+<dl>
 
+  <dt>--port</dt>
+  <dd>HTTP web server port number. REST API and UI will be available on this port (default: 8891).</dd>
+
+  <dt>--command</dt>
+  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameters allows to overide command for executing SlimerJS. It allows to use full power of [SlimerJS command line options](http://docs.slimerjs.org/current/configuration.html) (to configure proxy, SSL protocol, etc.)</dd>
+
+  <dt>--storage</dt>
+  <dd>File storage for cache (default is OS temp directory).</dd>
+
+  <dt>--cache</dt>
+  <dd>Lifetime for file cache in seconds. Screenshots are cached for 60 minutes by default, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
+
+</dl>
 
 ### Configuration file
 
@@ -94,7 +107,7 @@ Default configuration file *("default.json")*:
         "darwin": "slimerjs",
         "win32": "slimerjs.bat"
     },
-    "cache": 3600,
+    "storage": 3600,
     "port": 8891
 }
 ```
@@ -155,7 +168,19 @@ REST API is available on "/" by direct GET request with `"url"` query parameter.
 
 ### Query examples
 
-Just some query examples that could be executed by any REST API client (ex: `curl`):
+For a quick test with the command line (using `curl`), type:
+
+```bash
+curl http://localhost:8891/?url=github.com > github.png
+```
+
+or (using `wget`)
+
+```bash
+wget http://localhost:8891/?url=github.com -O github.png
+```
+
+Here are some query examples that could be executed by any REST API client:
 
 ```
 # Take a screenshot of the github.com.
