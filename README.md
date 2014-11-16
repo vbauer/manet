@@ -82,7 +82,7 @@ The less-priority parameters are stored in build-in configuration file.
   <dd>HTTP web server port number. REST API and UI will be available on this port (default: 8891).</dd>
 
   <dt>--command</dt>
-  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameters allows to overide command for executing SlimerJS. It allows to use full power of [SlimerJS command line options](http://docs.slimerjs.org/current/configuration.html) (to configure proxy, SSL protocol, etc.)</dd>
+  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html</dd>
 
   <dt>--storage</dt>
   <dd>File storage for cache (default is OS temp directory).</dd>
