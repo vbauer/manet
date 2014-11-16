@@ -27,7 +27,7 @@ describe('filters', function () {
         function next(value) {
             return function () {
                 return value;
-            }
+            };
         }
 
 

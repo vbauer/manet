@@ -16,4 +16,4 @@ function usage(req, res, next) {
 
 module.exports = {
     usage: usage
-}
+};
