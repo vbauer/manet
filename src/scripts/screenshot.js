@@ -15,10 +15,24 @@
 
 
     /* Common functions */
-
-    function error(e) {
-        system.stdout.write('Error: ' + e);
-        slimer.exit();
+    
+    function argument(index) {
+        return phantom.args ? phantom.args[index] : system.args[index];
+    }
+    
+    function log(message) {
+        if (system.stdout) {
+            system.stdout.write(message);
+        } else {
+            console.log(message);
+        }
+    }
+    
+    function exit(e) {
+        if (e) {
+            log('Error: ' + e);
+        }
+        phantom.exit();
     }
 
     function def(o, d) {
@@ -27,7 +41,7 @@
 
     function parseOptions(base64) {
         var optionsJSON = window.atob(base64);
-        system.stdout.write('SlimerJS script options: ' + optionsJSON);
+        log('Script options: ' + optionsJSON);
 
         return JSON.parse(optionsJSON);
     }
@@ -60,15 +74,21 @@
             quality = def(options.quality, DEF_QUALITY),
             format = def(options.format, DEF_FORMAT).toLowerCase();
 
-        slimer.wait(delay);
+        setTimeout(function() {
+            try {
+                page.render(outputFile, {
+                    onlyViewport: !!options.height,
+                    quality: quality,
+                    format: format
+                });
 
-        page.render(outputFile, {
-            onlyViewport: !!options.height,
-            quality: quality,
-            format: format
-        });
-
-        system.stdout.write('SlimerJS rendered screenshot: ' + outputFile);
+                log('Rendered screenshot: ' + outputFile);
+            } catch (e) {
+                exit(e);
+            } finally {
+                exit();
+            }
+        }, delay);
     }
 
 
@@ -81,13 +101,11 @@
                 try {
                     renderScreenshotFile(page, options, outputFile);
                 } catch (e) {
-                    error(e);
-                } finally {
-                    slimer.exit();
+                    exit(e);
                 }
             });
         } catch (e) {
-            error(e);
+            exit(e);
         }
     }
 
@@ -96,8 +114,8 @@
 
     var system = require('system'),
         webpage = require('webpage'),
-        base64 = phantom.args[0],
-        outputFile = phantom.args[1];
+        base64 = argument(0),
+        outputFile = argument(1);
 
     captureScreenshot(base64, outputFile);
 

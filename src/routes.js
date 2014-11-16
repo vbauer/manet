@@ -46,7 +46,7 @@ function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFini
         cmd = _.first(command),
         args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
 
-    logger.debug('Options for SlimerJS script: %j, base64: %s', options, base64);
+    logger.debug('Options for script: %j, base64: %s', options, base64);
     utils.execProcess(cmd, args, onFinish);
 }
 
@@ -58,7 +58,7 @@ function captureScreenshot(options, conf, force, onFinish) {
 
     if (force || !fs.existsSync(file)) {
         runScreenshotCapturingProcess(options, conf, file, base64, function () {
-            logger.info('SlimerJS process finished work: %s', base64);
+            logger.info('Process finished work: %s', base64);
             return onFinish(file);
         });
     } else {
