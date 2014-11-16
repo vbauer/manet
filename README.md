@@ -1,5 +1,5 @@
 
-# Manet
+# Manet [![Build Status](https://travis-ci.org/vbauer/manet.svg?branch=master)](https://travis-ci.org/vbauer/manet)
 
 > There is only one true thing: instantly paint what you see. When you've got it, you've got it. When you haven't, you begin again. All the rest is humbug.
 
