@@ -39,7 +39,7 @@ function outputFile(options, conf, base64) {
 function cliCommand(conf) {
     var command = conf.command;
     var cmd = _.isObject(command) ? command[process.platform] : command;
-    return cmd || 'slimerjs'
+    return cmd || 'slimerjs';
 }
 
 
