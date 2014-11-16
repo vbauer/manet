@@ -2,7 +2,10 @@
 {
     "command": {
         "linux": "xvfb-run -a slimerjs",
-        "win32": "slimerjs"
+        "freebsd": "xvfb-run -a slimerjs",
+        "sunos": "xvfb-run -a slimerjs",
+        "darwin": "slimerjs",
+        "win32": "slimerjs.bat"
     },
     "port": 8891
 }

@@ -22,7 +22,7 @@ function readConfiguration() {
         })
         .get();
 
-    conf['output'] = path.resolve(conf.output || os.tmpdir());
+    conf.output = path.resolve(conf.output || os.tmpdir());
 
     return conf;
 }
@@ -71,7 +71,7 @@ function runWebServer() {
     var conf = readConfiguration(),
         app = express();
 
-    app.use(express.static(__dirname + '../public'));
+    app.use(express.static(utils.filePath('../public')));
     app.get('/', nocache, filters.usage, routes.index(conf));
     app.listen(conf.port);
 

@@ -10,11 +10,7 @@
     }
 
     function def(o, d) {
-        if ((o === null) || (typeof(o) === "undefined")) {
-            return d;
-        } else {
-            return JSON.parse(o.toLowerCase());
-        }
+        return ((o === null) || (typeof(o) === "undefined")) ? d : o;
     }
 
     function parseOptions(base64) {
@@ -48,10 +44,15 @@
     /* Screenshot rendering */
 
     function renderScreenshotFile(page, options, outputFile) {
+        var format = def(options.format, 'png');
+
         slimer.wait(def(options.delay, 10));
+
         page.render(outputFile, {
-            onlyViewport: true
+            onlyViewport: true,
+            format: format
         });
+
         system.stdout.write('SlimerJS rendered screenshot: ' + outputFile);
     }
 

@@ -19,7 +19,7 @@ var _ = require('lodash'),
 function readOptions(req) {
     return _.compactObject(
         _.filterByCollection(req.query, [
-            'url', 'agent', 'delay',
+            'url', 'agent', 'delay', 'format',
             'width', 'height', 'zoom',
             'js', 'images',
             'user', 'password'
@@ -31,14 +31,15 @@ function encodeOptions(options) {
     return new Buffer(JSON.stringify(options), 'binary').toString('base64');
 }
 
-function outputFile(conf, base64) {
-    return util.format('%s/%s.png', conf.output, base64);
+function outputFile(options, conf, base64) {
+    var format = options.format || 'png';
+    return util.format('%s/%s.%s', conf.output, base64, format);
 }
 
 
 /* Screenshot capturing runner */
 
-function runScreenshotCapturingProcess(outputFile, base64, options, conf, onFinish) {
+function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFinish) {
     var scriptFile = utils.filePath('scripts/screenshot.js'),
         command = (conf.command[process.platform] || 'slimerjs').split(/[ ]+/),
         cmd = _.first(command),
@@ -50,12 +51,12 @@ function runScreenshotCapturingProcess(outputFile, base64, options, conf, onFini
 
 function captureScreenshot(options, conf, force, onFinish) {
     var base64 = encodeOptions(options),
-        file = outputFile(conf, base64);
+        file = outputFile(options, conf, base64);
 
     logger.info('Capture site screenshot: %s', options.url);
 
     if (force || !fs.existsSync(file)) {
-        runScreenshotCapturingProcess(file, base64, options, conf, function () {
+        runScreenshotCapturingProcess(options, conf, file, base64, function () {
             logger.info('SlimerJS process finished work: %s', base64);
             return onFinish(file);
         });
@@ -74,7 +75,7 @@ function index(conf) {
             options = readOptions(req);
 
         return captureScreenshot(options, conf, force, function (file) {
-            return res.status(200).sendFile(file);
+            return res.sendFile(file);
         });
     };
 }
