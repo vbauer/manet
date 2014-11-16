@@ -3,49 +3,92 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Manet</title>
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><![endif]-->
+    <meta name="author" content="Vladislav Bauer"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manet</title>
+
     <link rel="stylesheet" type="text/css" href="/css/pure-nr-min.css">
     <link rel="stylesheet" type="text/css" href="/css/app.css">
+
+    <script type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
 
     <div class="header">
         <h1>Manet</h1>
-        <h2>Simple screenshot service powered by SlimerJS</h2>
+        <h2>Website screenshot service</h2>
     </div>
 
     <div class="main">
 
-        <form class="pure-form pure-form-aligned">
+        <form class="pure-form pure-form-aligned" method="get" action="/">
             <fieldset>
                 <div class="pure-control-group">
-                    <label for="name">Username</label>
-                    <input id="name" type="text" placeholder="Username">
+                    <label for="url">Site address</label>
+                    <input id="url" name="url" type="text" placeholder="URL" value="google.com">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="width">Width</label>
+                    <input id="width" name="width" type="number" placeholder="Width">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="height">Height</label>
+                    <input id="height" name="height" type="number" placeholder="Height">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="zoom">Zoom (0-1)</label>
+                    <input id="zoom" name="zoom" type="number" step="0.01" placeholder="Zoom">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="agent">User agent</label>
+                    <input id="agent" name="agent" type="text" placeholder="User-Agent">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="delay">Delay (ms)</label>
+                    <input id="delay" name="delay" type="number" placeholder="Delay">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="format">Output format</label>
+                    <select id="format" name="format">
+                        <option value="png" selected>PNG</option>
+                        <option value="jpg">JPG</option>
+                        <option value="jpeg">JPEG</option>
+                        <option value="pdf">PDF</option>
+                    </select>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="user">User name</label>
+                    <input id="user" name="user" type="text" placeholder="User">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="password">Password</label>
-                    <input id="password" type="password" placeholder="Password">
+                    <input id="password" name="password" type="text" placeholder="Password">
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="email">Email Address</label>
-                    <input id="email" type="email" placeholder="Email Address">
+                    <label for="js" class="pure-checkbox">Enable JavaScript</label>
+                    <input id="js" name="js" type="checkbox" checked>
                 </div>
 
                 <div class="pure-control-group">
-                    <label for="foo">Supercalifragilistic Label</label>
-                    <input id="foo" type="text" placeholder="Enter something here...">
+                    <label for="images" class="pure-checkbox">Enable images</label>
+                    <input id="images" name="images" type="checkbox" checked>
                 </div>
 
                 <div class="pure-controls">
-                    <label for="cb" class="pure-checkbox">
-                        <input id="cb" type="checkbox"> I've read the terms and conditions
-                    </label>
-
-                    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+                    <button type="submit" class="pure-button pure-button-primary">
+                        Generate URL
+                    </button>
                 </div>
             </fieldset>
         </form>

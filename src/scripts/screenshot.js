@@ -44,9 +44,10 @@
     /* Screenshot rendering */
 
     function renderScreenshotFile(page, options, outputFile) {
-        var format = def(options.format, 'png');
+        var delay = def(options.delay, 100),
+            format = def(options.format, 'png');
 
-        slimer.wait(def(options.delay, 10));
+        slimer.wait(delay);
 
         page.render(outputFile, {
             onlyViewport: true,

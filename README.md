@@ -3,15 +3,13 @@
 
 > There is only one true thing: instantly paint what you see. When you've got it, you've got it. When you haven't, you begin again. All the rest is humbug.
 
-<img align="right" style="margin-left: 15px" src="misc/manet.jpg">
+<img align="right" style="margin-left: 15px" width="300" height="360" title="Self-Portrait with Palette, 1879" src="misc/manet.jpg">
 
 Manet is a REST API server which allows to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
 
 Manet uses [SlimerJS](http://slimerjs.org) under the hood, which is very similar to [PhantomJs](http://phantomjs.org), except that it runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko) (the browser engine of [Mozilla Firefox](https://www.mozilla.org)) and [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey) (the JavaScript engine of Firefox). This is a conscious choice to be more stable and predictable.
 
-You can find additional useful information in SlimerJS [documentation](http://docs.slimerjs.org/current/).
-
-*Project is named in honor of Édouard Manet, French painter (1832-1883).*
+*Project was named in honor of Édouard Manet, French painter (1832-1883). He was one of the first 19th-century artists to paint modern life, and a pivotal figure in the transition from Realism to Impressionism.*
 
 
 ## Main features
@@ -83,9 +81,9 @@ TODO
 
 ### Configuration file
 
-Built-in configuration could be found in `manet` directory.
+Built-in configuration could be found in `manet` directory. For example, on Ubuntu it is located here: *"/usr/local/lib/node_modules/manet/"*.
 
-Default configuration:
+Default configuration file *("default.json")*:
 
 ```json
 {
