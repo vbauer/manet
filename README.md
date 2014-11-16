@@ -90,6 +90,9 @@ The less-priority parameters are stored in build-in configuration file.
   <dt>--cache</dt>
   <dd>Lifetime for file cache in seconds. Screenshots are cached for 60 minutes by default, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
 
+  <dt>--silent</dt>
+  <dd>Run Manet server with or without logging information (default is false).</dd>
+
 </dl>
 
 ### Configuration file

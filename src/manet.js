@@ -30,7 +30,7 @@ function readConfiguration() {
 
 /* Logging system */
 
-function initLogging() {
+function initLogging(config) {
     logger.setLevels({
         debug: 0,
         info: 1,
@@ -49,7 +49,8 @@ function initLogging() {
     logger.remove(logger.transports.Console);
     logger.add(logger.transports.Console, {
         level: 'debug',
-        colorize: true
+        colorize: true,
+        silent: config.silent || false
     });
 }
 
@@ -62,19 +63,6 @@ function initExitHandling() {
     };
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
-}
-
-
-/* Web service */
-
-function runWebServer(config) {
-    var app = express();
-
-    app.use(express.static(utils.filePath('../public')));
-    app.get('/', nocache, filters.usage, routes.index(config));
-    app.listen(config.port);
-
-    logger.info('Manet server started on port %d', config.port);
 }
 
 
@@ -95,19 +83,41 @@ function initFsWatchdog(config) {
 }
 
 
-/* Initialize and run server */
+/* Web service */
 
-function main() {
-    var config = readConfiguration();
+function runWebServer(config, onStart) {
+    var app = express(), server;
 
-    initLogging();
-    initExitHandling();
-    initFsWatchdog(config);
+    app.use(express.static(utils.filePath('../public')));
+    app.get('/', nocache, filters.usage, routes.index(config));
 
-    runWebServer(config);
+    server = app.listen(config.port, function() {
+        if (onStart) {
+            onStart(server);
+        }
+    });
+
+    logger.info('Manet server started on port %d', config.port);
 }
 
 
-/* Fire starter */
+/* Initialize and run server */
 
-main();
+function main(onStart) {
+    var config = readConfiguration();
+
+    initLogging(config);
+    initExitHandling();
+    initFsWatchdog(config);
+
+    runWebServer(config, onStart);
+}
+
+
+/* Export functions */
+
+module.exports = {
+    readConfiguration: readConfiguration,
+
+    main: main
+};

@@ -3,6 +3,7 @@
 var _ = require('lodash'),
     assert = require('assert'),
     os = require('os'),
+    common = require('./common'),
     utils = require('../src/utils');
 
 
@@ -79,13 +80,13 @@ describe('utils', function () {
 
     describe('runFsWatchdog', function () {
 
-        it('don\'t start', function () {
+        it('shouldn not start', function () {
             assert.equal(null, utils.runFsWatchdog(null, 0, null));
             assert.equal(null, utils.runFsWatchdog(null, 60, null));
             assert.equal(null, utils.runFsWatchdog('/tmp', 0, null));
         });
 
-        it('start correctly', function () {
+        it('should start correctly', function () {
             var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function() {});
             assert.notEqual(null, watchdog);
             clearInterval(watchdog);
@@ -95,6 +96,7 @@ describe('utils', function () {
 
 
     describe('execProcess', function () {
+        common.silentLogger();
 
         it('ls', function () {
             utils.execProcess('ls', null, function(code) {
