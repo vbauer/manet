@@ -11,7 +11,9 @@
         DEF_HEIGHT = 768,
         DEF_JS_ENABLED = 'true',
         DEF_IMAGES_ENABLED = 'true',
-        DEF_FORMAT = 'png';
+        DEF_FORMAT = 'png',
+        URL_PREFIX_HTTP = 'http://',
+        URL_PREFIX_HTTPS = 'https://';
 
 
     /* Common functions */
@@ -91,13 +93,20 @@
         }, delay);
     }
 
+    function fixUrl(url) {
+        var http = url.indexOf(URL_PREFIX_HTTP) === 0,
+            https = url.indexOf(URL_PREFIX_HTTPS) === 0;
+        
+        return (http || https) ? url : (URL_PREFIX_HTTP + url);
+    }
 
     function captureScreenshot(base64, outputFile) {
         try {
             var options = parseOptions(base64),
-                page = createPage(options);
+                page = createPage(options),
+                url = fixUrl(options.url);
 
-            page.open(options.url, function () {
+            page.open(url, function () {
                 try {
                     renderScreenshotFile(page, options, outputFile);
                 } catch (e) {
