@@ -35,12 +35,18 @@ _.mixin({
 });
 
 
+/* BASE64 functions */
+
+function encodeBase64(json) {
+    return new Buffer(JSON.stringify(json), 'binary').toString('base64');
+}
+
+
 /* Functions to work with FS */
 
 function filePath(file) {
     return path.normalize(path.join(__dirname, file));
 }
-
 
 function runFsWatchdog(dir, timeout, callback) {
     if (timeout > 0) {
@@ -78,11 +84,11 @@ function execProcess(cmd, args, onClose) {
     proc.stderr.on('data', function (data) {
         logger.error('Error: %s', data.toString());
     });
-    proc.on('close', function() {
+    proc.on('close', function(code) {
         var procEnd = process.hrtime(procStart);
         var end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
         logger.debug('Execution time: %d sec', end);
-        onClose();
+        onClose(code);
     });
 }
 
@@ -90,7 +96,8 @@ function execProcess(cmd, args, onClose) {
 /* Export functions */
 
 module.exports = {
+    encodeBase64: encodeBase64,
     filePath: filePath,
-    execProcess: execProcess,
-    runFsWatchdog: runFsWatchdog
+    runFsWatchdog: runFsWatchdog,
+    execProcess: execProcess
 };

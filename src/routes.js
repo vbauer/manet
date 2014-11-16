@@ -27,10 +27,6 @@ function readOptions(req) {
     );
 }
 
-function encodeOptions(options) {
-    return new Buffer(JSON.stringify(options), 'binary').toString('base64');
-}
-
 function outputFile(options, conf, base64) {
     var format = options.format || 'png';
     return util.format('%s/%s.%s', conf.storage, base64, format);
@@ -56,7 +52,7 @@ function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFini
 }
 
 function captureScreenshot(options, conf, force, onFinish) {
-    var base64 = encodeOptions(options),
+    var base64 = utils.encodeBase64(options),
         file = outputFile(options, conf, base64);
 
     logger.info('Capture site screenshot: %s', options.url);
