@@ -94,6 +94,7 @@ Default configuration file *("default.json")*:
         "darwin": "slimerjs",
         "win32": "slimerjs.bat"
     },
+    "cache": 3600,
     "port": 8891
 }
 ```
@@ -103,7 +104,53 @@ Default configuration file *("default.json")*:
 
 REST API is available on "/" by direct GET request with `"url"` query parameter.
 
-TODO
+
+### Query parameters
+
+<dl>
+
+  <dt>url</dt>
+  <dd>Website address (URL). This is the only required parameter for the HTTP request. It is unnecessary for the most cases to configure scheme. Example: "github.com".</dd>
+
+  <dt>width</dt>
+  <dd>This property allows to change the width of the viewport, e.g., the size of the window where the webpage is displayed (default: 1024)</dd>
+
+  <dt>height</dt>
+  <dd>This property allows to change the height of the viewport. If width is defined and height is not defined, than full page will be captured.</dd>
+
+  <dt>zoom</dt>
+  <dd>Contains the zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>
+
+  <!--
+  <dt>quality</dt>
+  <dd>The compression quality. A number between 0 and 1. Default value: 100.</dd>
+  -->
+
+  <dt>delay</dt>
+  <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: 100).</dd>
+
+  <dt>format</dt>
+  <dd>Indicate the file format (then the file extension is ignored). possible values: jpg, png, jpeg, pdf. (default is "png")</dd>
+
+  <dt>agent</dt>
+  <dd>String to define the user Agent in HTTP requests. By default, it is something like "Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 SlimerJS/0.7" (depending of the version of Firefox/XulRunner you use).</dd>
+
+  <dt>user</dt>
+  <dd>User name to give to HTTP Basic authentication.</dd>
+
+  <dt>password</dt>
+  <dd>Password to give to HTTP Basic authentication.</dd>
+
+  <dt>js</dt>
+  <dd>false to deactivate javascript in web pages (default is true).</dd>
+
+  <dt>images</dt>
+  <dd>false to deactivate the loading of images (default is true).</dd>
+
+  <dt>force</dt>
+  <dd>Use the force reloading of web page without using cache (defalut is false).</dd>
+
+</dl>
 
 
 ### Query examples
@@ -134,8 +181,7 @@ GET /?url=github.com&delay=1000
 ## Sandbox UI
 
 Sandbox UI is available on "/" by direct GET request without `"url"` query parameter.
-
-TODO
+It is a simple playground to build HTTP requests and try them.
 
 
 ## Thanks to

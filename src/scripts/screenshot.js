@@ -2,6 +2,18 @@
 (function() {
 "use strict";
 
+    /* Constants */
+
+    var DEF_ZOOM = 1,
+        DEF_QUALITY = 1,
+        DEF_DELAY = 100,
+        DEF_WIDTH = 1024,
+        DEF_HEIGHT = 768,
+        DEF_JS_ENABLED = true,
+        DEF_IMAGES_ENABLED = true,
+        DEF_FORMAT = 'png';
+
+
     /* Common functions */
 
     function error(e) {
@@ -25,14 +37,14 @@
 
     function createPage(options) {
         var page = webpage.create();
-        page.zoomFactor = def(options.zoom, 1);
+        page.zoomFactor = def(options.zoom, DEF_ZOOM);
         page.viewportSize = {
-            width: def(options.width, 800),
-            height: def(options.height, 600)
+            width: def(options.width, DEF_WIDTH),
+            height: def(options.height, DEF_HEIGHT)
         };
         page.settings = {
-            javascriptEnabled: def(options.js, true),
-            loadImages: def(options.images, true),
+            javascriptEnabled: def(options.js, DEF_JS_ENABLED),
+            loadImages: def(options.images, DEF_IMAGES_ENABLED),
             userName: options.user,
             password: options.password,
             userAgent: options.agent
@@ -44,14 +56,14 @@
     /* Screenshot rendering */
 
     function renderScreenshotFile(page, options, outputFile) {
-        var delay = def(options.delay, 100),
-            format = def(options.format, 'png'),
-            quality = def(options.quality, 1);
+        var delay = def(options.delay, DEF_DELAY),
+            quality = def(options.quality, DEF_QUALITY),
+            format = def(options.format, DEF_FORMAT).toLowerCase();
 
         slimer.wait(delay);
 
         page.render(outputFile, {
-            onlyViewport: true,
+            onlyViewport: !!options.height,
             quality: quality,
             format: format
         });
