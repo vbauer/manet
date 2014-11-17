@@ -18,8 +18,8 @@ var _ = require('lodash'),
 
 /* Functions to work with configurations/options */
 
-function readOptions(req) {
-    return _.pick(req.query, [
+function readOptions(data) {
+    return _.pick(data, [
         'url', 'agent', 'delay', 'format',
         'width', 'height', 'zoom', 'quality',
         'js', 'images',
@@ -73,8 +73,9 @@ function captureScreenshot(options, config, force, onFinish) {
 
 function index(config) {
     return function (req, res) {
-        var force = req.query.force === 'true',
-            options = readOptions(req);
+        var data = req.data,
+            force = data.force === 'true',
+            options = readOptions(data);
 
         return captureScreenshot(options, config, force, function (file) {
             return res.sendFile(file);

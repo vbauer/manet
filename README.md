@@ -146,7 +146,14 @@ Default configuration file *("default.json")*:
 
 ## REST API
 
-REST API is available on "/" by direct GET request with `"url"` query parameter.
+REST API is available on "/" using:
+
+* GET method
+* POST method with `Content-Type`:
+    * *application/json*
+    * or *application/x-www-form-urlencoded*
+
+The `"url"` parameter must be specified.
 
 
 ### Query parameters
@@ -203,6 +210,8 @@ For a quick test with the command line (using `curl`), type:
 
 ```bash
 curl http://localhost:8891/?url=github.com > github.png
+curl -H "Content-Type: application/json" -d '{"url":"github.com"}' http://localhost:8891/ > github.png
+curl -H "Content-Type: application/x-www-form-urlencoded" -d 'url=github.com' http://localhost:8891/ > github.png
 ```
 
 or (using `wget`)

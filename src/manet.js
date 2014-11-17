@@ -2,11 +2,12 @@
 
 var nconf = require('nconf'),
     express = require('express'),
+    bodyParser = require('body-parser'),
     logger = require('winston'),
     path = require('path'),
     os = require('os'),
     fs = require('fs'),
-    nocache = require('connect-nocache')(),
+    nocache = require('connect-nocache'),
     routes = require('./routes'),
     filters = require('./filters'),
     utils = require('./utils');
@@ -72,7 +73,7 @@ function initFsWatchdog(config) {
     var timeout = config.cache * 1000,
         dir = config.storage;
 
-    utils.runFsWatchdog(dir, timeout, function(file) {
+    utils.runFsWatchdog(dir, timeout, function (file) {
         return fs.unlink(file, function (err) {
             if (err) {
                 return logger.error(err);
@@ -85,17 +86,27 @@ function initFsWatchdog(config) {
 
 /* Web service */
 
-function runWebServer(config, onStart) {
-    var app = express(), server;
+function createWebApplication(config) {
+    var app = express(),
+        controller = routes.index(config),
+        urlencodedParser = bodyParser.urlencoded({ extended: false }),
+        jsonParser = bodyParser.json();
 
     app.use(express.static(utils.filePath('../public')));
-    app.get('/', nocache, filters.usage, routes.index(config));
 
-    server = app.listen(config.port, function() {
-        if (onStart) {
-            onStart(server);
-        }
-    });
+    app.get('/', nocache(), filters.usage, controller);
+    app.post('/', urlencodedParser, jsonParser, nocache(), filters.usage, controller);
+
+    return app;
+}
+
+function runWebServer(config, onStart) {
+    var app = createWebApplication(config),
+        server = app.listen(config.port, function () {
+            if (onStart) {
+                onStart(server);
+            }
+        });
 
     logger.info('Manet server started on port %d', config.port);
 }
