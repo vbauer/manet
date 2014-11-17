@@ -63,9 +63,9 @@ describe('manet', function () {
                     sendRequest('GET', '/?url=google.com', 'binary', function(d2) {
                         assert.equal(true, d2.length > 0);
                         
-                        // Check GET
-                        sendRequest('POST', '/?url=google.com', 'binary', function(d2) {
-                            assert.equal(true, d2.length > 0);
+                        // Check POST
+                        sendRequest('POST', '/?url=google.com', 'binary', function(d3) {
+                            assert.equal(true, d3.length > 0);
                             server.close();
                         });
                     });
