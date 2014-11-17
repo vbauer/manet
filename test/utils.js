@@ -99,6 +99,21 @@ describe('utils', function () {
 
     describe('execProcess', function () {
 
+        it('should not execute empty command', function () {
+            assert.throws(function () {
+                utils.execProcess(null, null, function() {});
+            });
+            assert.throws(function () {
+                utils.execProcess(null, [], function() {});
+            });
+            assert.throws(function () {
+                utils.execProcess('', null, function() {});
+            });
+            assert.throws(function () {
+                utils.execProcess('', [], function() {});
+            });
+        });
+
         it('execute "ls"', function () {
             utils.execProcess('ls', null, function(code) {
                 assert.equal(0, code);
