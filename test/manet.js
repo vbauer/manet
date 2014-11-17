@@ -15,7 +15,9 @@ describe('manet', function () {
             var config = manet.readConfiguration();
 
             assert.notEqual(null, config);
-            assert.notEqual(null, config.command);
+            assert.notEqual(null, config.commands);
+            assert.notEqual(null, config.commands.phantomjs);
+            assert.notEqual(null, config.commands.slimerjs);
 
             assert.equal('true', config.silent);
             assert.equal(3600, config.cache);
