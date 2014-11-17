@@ -181,7 +181,7 @@ The `"url"` parameter must be specified.
   <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: 100).</dd>
 
   <dt>format</dt>
-  <dd>Indicate the file format (then the file extension is ignored). possible values: jpg, png, jpeg, pdf. (default is "png")</dd>
+  <dd>Indicate the file format for output image (default is "png"). Possible values: jpg, jpeg, png, gif, pdf</dd>
 
   <dt>agent</dt>
   <dd>String to define the user Agent in HTTP requests. By default, it is something like "Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 SlimerJS/0.7" (depending of the version of Firefox/XulRunner you use).</dd>
