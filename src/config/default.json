@@ -1,11 +1,21 @@
 
 {
-    "command": {
-        "linux": "xvfb-run -a slimerjs",
-        "freebsd": "xvfb-run -a slimerjs",
-        "sunos": "xvfb-run -a slimerjs",
-        "darwin": "slimerjs",
-        "win32": "slimerjs.bat"
+    "engine": "slimerjs",
+    "commands": {
+        "slimerjs": {
+            "linux": "xvfb-run -a slimerjs",
+            "freebsd": "xvfb-run -a slimerjs",
+            "sunos": "xvfb-run -a slimerjs",
+            "darwin": "slimerjs",
+            "win32": "slimerjs.bat"
+        },
+        "phantomjs": {
+            "linux": "phantomjs",
+            "freebsd": "phantomjs",
+            "sunos": "phantomjs",
+            "darwin": "phantomjs",
+            "win32": "phantomjs"
+        }
     },
     "cache": 3600,
     "port": 8891

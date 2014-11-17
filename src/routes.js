@@ -10,7 +10,10 @@ var _ = require('lodash'),
     logger = require('winston'),
     fs = require('fs'),
     util = require('util'),
-    utils = require('./utils');
+    utils = require('./utils'),
+
+    DEF_ENGINE = 'slimerjs',
+    DEF_COMMAND = 'slimerjs';
 
 
 /* Functions to work with configurations/options */
@@ -32,9 +35,9 @@ function outputFile(options, conf, base64) {
 }
 
 function cliCommand(conf) {
-    var command = conf.command;
-    var cmd = _.isObject(command) ? command[process.platform] : command;
-    return cmd || 'slimerjs';
+    var engine = conf.engine || DEF_ENGINE,
+        command = conf.command || conf.commands[engine][process.platform];
+    return command || DEF_COMMAND;
 }
 
 

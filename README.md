@@ -5,15 +5,19 @@
 
 <img align="right" style="margin-left: 15px" width="300" height="360" title="Self-Portrait with Palette, 1879" src="misc/manet.jpg">
 
-Manet is a REST API server which allows to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
+**Manet** is a REST API server which allows to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
 
-Manet uses [SlimerJS](http://slimerjs.org) under the hood, which is very similar to [PhantomJs](http://phantomjs.org), except that it runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko) (the browser engine of [Mozilla Firefox](https://www.mozilla.org)) and [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey) (the JavaScript engine of Firefox). This is a conscious choice to be more stable and predictable.
+**Manet** could use different engines to work: [SlimerJS](http://slimerjs.org) or [PhantomJs](http://phantomjs.org).
+
+* **SlimerJS** runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko) (the browser engine of [Mozilla Firefox](https://www.mozilla.org)) and [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey) (the JavaScript engine of Firefox).
+* **PhantomJS** run on top of [WebKit](https://www.webkit.org) and [JavaScriptCode](http://trac.webkit.org/wiki/JavaScriptCore).
 
 *Project was named in honor of Édouard Manet, French painter (1832-1883). He was one of the first 19th-century artists to paint modern life, and a pivotal figure in the transition from Realism to Impressionism.*
 
 
 ## Main features
 * Ready-To-Use
+* Support 2 engines: SlimerJS and PhantomJS
 * Configurable CLI application
 * Flexible REST API
 * File caching
@@ -24,9 +28,11 @@ Manet uses [SlimerJS](http://slimerjs.org) under the hood, which is very similar
 ## Setup
 
 ### Preset
-First install SlimerJS:
+Choose and install needed engine (PhantomJS, SlimerJS, or both of them):
 
-* You can download it from the [official site](http://slimerjs.org/download.html) and install manually.
+#### SlimerJS:
+
+* You can download SlimerJS from the [official site](http://slimerjs.org/download.html) and install manually.
 * or you can use the power of [NPM](https://www.npmjs.org/):
 ```bash
 npm install -g slimerjs
@@ -38,6 +44,15 @@ For example, you can use **apt-get** to install **xvfb** on Ubuntu:
 ```bash
 sudo apt-get install xvfb
 ```
+
+#### PhantomJS
+
+* You can download PhantomJS from the [official site](http://phantomjs.org/download.html) and install manually.
+* or you can also use NPM:
+```bash
+npm install -g phantomjs
+```
+
 
 ### Installation
 
@@ -79,19 +94,22 @@ The less-priority parameters are stored in build-in configuration file.
 <dl>
 
   <dt>--port</dt>
-  <dd>HTTP web server port number. REST API and UI will be available on this port (default: 8891).</dd>
+  <dd>Web server port number. REST API and UI will be available on this port *(default: 8891)*.</dd>
+
+  <dt>--engine</dt>
+  <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" *(default is "slimerjs")*. Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
-  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html</dd>
+  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
 
   <dt>--storage</dt>
-  <dd>File storage for cache (default is OS temp directory).</dd>
+  <dd>File storage for cache *(default is global temp directory)*.</dd>
 
   <dt>--cache</dt>
-  <dd>Lifetime for file cache in seconds. Screenshots are cached for 60 minutes by default, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
+  <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
 
   <dt>--silent</dt>
-  <dd>Run Manet server with or without logging information (default is false).</dd>
+  <dd>Run Manet server with or without logging information *(default is false)*.</dd>
 
 </dl>
 
@@ -103,14 +121,24 @@ Default configuration file *("default.json")*:
 
 ```json
 {
-    "command": {
-        "linux": "xvfb-run -a slimerjs",
-        "freebsd": "xvfb-run -a slimerjs",
-        "sunos": "xvfb-run -a slimerjs",
-        "darwin": "slimerjs",
-        "win32": "slimerjs.bat"
+    "engine": "slimerjs",
+    "commands": {
+        "slimerjs": {
+            "linux": "xvfb-run -a slimerjs",
+            "freebsd": "xvfb-run -a slimerjs",
+            "sunos": "xvfb-run -a slimerjs",
+            "darwin": "slimerjs",
+            "win32": "slimerjs.bat"
+        },
+        "phantomjs": {
+            "linux": "phantomjs",
+            "freebsd": "phantomjs",
+            "sunos": "phantomjs",
+            "darwin": "phantomjs",
+            "win32": "phantomjs"
+        }
     },
-    "storage": 3600,
+    "cache": 3600,
     "port": 8891
 }
 ```
@@ -214,7 +242,8 @@ It is a simple playground to build HTTP requests and try them.
 
 ## Thanks to
 
-SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and other [developers](https://github.com/laurentj/slimerjs/graphs/contributors) who worked on this great project.
+* SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
+* PhantomJS author [Ariya Hidayat](https://github.com/ariya/phantomjs) and PhantomJS [community](https://github.com/ariya/phantomjs/graphs/contributors).
 
 
 ## License
