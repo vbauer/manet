@@ -1,25 +1,9 @@
 "use strict";
 
-var _ = require('lodash'),
-    fs = require('fs'),
+var fs = require('fs'),
     path = require('path'),
     logger = require('winston'),
     childProcess = require('child_process');
-
-
-/* Lo-Dash plugins */
-
-_.mixin({
-    filterByCollection: function (o, c) {
-        var res = {};
-        _.each(o, function (v, k) {
-            if (_.contains(c, k)) {
-                res[k] = v;
-            }
-        });
-        return res;
-    }
-});
 
 
 /* BASE64 functions */

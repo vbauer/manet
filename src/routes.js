@@ -7,7 +7,6 @@
  */
 
 var _ = require('lodash'),
-    compactObject = require('compact-object'),
     logger = require('winston'),
     fs = require('fs'),
     util = require('util'),
@@ -20,14 +19,12 @@ var _ = require('lodash'),
 /* Functions to work with configurations/options */
 
 function readOptions(req) {
-    return compactObject(
-        _.filterByCollection(req.query, [
-            'url', 'agent', 'delay', 'format',
-            'width', 'height', 'zoom', 'quality',
-            'js', 'images',
-            'user', 'password'
-        ])
-    );
+    return _.pick(req.query, [
+        'url', 'agent', 'delay', 'format',
+        'width', 'height', 'zoom', 'quality',
+        'js', 'images',
+        'user', 'password'
+    ]);
 }
 
 function outputFile(options, conf, base64) {

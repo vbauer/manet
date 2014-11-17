@@ -1,7 +1,6 @@
 'use strict';
 
-var _ = require('lodash'),
-    assert = require('assert'),
+var assert = require('assert'),
     os = require('os'),
     common = require('./common'),
     utils = require('../src/utils');
@@ -10,20 +9,6 @@ var _ = require('lodash'),
 describe('utils', function () {
 
     common.silentLogger();
-
-    describe('lodash plugins', function () {
-
-        it('check filterByCollection', function () {
-            assert.deepEqual({}, _.filterByCollection());
-            assert.deepEqual({}, _.filterByCollection({}));
-            assert.deepEqual({}, _.filterByCollection({}, []));
-            assert.deepEqual({}, _.filterByCollection({}, ['d']));
-            assert.deepEqual({}, _.filterByCollection({d: 't'}, ['e']));
-            assert.deepEqual({d: 't'}, _.filterByCollection({d: 't'}, ['d']));
-            assert.deepEqual({d: 't', e: 'f'}, _.filterByCollection({d: 't', e: 'f'}, ['d', 'e']));
-        });
-
-    });
 
     describe('encodeBase64', function () {
 
