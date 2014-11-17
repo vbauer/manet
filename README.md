@@ -10,14 +10,14 @@
 **Manet** could use different engines to work: [SlimerJS](http://slimerjs.org) or [PhantomJs](http://phantomjs.org).
 
 * **SlimerJS** runs on top of [Gecko](https://developer.mozilla.org/en-US/docs/Mozilla/Gecko) (the browser engine of [Mozilla Firefox](https://www.mozilla.org)) and [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey) (the JavaScript engine of Firefox).
-* **PhantomJS** run on top of [WebKit](https://www.webkit.org) and [JavaScriptCode](http://trac.webkit.org/wiki/JavaScriptCore).
+* **PhantomJS** runs on top of [WebKit](https://www.webkit.org) and [JavaScriptCore](http://trac.webkit.org/wiki/JavaScriptCore).
 
 *Project was named in honor of Édouard Manet, French painter (1832-1883). He was one of the first 19th-century artists to paint modern life, and a pivotal figure in the transition from Realism to Impressionism.*
 
 
 ## Main features
 * Ready-To-Use
-* Support 2 engines: SlimerJS and PhantomJS
+* Supporting SlimerJS and PhantomJS
 * Configurable CLI application
 * Flexible REST API
 * File caching
