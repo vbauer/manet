@@ -240,6 +240,26 @@ Sandbox UI is available on "/" by direct GET request without `"url"` query param
 It is a simple playground to build HTTP requests and try them.
 
 
+## Development
+
+* To run [jshint](https://github.com/jshint/jshint/) checks:
+```bash
+npm run lint
+```
+* To run [Mocha](https://github.com/mochajs/mocha) tests:
+```bash
+npm test
+```
+To run tests with watcher:
+```bash
+mocha --watch -R spec
+```
+* To run Manet server:
+```bash
+./bin/manet
+```
+
+
 ## Thanks to
 
 * SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
