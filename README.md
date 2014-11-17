@@ -246,12 +246,11 @@ It is a simple playground to build HTTP requests and try them.
 ```bash
 npm run lint
 ```
-* To run [Mocha](https://github.com/mochajs/mocha) tests:
+* To run [Mocha](https://github.com/mochajs/mocha) unit tests:
 ```bash
+# using NPM:
 npm test
-```
-To run tests with watcher:
-```bash
+# using mocha and watcher:
 mocha --watch -R spec
 ```
 * To run Manet server:
