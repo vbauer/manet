@@ -1,46 +1,53 @@
 'use strict';
 
-var assert = require('assert'),
+var _ = require('lodash'),
+    assert = require('assert'),
     http = require('http'),
-    common = require('./common'),
     manet = require('../src/manet');
 
 
+process.env.silent = true;
+process.env.engine = 'phantomjs';
+
+
 describe('manet', function () {
-
-    common.silentLogger();
-
+        
+    var config = manet.readConfiguration();
+    
     describe('config', function () {
 
         it('default configuration should exist', function () {
-            var config = manet.readConfiguration();
-
-            assert.notEqual(null, config);
-            assert.notEqual(null, config.commands);
-            assert.notEqual(null, config.commands.phantomjs);
-            assert.notEqual(null, config.commands.slimerjs);
-
-            assert.equal('slimerjs', config.engine);
+            assert.equal('phantomjs', config.engine);
             assert.equal('true', config.silent);
             assert.equal(3600, config.cache);
-            assert.equal(8891, config.port);
+            assert.equal(8891, config.port);            
+            assert.equal(false, _.isEmpty(config));
+            assert.equal(false, _.isEmpty(config.commands));
+            assert.equal(false, _.isEmpty(config.commands.phantomjs));
+            assert.equal(false, _.isEmpty(config.commands.slimerjs));
         });
 
     });
 
     describe('main', function () {
 
-        function sendRequest(config, url, callback) {
+        function sendRequest(method, url, encoding, callback) {
             var options = {
                 host: 'localhost',
                 port: config.port,
-                method: 'GET',
+                method: method,
                 path: url
             };
-
+            
             http.request(options, function (res) {
-                res.setEncoding('utf8');
-                res.on('data', callback);
+                var data = '';
+                res.setEncoding(encoding);
+                res.on('data', function(chunk) {
+                    return data += chunk;
+                });
+                res.on('end', function() {
+                    return callback(data);
+                });                
             }).end();
         }
 
@@ -49,9 +56,19 @@ describe('manet', function () {
                 assert.notEqual(null, server);
 
                 // Check sandbox UI
-                sendRequest(manet.readConfiguration(), '/', function(data) {
-                    assert.equal(true, data.length > 0);
-                    server.close();
+                sendRequest('GET', '/', 'utf8', function(d1) {
+                    assert.equal(true, d1.length > 0);
+                    
+                    // Check GET
+                    sendRequest('GET', '/?url=google.com', 'binary', function(d2) {
+                        assert.equal(true, d2.length > 0);
+                        
+                        // Check GET
+                        sendRequest('POST', '/?url=google.com', 'binary', function(d2) {
+                            assert.equal(true, d2.length > 0);
+                            server.close();
+                        });
+                    });
                 });
             });
         });

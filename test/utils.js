@@ -2,13 +2,12 @@
 
 var assert = require('assert'),
     os = require('os'),
-    common = require('./common'),
     utils = require('../src/utils');
 
 
 describe('utils', function () {
 
-    common.silentLogger();
+    process.env.silent = true;
 
     describe('encodeBase64', function () {
 
