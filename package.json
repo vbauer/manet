@@ -51,6 +51,7 @@
     "dependencies": {
         "express": "^4.10.2",
         "connect-nocache": "^1.1.0",
+        "compact-object": "^0.1.2",
         "nconf": "^0.6.9",
         "lodash": "^2.4.1",
         "winston": "^0.8.3"

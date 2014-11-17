@@ -10,18 +10,6 @@ var _ = require('lodash'),
 /* Lo-Dash plugins */
 
 _.mixin({
-    compactObject: function (o) {
-        var res = {};
-        _.each(o, function (v, k) {
-            if (v) {
-                res[k] = v;
-            }
-        });
-        return res;
-    }
-});
-
-_.mixin({
     filterByCollection: function (o, c) {
         var res = {};
         _.each(o, function (v, k) {

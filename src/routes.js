@@ -7,6 +7,7 @@
  */
 
 var _ = require('lodash'),
+    compactObject = require('compact-object'),
     logger = require('winston'),
     fs = require('fs'),
     util = require('util'),
@@ -19,7 +20,7 @@ var _ = require('lodash'),
 /* Functions to work with configurations/options */
 
 function readOptions(req) {
-    return _.compactObject(
+    return compactObject(
         _.filterByCollection(req.query, [
             'url', 'agent', 'delay', 'format',
             'width', 'height', 'zoom', 'quality',
@@ -34,18 +35,18 @@ function outputFile(options, conf, base64) {
     return util.format('%s/%s.%s', conf.storage, base64, format);
 }
 
-function cliCommand(conf) {
-    var engine = conf.engine || DEF_ENGINE,
-        command = conf.command || conf.commands[engine][process.platform];
+function cliCommand(config) {
+    var engine = config.engine || DEF_ENGINE,
+        command = config.command || config.commands[engine][process.platform];
     return command || DEF_COMMAND;
 }
 
 
 /* Screenshot capturing runner */
 
-function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFinish) {
+function runScreenshotCapturingProcess(options, config, outputFile, base64, onFinish) {
     var scriptFile = utils.filePath('scripts/screenshot.js'),
-        command = cliCommand(conf).split(/[ ]+/),
+        command = cliCommand(config).split(/[ ]+/),
         cmd = _.first(command),
         args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
 
@@ -53,14 +54,14 @@ function runScreenshotCapturingProcess(options, conf, outputFile, base64, onFini
     utils.execProcess(cmd, args, onFinish);
 }
 
-function captureScreenshot(options, conf, force, onFinish) {
+function captureScreenshot(options, config, force, onFinish) {
     var base64 = utils.encodeBase64(options),
-        file = outputFile(options, conf, base64);
+        file = outputFile(options, config, base64);
 
     logger.info('Capture site screenshot: %s', options.url);
 
     if (force || !fs.existsSync(file)) {
-        runScreenshotCapturingProcess(options, conf, file, base64, function () {
+        runScreenshotCapturingProcess(options, config, file, base64, function () {
             logger.info('Process finished work: %s', base64);
             return onFinish(file);
         });
@@ -73,12 +74,12 @@ function captureScreenshot(options, conf, force, onFinish) {
 
 /* Controllers */
 
-function index(conf) {
+function index(config) {
     return function (req, res) {
         var force = req.query.force === 'true',
             options = readOptions(req);
 
-        return captureScreenshot(options, conf, force, function (file) {
+        return captureScreenshot(options, config, force, function (file) {
             return res.sendFile(file);
         });
     };
@@ -87,4 +88,6 @@ function index(conf) {
 
 /* Export functions */
 
-module.exports.index = index;
+module.exports = {
+    index: index
+};

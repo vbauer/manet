@@ -13,17 +13,6 @@ describe('utils', function () {
 
     describe('lodash plugins', function () {
 
-        it('check compactObject', function () {
-            assert.deepEqual({}, _.compactObject());
-            assert.deepEqual({}, _.compactObject({}));
-            assert.deepEqual({}, _.compactObject({d: null}));
-            assert.deepEqual({d: 't'}, _.compactObject({d: 't'}));
-            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: ''}));
-            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: null}));
-            assert.deepEqual({d: 't'}, _.compactObject({d: 't', e: null}));
-            assert.deepEqual({d: 't', e: 'f'}, _.compactObject({d: 't', e: 'f'}));
-        });
-
         it('check filterByCollection', function () {
             assert.deepEqual({}, _.filterByCollection());
             assert.deepEqual({}, _.filterByCollection({}));
