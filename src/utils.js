@@ -64,10 +64,10 @@ function execProcess(cmd, args, onClose) {
         procStart = process.hrtime();
 
     proc.stdout.on('data', function (data) {
-        logger.debug('Output: %s', data.toString());
+        logger.debug('Process output: %s', data.toString());
     });
     proc.stderr.on('data', function (data) {
-        logger.error('Error: %s', data.toString());
+        logger.error('Process error: %s', data.toString());
     });
     proc.on('close', function(code) {
         var procEnd = process.hrtime(procStart);

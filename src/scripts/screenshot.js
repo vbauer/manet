@@ -74,7 +74,7 @@
     function renderScreenshotFile(page, options, outputFile) {
         var delay = def(options.delay, DEF_DELAY),
             quality = def(options.quality, DEF_QUALITY),
-            format = def(options.format, DEF_FORMAT).toLowerCase();
+            format = def(options.format, DEF_FORMAT);
 
         setTimeout(function() {
             try {

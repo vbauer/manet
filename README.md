@@ -27,8 +27,10 @@
 
 ## Setup
 
+
 ### Preset
 Choose and install needed engine (PhantomJS, SlimerJS, or both of them):
+
 
 #### SlimerJS:
 
@@ -44,6 +46,9 @@ For example, you can use **apt-get** to install **xvfb** on Ubuntu:
 ```bash
 sudo apt-get install xvfb
 ```
+
+**NB:** It is really the rare case, but do not forget to configure `"--command slimerjs"` if you use SlimerJS on Windows OS with Bash, otherwise Manet will try to run "slimerjs.bat" under Bash.
+
 
 #### PhantomJS
 
