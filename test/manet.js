@@ -56,7 +56,7 @@ describe('manet', function () {
         }
 
 
-        it('server should start correctly', function () {
+        it('server should start correctly', function (done) {
             manet.main(function (server) {
                 assert.notEqual(null, server);
 
@@ -73,6 +73,7 @@ describe('manet', function () {
                         sendRequest('POST', '/?url=google.com', 'binary', function (d3, r3) {
                             checkResponse(r3, d3, 'image/png');
                             server.close();
+                            done();
                         });
                     });
                 });

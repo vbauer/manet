@@ -13,7 +13,7 @@ describe('config', function () {
 
     describe('read', function () {
 
-        it('default configuration should exist', function () {
+        it('default configuration should exist', function (done) {
             var conf = config.read();
 
             assert.equal('phantomjs', conf.engine);
@@ -25,6 +25,8 @@ describe('config', function () {
             assert.equal(false, _.isEmpty(conf.commands));
             assert.equal(false, _.isEmpty(conf.commands.phantomjs));
             assert.equal(false, _.isEmpty(conf.commands.slimerjs));
+
+            done();
         });
 
     });

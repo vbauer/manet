@@ -72,7 +72,7 @@ describe('utils', function () {
 
     describe('execProcess', function () {
 
-        it('should not execute empty command', function () {
+        it('should not execute empty command', function (done) {
             assert.throws(function () {
                 utils.execProcess(null, null, function() {});
             });
@@ -85,27 +85,31 @@ describe('utils', function () {
             assert.throws(function () {
                 utils.execProcess('', [], function() {});
             });
+            done();
         });
 
-        it('execute "ls"', function () {
+        it('execute "ls"', function (done) {
             utils.execProcess('ls', null, function(code) {
                 assert.equal(0, code);
             });
             utils.execProcess('ls', [], function(code) {
                 assert.equal(0, code);
             });
+            done();
         });
 
-        it('execute "ls -la"', function () {
+        it('execute "ls -la"', function (done) {
             utils.execProcess('ls', ['-la'], function(code) {
                 assert.equal(0, code);
             });
+            done();
         });
 
-        it('execute "ls -l -a"', function () {
+        it('execute "ls -l -a"', function (done) {
             utils.execProcess('ls', ['-l', '-a'], function(code) {
                 assert.equal(0, code);
             });
+            done();
         });
 
     });
