@@ -23,7 +23,7 @@ function usage(req, res, next) {
 }
 
 
-/* Export functions */
+/* Exported functions */
 
 module.exports = {
     merge: merge,

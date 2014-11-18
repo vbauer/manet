@@ -1,37 +1,19 @@
 "use strict";
 
-var nconf = require('nconf'),
-    express = require('express'),
+var express = require('express'),
     bodyParser = require('body-parser'),
     logger = require('winston'),
-    path = require('path'),
-    os = require('os'),
     fs = require('fs'),
     nocache = require('connect-nocache'),
+    config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
     utils = require('./utils');
 
 
-/* Read configuration system */
-
-function readConfiguration() {
-    var config = nconf.argv()
-        .env()
-        .file({
-            file: utils.filePath('config/default.json')
-        })
-        .get();
-
-    config.storage = path.resolve(config.storage || os.tmpdir());
-
-    return config;
-}
-
-
 /* Logging system */
 
-function initLogging(config) {
+function initLogging(conf) {
     logger.setLevels({
         debug: 0,
         info: 1,
@@ -51,7 +33,7 @@ function initLogging(config) {
     logger.add(logger.transports.Console, {
         level: 'debug',
         colorize: true,
-        silent: config.silent || false
+        silent: conf.silent || false
     });
 }
 
@@ -69,9 +51,9 @@ function initExitHandling() {
 
 /* Init file system watchdog */
 
-function initFsWatchdog(config) {
-    var timeout = config.cache * 1000,
-        dir = config.storage;
+function initFsWatchdog(conf) {
+    var timeout = conf.cache * 1000,
+        dir = conf.storage;
 
     utils.runFsWatchdog(dir, timeout, function (file) {
         return fs.unlink(file, function (err) {
@@ -86,56 +68,56 @@ function initFsWatchdog(config) {
 
 /* Web service */
 
-function addUsage(config, chain) {
-    if (config.ui === 'true') {
+function addUsage(conf, chain) {
+    if (conf.ui) {
         chain.push(filters.usage);
     }
     return chain;
 }
 
-function createWebApplication(config) {
+function createWebApplication(conf) {
     var app = express(),
-        index = routes.index(config),
-        urlencoded = bodyParser.urlencoded({ extended: false }),
+        index = routes.index(conf),
+        urlencoded = bodyParser.urlencoded({
+            extended: false
+        }),
         json = bodyParser.json();
 
     app.use(express.static(utils.filePath('../public')));
 
-    app.get('/', addUsage(config, [nocache(), filters.merge]), index);
-    app.post('/', addUsage(config, [urlencoded, json, nocache(), filters.merge]), index);
+    app.get('/', addUsage(conf, [nocache(), filters.merge]), index);
+    app.post('/', addUsage(conf, [urlencoded, json, nocache(), filters.merge]), index);
 
     return app;
 }
 
-function runWebServer(config, onStart) {
-    var app = createWebApplication(config),
-        server = app.listen(config.port, function () {
+function runWebServer(conf, onStart) {
+    var app = createWebApplication(conf),
+        server = app.listen(conf.port, function () {
             if (onStart) {
                 onStart(server);
             }
         });
 
-    logger.info('Manet server started on port %d', config.port);
+    logger.info('Manet server started on port %d', conf.port);
 }
 
 
 /* Initialize and run server */
 
 function main(onStart) {
-    var config = readConfiguration();
+    var conf = config.read();
 
-    initLogging(config);
+    initLogging(conf);
     initExitHandling();
-    initFsWatchdog(config);
+    initFsWatchdog(conf);
 
-    runWebServer(config, onStart);
+    runWebServer(conf, onStart);
 }
 
 
-/* Export functions */
+/* Exported functions */
 
 module.exports = {
-    readConfiguration: readConfiguration,
-
     main: main
 };

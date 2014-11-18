@@ -3,6 +3,8 @@
 var _ = require('lodash'),
     assert = require('assert'),
     http = require('http'),
+    w3cjs = require('w3cjs'),
+    config = require('../src/config'),
     manet = require('../src/manet');
 
 
@@ -11,62 +13,65 @@ process.env.engine = 'phantomjs';
 
 
 describe('manet', function () {
-        
-    var config = manet.readConfiguration();
-    
-    describe('config', function () {
 
-        it('default configuration should exist', function () {
-            assert.equal('phantomjs', config.engine);
-            assert.equal('true', config.silent);
-            assert.equal(true, config.ui);
-            assert.equal(3600, config.cache);
-            assert.equal(8891, config.port);            
-            assert.equal(false, _.isEmpty(config));
-            assert.equal(false, _.isEmpty(config.commands));
-            assert.equal(false, _.isEmpty(config.commands.phantomjs));
-            assert.equal(false, _.isEmpty(config.commands.slimerjs));
-        });
-
-    });
+    var conf = config.read(),
+        DEF_HOSTNAME = 'localhost';
 
     describe('main', function () {
 
         function sendRequest(method, url, encoding, callback) {
             var options = {
-                host: 'localhost',
-                port: config.port,
+                host: DEF_HOSTNAME,
+                port: conf.port,
                 method: method,
                 path: url
             };
-            
+
             http.request(options, function (res) {
                 var data = '';
+
                 res.setEncoding(encoding);
-                res.on('data', function(chunk) {
+                res.on('data', function (chunk) {
                     return data += chunk;
                 });
-                res.on('end', function() {
-                    return callback(data);
-                });                
+                res.on('end', function () {
+                    return callback(data, res);
+                });
             }).end();
         }
+
+        function checkHtml(html) {
+            w3cjs.validate({
+                input: html,
+                callback: function (res) {
+                    assert.equal(true, _.isEmpty(res.messages));
+                }
+            });
+        }
+
+        function checkResponse(res, data, type) {
+            assert.equal(true, data.length > 0);
+            assert.equal(type, res.headers['content-type'].toLowerCase());
+            assert.equal(200, res.statusCode);
+        }
+
 
         it('server should start correctly', function () {
             manet.main(function (server) {
                 assert.notEqual(null, server);
 
                 // Check sandbox UI
-                sendRequest('GET', '/', 'utf8', function(d1) {
-                    assert.equal(true, d1.length > 0);
-                    
+                sendRequest('GET', '/', 'utf8', function (d1, r1) {
+                    checkResponse(r1, d1, 'text/html; charset=utf-8');
+                    checkHtml(d1);
+
                     // Check GET
-                    sendRequest('GET', '/?url=google.com', 'binary', function(d2) {
-                        assert.equal(true, d2.length > 0);
-                        
+                    sendRequest('GET', '/?url=google.com', 'binary', function (d2, r2) {
+                        checkResponse(r2, d2, 'image/png');
+
                         // Check POST
-                        sendRequest('POST', '/?url=google.com', 'binary', function(d3) {
-                            assert.equal(true, d3.length > 0);
+                        sendRequest('POST', '/?url=google.com', 'binary', function (d3, r3) {
+                            checkResponse(r3, d3, 'image/png');
                             server.close();
                         });
                     });

@@ -53,12 +53,14 @@
         "body-parser": "^1.9.2",
         "connect-nocache": "^1.1.0",
         "nconf": "^0.6.9",
+        "joi": "^4.9.0",
         "lodash": "^2.4.1",
         "winston": "^0.8.3"
     },
 
     "devDependencies": {
         "jshint": "^2.5.10",
-        "mocha": "^2.0.1"
+        "mocha": "^2.0.1",
+        "w3cjs": "^0.1.25"
     }
 }

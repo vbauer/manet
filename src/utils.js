@@ -65,7 +65,7 @@ function execProcess(cmd, args, onClose) {
 }
 
 
-/* Export functions */
+/* Exported functions */
 
 module.exports = {
     encodeBase64: encodeBase64,

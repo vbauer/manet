@@ -59,7 +59,7 @@ function screenshot(options, config, onFinish) {
 }
 
 
-/* Export functions */
+/* Exported functions */
 
 module.exports = {
     screenshot: screenshot

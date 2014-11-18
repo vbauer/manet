@@ -38,7 +38,7 @@ function index(config) {
 }
 
 
-/* Export functions */
+/* Exported functions */
 
 module.exports = {
     index: index
