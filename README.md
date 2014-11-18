@@ -94,25 +94,25 @@ The less-priority parameters are stored in build-in configuration file.
 <dl>
 
   <dt>--port</dt>
-  <dd>Web server port number. REST API and UI will be available on this port *(default: 8891)*.</dd>
+  <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
 
   <dt>--engine</dt>
-  <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" *(default is "slimerjs")*. Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
+  <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "slimerjs"). Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
-  <dd>Configuration file *"default.json"* supports specific commands for different platforms (ex: *"linux": "xvfb-run -a slimerjs"*). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
+  <dd>Configuration file "default.json" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
 
   <dt>--storage</dt>
-  <dd>File storage for cache *(default is global temp directory)*.</dd>
+  <dd>File storage for cache (default is global temp directory).</dd>
 
   <dt>--cache</dt>
   <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
 
   <dt>--silent</dt>
-  <dd>Run Manet server with or without logging information *(default is false)*.</dd>
+  <dd>Run Manet server with or without logging information (default is false).</dd>
 
   <dt>--ui</dt>
-  <dd>Enable or disable sandbox UI (default is true)*.</dd>
+  <dd>Enable or disable sandbox UI (default is true).</dd>
 
 </dl>
 
@@ -124,6 +124,9 @@ Default configuration file *("default.json")*:
 
 ```json
 {
+    "cache": 3600,
+    "port": 8891,
+    "ui": true,
     "engine": "slimerjs",
     "commands": {
         "slimerjs": {
@@ -140,9 +143,7 @@ Default configuration file *("default.json")*:
             "darwin": "phantomjs",
             "win32": "phantomjs"
         }
-    },
-    "cache": 3600,
-    "port": 8891
+    }
 }
 ```
 
