@@ -86,16 +86,23 @@ function initFsWatchdog(config) {
 
 /* Web service */
 
+function addUsage(config, chain) {
+    if (config.ui === 'true') {
+        chain.push(filters.usage);
+    }
+    return chain;
+}
+
 function createWebApplication(config) {
     var app = express(),
-        controller = routes.index(config),
-        urlencodedParser = bodyParser.urlencoded({ extended: false }),
-        jsonParser = bodyParser.json();
+        index = routes.index(config),
+        urlencoded = bodyParser.urlencoded({ extended: false }),
+        json = bodyParser.json();
 
     app.use(express.static(utils.filePath('../public')));
 
-    app.get('/', nocache(), filters.usage, controller);
-    app.post('/', urlencodedParser, jsonParser, nocache(), filters.usage, controller);
+    app.get('/', addUsage(config, [nocache(), filters.merge]), index);
+    app.post('/', addUsage(config, [urlencoded, json, nocache(), filters.merge]), index);
 
     return app;
 }

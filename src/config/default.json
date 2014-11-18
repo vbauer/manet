@@ -1,5 +1,8 @@
 
 {
+    "cache": 3600,
+    "port": 8891,
+    "ui": true,
     "engine": "slimerjs",
     "commands": {
         "slimerjs": {
@@ -16,7 +19,5 @@
             "darwin": "phantomjs",
             "win32": "phantomjs"
         }
-    },
-    "cache": 3600,
-    "port": 8891
+    }
 }

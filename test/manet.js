@@ -19,6 +19,7 @@ describe('manet', function () {
         it('default configuration should exist', function () {
             assert.equal('phantomjs', config.engine);
             assert.equal('true', config.silent);
+            assert.equal(true, config.ui);
             assert.equal(3600, config.cache);
             assert.equal(8891, config.port);            
             assert.equal(false, _.isEmpty(config));

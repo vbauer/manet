@@ -111,6 +111,9 @@ The less-priority parameters are stored in build-in configuration file.
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information *(default is false)*.</dd>
 
+  <dt>--ui</dt>
+  <dd>Enable or disable sandbox UI (default is true)*.</dd>
+
 </dl>
 
 ### Configuration file
@@ -153,7 +156,10 @@ REST API is available on "/" using:
     * *application/json*
     * or *application/x-www-form-urlencoded*
 
-The `"url"` parameter must be specified.
+Few rules:
+
+* The `"url"` parameter must be specified.
+* Query parameters will be used in priority and override others.
 
 
 ### Query parameters
