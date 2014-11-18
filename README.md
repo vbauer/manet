@@ -47,8 +47,6 @@ For example, you can use **apt-get** to install **xvfb** on Ubuntu:
 sudo apt-get install xvfb
 ```
 
-**NB:** It is really the rare case, but do not forget to configure `"--command slimerjs"` if you use SlimerJS on Windows OS with Bash, otherwise Manet will try to run "slimerjs.bat" under Bash.
-
 
 #### PhantomJS
 
@@ -89,9 +87,11 @@ Manet server uses hierarchical configurations to cover differnet usage use-cases
 * Environment variables
 * Built-in configuration JSON file *("config/default.json")*
 
-Each configuration level could be overridden by another level.
-The most-priority parameters are command-line parameters.
-The less-priority parameters are stored in build-in configuration file.
+Rules of overriding:
+
+* Each configuration level could be overridden by another level.
+* The *most-priority* parameters are *command-line parameters*.
+* The *less-priority* parameters are stored in *build-in configuration file*.
 
 
 ### CLI parameters
