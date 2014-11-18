@@ -127,6 +127,7 @@ Default configuration file *("default.json")*:
     "cache": 3600,
     "port": 8891,
     "ui": true,
+    "silent": false,
     "engine": "slimerjs",
     "commands": {
         "slimerjs": {

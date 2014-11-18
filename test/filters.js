@@ -34,22 +34,19 @@ describe('filters', function () {
             };
         }
 
-        it('should take url from body', function (done) {
+        it('should take url from body', function () {
             var r = req(URL, 'body');
             assert.equal(URL, filters.merge(r, res(), next(r)));
-            done();
         });
 
-        it('should take url from query', function (done) {
+        it('should take url from query', function () {
             var r = req(URL, 'query');
             assert.equal(URL, filters.merge(r, res(), next(r)));
-            done();
         });
 
-        it('should take from url query in priority', function (done) {
+        it('should take from url query in priority', function () {
             var r = _.defaults(req(URL, 'query'), req(URL + URL, 'body'));
             assert.equal(URL, filters.merge(r, res(), next(r)));
-            done();
         });
 
     });
@@ -62,15 +59,13 @@ describe('filters', function () {
             };
         }
 
-        it('should process url parameter', function (done) {
+        it('should process url parameter', function () {
             assert.equal(true, filters.usage(req(URL), res(false), next(true)));
-            done();
         });
 
-        it('should process next function', function (done) {
+        it('should process next function', function () {
             assert.equal(true, filters.usage(req(null), res(true), next(false)));
             assert.equal(true, filters.usage(req(''), res(true), next(false)));
-            done();
         });
 
     });

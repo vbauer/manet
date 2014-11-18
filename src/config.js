@@ -18,8 +18,10 @@ function createSchema() {
         cache: joi.number().integer().min(1).label('Cache'),
         port: joi.number().integer().min(1).max(65535).label('Port number'),
         ui: joi.boolean().label('Sandbox UI'),
+        silent: joi.boolean().label('Silent mode'),
         engine: joi.string().lowercase().allow('phantomjs', 'slimerjs').label('Engine'),
-        command: joi.string().label('Command')
+        command: joi.string().label('Command'),
+        storage: joi.string().label('Storage path')
     });
 }
 
@@ -37,12 +39,8 @@ function load() {
 }
 
 function read() {
-    var schema = createSchema(),
-        conf = load(),
-        options = {
-            allowUnknown: true
-        },
-        val = joi.validate(conf, schema, options);
+    var conf = load(),
+        val = utils.validate(conf, createSchema);
 
     if (val.error) {
         _.forEach(val.error.details, function(detail) {

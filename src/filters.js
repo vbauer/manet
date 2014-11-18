@@ -17,9 +17,8 @@ function merge(req, res, next) {
 function usage(req, res, next) {
     if (!req.data.url) {
         return res.sendFile(utils.filePath('../public/usage.html'));
-    } else {
-        return next();
     }
+    return next();
 }
 
 

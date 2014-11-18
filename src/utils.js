@@ -1,9 +1,22 @@
 "use strict";
 
 var fs = require('fs'),
+    joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
     childProcess = require('child_process');
+
+
+/* Validation */
+
+function validate(object, schemaFactory) {
+    var schema = schemaFactory(),
+        options = {
+            allowUnknown: true
+        };
+
+    return joi.validate(object, schema, options);
+}
 
 
 /* BASE64 functions */
@@ -68,6 +81,7 @@ function execProcess(cmd, args, onClose) {
 /* Exported functions */
 
 module.exports = {
+    validate: validate,
     encodeBase64: encodeBase64,
     filePath: filePath,
     runFsWatchdog: runFsWatchdog,

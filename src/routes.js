@@ -7,7 +7,30 @@
  */
 
 var _ = require('lodash'),
-    capture = require('./capture');
+    joi = require('joi'),
+    capture = require('./capture'),
+    utils = require('./utils');
+
+
+/* Schemas */
+
+function createSchema() {
+    return joi.object().keys({
+        force: joi.boolean(),
+        url: joi.string().required(),
+        agent: joi.string(),
+        delay: joi.number().integer().min(0),
+        format: joi.string().lowercase().allow('jpg', 'jpeg', 'png', 'pdf', 'gif'),
+        quality: joi.number().min(0).max(1),
+        width: joi.number().integer().min(1),
+        height: joi.number().integer().min(1),
+        zoom: joi.number().min(0).max(1),
+        js: joi.boolean(),
+        images: joi.boolean(),
+        user: joi.string(),
+        password: joi.string()
+    });
+}
 
 
 /* Options */
@@ -28,12 +51,15 @@ function readOptions(data) {
 
 function index(config) {
     return function (req, res) {
-        var data = req.data,
-            options = readOptions(data);
-
-        return capture.screenshot(options, config, function (file) {
-            return res.sendFile(file);
-        });
+        var data = utils.validate(req.data, createSchema);
+        if (data.error) {
+            return res.json(data.error.details);
+        } else {
+            var options = readOptions(data.value);
+            return capture.screenshot(options, config, function (file) {
+                return res.sendFile(file);
+            });
+        }
     };
 }
 

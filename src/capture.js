@@ -42,12 +42,11 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 function screenshot(options, config, onFinish) {
     var opts = _.omit(options, 'force'),
         base64 = utils.encodeBase64(opts),
-        file = outputFile(opts, config, base64),
-        force = options.force === 'true';
+        file = outputFile(opts, config, base64);
 
     logger.info('Capture site screenshot: %s', options.url);
 
-    if (force || !fs.existsSync(file)) {
+    if (options.force || !fs.existsSync(file)) {
         runCapturingProcess(opts, config, file, base64, function () {
             logger.info('Process finished work: %s', base64);
             return onFinish(file);

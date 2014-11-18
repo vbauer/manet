@@ -9,19 +9,19 @@
         DEF_DELAY = 100,
         DEF_WIDTH = 1024,
         DEF_HEIGHT = 768,
-        DEF_JS_ENABLED = 'true',
-        DEF_IMAGES_ENABLED = 'true',
+        DEF_JS_ENABLED = true,
+        DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
         URL_PREFIX_HTTP = 'http://',
         URL_PREFIX_HTTPS = 'https://';
 
 
     /* Common functions */
-    
+
     function argument(index) {
         return phantom.args ? phantom.args[index] : system.args[index];
     }
-    
+
     function log(message) {
         if (system.stdout) {
             system.stdout.write(message);
@@ -29,7 +29,7 @@
             console.log(message);
         }
     }
-    
+
     function exit(e) {
         if (e) {
             log('Error: ' + e);
@@ -59,8 +59,8 @@
             height: def(options.height, DEF_HEIGHT)
         };
         page.settings = {
-            javascriptEnabled: def(options.js, DEF_JS_ENABLED) === 'true',
-            loadImages: def(options.images, DEF_IMAGES_ENABLED) === 'true',
+            javascriptEnabled: def(options.js, DEF_JS_ENABLED),
+            loadImages: def(options.images, DEF_IMAGES_ENABLED),
             userName: options.user,
             password: options.password,
             userAgent: options.agent
@@ -94,9 +94,9 @@
     }
 
     function fixUrl(url) {
-        var http = url.indexOf(URL_PREFIX_HTTP) === 0,
-            https = url.indexOf(URL_PREFIX_HTTPS) === 0;
-        
+        var http = !url.indexOf(URL_PREFIX_HTTP),
+            https = !url.indexOf(URL_PREFIX_HTTPS);
+
         return (http || https) ? url : (URL_PREFIX_HTTP + url);
     }
 
