@@ -32,18 +32,8 @@ function createSchema() {
     });
 }
 
-
-/* Options */
-
-function readOptions(data) {
-    return _.pick(data, [
-        'force',
-        'url', 'agent', 'delay',
-        'format', 'quality',
-        'width', 'height', 'zoom',
-        'js', 'images',
-        'user', 'password'
-    ]);
+function readOptions(data, schema) {
+    return _.pick(data, _.keys(schema.describe().children));
 }
 
 
@@ -51,11 +41,13 @@ function readOptions(data) {
 
 function index(config) {
     return function (req, res) {
-        var data = utils.validate(req.data, createSchema);
+        var schema = createSchema(),
+            data = utils.validate(req.data, schema);
+
         if (data.error) {
             return res.json(data.error.details);
         } else {
-            var options = readOptions(data.value);
+            var options = readOptions(data.value, schema);
             return capture.screenshot(options, config, function (file) {
                 return res.sendFile(file);
             });

@@ -9,13 +9,10 @@ var fs = require('fs'),
 
 /* Validation */
 
-function validate(object, schemaFactory) {
-    var schema = schemaFactory(),
-        options = {
-            allowUnknown: true
-        };
-
-    return joi.validate(object, schema, options);
+function validate(object, schema) {
+    return joi.validate(object, schema, {
+        allowUnknown: true
+    });
 }
 
 

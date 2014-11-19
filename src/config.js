@@ -39,8 +39,7 @@ function load() {
 }
 
 function read() {
-    var conf = load(),
-        val = utils.validate(conf, createSchema);
+    var val = utils.validate(load(), createSchema());
 
     if (val.error) {
         _.forEach(val.error.details, function(detail) {
