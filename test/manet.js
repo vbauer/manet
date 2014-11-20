@@ -9,7 +9,6 @@ var _ = require('lodash'),
 
 
 process.env.silent = true;
-process.env.engine = 'phantomjs';
 
 
 describe('manet', function () {

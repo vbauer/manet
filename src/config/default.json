@@ -4,7 +4,7 @@
     "port": 8891,
     "ui": true,
     "silent": false,
-    "engine": "slimerjs",
+    "engine": "phantomjs",
     "commands": {
         "slimerjs": {
             "linux": "xvfb-run -a slimerjs",
