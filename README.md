@@ -56,6 +56,8 @@ sudo apt-get install xvfb
 npm install -g phantomjs
 ```
 
+**IMPORTANT:** PhantomJS is used by default (see `default.json` file).
+
 
 ### Installation
 
