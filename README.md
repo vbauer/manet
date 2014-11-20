@@ -247,8 +247,20 @@ GET /?url=github.com
 # Custom viewport size. Return a 800x600 PNG screenshot of the github.com homepage.
 GET /?url=github.com&width=800&height=600
 
+# Clipping Rectangle. Return a screenshot clipped at [top=20, left=30, width=90, height=80]
+GET /?url=github.com&clipRect=20%2C30%2C90%2C80
+
+# Zoom rendered page in 2 times.
+GET /?url=github.com&zoom=2
+
+# Specify image output format.
+GET /?url=github.com&format=jpeg
+
 # Disable JavaScript. Return a screenshot with no JavaScript executed.
 GET /?url=github.com&js=false
+
+# Disable images. Return a screenshot without images.
+GET /?url=github.com&images=false
 
 # Custom User Agent.
 GET /?url=github.com&agent=Mozilla%2F5.0+(X11%3B+Linux+x86_64)+AppleWebKit%2F537.36+(KHTML%2C+like+Gecko)+Chrome%2F34.0.1847.132+Safari%2F537.36
@@ -258,6 +270,10 @@ GET /?url=mysite.com&user=john&password=smith
 
 # Screenshot delay. Return a screenshot of the github.com homepage 1 second after it's loaded.
 GET /?url=github.com&delay=1000
+
+# Force page reloading. Return a screenshot without using file cache.
+GET /?url=github.com&force=true
+
 ```
 
 
