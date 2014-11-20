@@ -51,20 +51,44 @@
 
     /* Web page creation */
 
-    function createPage(options) {
-        var page = webpage.create();
-        page.zoomFactor = def(options.zoom, DEF_ZOOM);
-        page.viewportSize = {
+    function pageViewPortSize(options) {
+        return {
             width: def(options.width, DEF_WIDTH),
             height: def(options.height, DEF_HEIGHT)
         };
-        page.settings = {
+    }
+
+    function pageSettings(options) {
+        return {
             javascriptEnabled: def(options.js, DEF_JS_ENABLED),
             loadImages: def(options.images, DEF_IMAGES_ENABLED),
             userName: options.user,
             password: options.password,
             userAgent: options.agent
         };
+    }
+
+    function pageClipRect(options) {
+        var regexp = /^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/,
+            params = (options.clipRect || '').match(regexp);
+
+        if (params && (params.length === 5)) {
+            return {
+                top: parseInt(params[1]),
+                left: parseInt(params[2]),
+                width: parseInt(params[3]),
+                height: parseInt(params[4])
+            };
+        }
+        return null;
+    }
+
+    function createPage(options) {
+        var page = webpage.create();
+        page.zoomFactor = def(options.zoom, DEF_ZOOM);
+        page.viewportSize = pageViewPortSize(options);
+        page.settings = pageSettings(options);
+        page.clipRect = pageClipRect(options);
         return page;
     }
 

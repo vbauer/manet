@@ -1,5 +1,5 @@
 
-# Manet [![Build Status](http://img.shields.io/travis/vbauer/manet.svg)](https://travis-ci.org/vbauer/manet) [![NPM](http://img.shields.io/npm/v/manet.svg)](https://www.npmjs.org/package/manet)
+# Manet [![Build Status](https://img.shields.io/travis/vbauer/manet.svg)](https://travis-ci.org/vbauer/manet) [![NPM](https://img.shields.io/npm/v/manet.svg)](https://www.npmjs.org/package/manet)
 
 > There is only one true thing: instantly paint what you see. When you've got it, you've got it. When you haven't, you begin again. All the rest is humbug.
 
@@ -181,6 +181,9 @@ Few rules:
 
   <dt>height</dt>
   <dd>This property allows to change the height of the viewport. If width is defined and height is not defined, than full page will be captured.</dd>
+
+  <dt>clipRect</dt>
+  <dd>This property defines the rectangular area of the web page to be rasterized. Format: `top,left,width,height`, example: `20,20,640,480`.</dd>
 
   <dt>zoom</dt>
   <dd>Contains the zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>

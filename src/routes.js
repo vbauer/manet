@@ -24,6 +24,7 @@ function createSchema() {
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
+        clipRect: joi.string().regex(/^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/g),
         zoom: joi.number().min(0).max(1),
         js: joi.boolean(),
         images: joi.boolean(),
