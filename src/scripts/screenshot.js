@@ -69,18 +69,8 @@
     }
 
     function pageClipRect(options) {
-        var regexp = /^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/,
-            params = (options.clipRect || '').match(regexp);
-
-        if (params && (params.length === 5)) {
-            return {
-                top: parseInt(params[1]),
-                left: parseInt(params[2]),
-                width: parseInt(params[3]),
-                height: parseInt(params[4])
-            };
-        }
-        return null;
+        var cr = options.clipRect;
+        return (cr && cr.top && cr.left && cr.width && cr.height) ? cr : null;
     }
 
     function createPage(options) {

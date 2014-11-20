@@ -2,14 +2,15 @@
 
 /**
  * TODO:
- * - Clipping Rectangle
  * - Asynchronous call
  */
 
 var _ = require('lodash'),
     joi = require('joi'),
     capture = require('./capture'),
-    utils = require('./utils');
+    utils = require('./utils'),
+
+    REGEXP_CLIP_RECT = /^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/;
 
 
 /* Schemas */
@@ -24,7 +25,7 @@ function createSchema() {
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
-        clipRect: joi.string().regex(/^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/g),
+        clipRect: joi.string().regex(REGEXP_CLIP_RECT),
         zoom: joi.number().min(0).max(1),
         js: joi.boolean(),
         images: joi.boolean(),
@@ -33,8 +34,30 @@ function createSchema() {
     });
 }
 
+
+/* Options */
+
+function clipRect(cr) {
+    var params = (cr || '').match(REGEXP_CLIP_RECT);
+
+    if (params && (params.length === 5)) {
+        return {
+            top: parseInt(params[1]),
+            left: parseInt(params[2]),
+            width: parseInt(params[3]),
+            height: parseInt(params[4])
+        };
+    }
+    return null;
+}
+
 function readOptions(data, schema) {
-    return _.pick(data, _.keys(schema.describe().children));
+    var keys = _.keys(schema.describe().children),
+        options = _.pick(data, keys);
+
+    options.clipRect = clipRect(options.clipRect);
+
+    return _.pick(options, _.identity);
 }
 
 
