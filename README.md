@@ -217,7 +217,7 @@ Few rules:
   <dd>false to deactivate the loading of images (default is true).</dd>
 
   <dt>force</dt>
-  <dd>Use the force reloading of web page without using cache (defalut is false).</dd>
+  <dd>Use the force reloading of web page without using cache (default is false).</dd>
 
 </dl>
 
