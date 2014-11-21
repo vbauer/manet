@@ -55,9 +55,10 @@ function parseClipRect(cr) {
 }
 
 function parseHeaders(headers) {
-    return qs.parse(headers, {
+    var res = qs.parse(headers, {
         delimiter: ';'
     });
+    return _.isEmpty(res) ? null : res;
 }
 
 function readOptions(data, schema) {
