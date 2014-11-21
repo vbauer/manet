@@ -12,7 +12,7 @@ var _ = require('lodash'),
     utils = require('./utils'),
 
     OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
-    REGEXP_CLIP_RECT = /^(\d*),(\d*),(\d*),(\d*)$/;
+    REGEXP_CLIP_RECT = /^(\d*),(\d*),([1-9]\d*),([1-9]\d*)$/;
 
 
 /* Schemas */
