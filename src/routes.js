@@ -6,10 +6,12 @@
  */
 
 var _ = require('lodash'),
+    qs = require('qs'),
     joi = require('joi'),
     capture = require('./capture'),
     utils = require('./utils'),
 
+    OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
     REGEXP_CLIP_RECT = /^([1-9]\d*),([1-9]\d*),([1-9]\d*),([1-9]\d*)$/;
 
 
@@ -20,8 +22,9 @@ function createSchema() {
         force: joi.boolean(),
         url: joi.string().required(),
         agent: joi.string(),
+        headers: joi.string(),
         delay: joi.number().integer().min(0),
-        format: joi.string().lowercase().allow('jpg', 'jpeg', 'png', 'pdf', 'gif'),
+        format: joi.string().lowercase().allow(OUTPUT_FORMATS),
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
@@ -37,7 +40,7 @@ function createSchema() {
 
 /* Options */
 
-function clipRect(cr) {
+function parseClipRect(cr) {
     var params = (cr || '').match(REGEXP_CLIP_RECT);
 
     if (params && (params.length === 5)) {
@@ -51,11 +54,18 @@ function clipRect(cr) {
     return null;
 }
 
+function parseHeaders(headers) {
+    return qs.parse(headers, {
+        delimiter: ';'
+    });
+}
+
 function readOptions(data, schema) {
     var keys = _.keys(schema.describe().children),
         options = _.pick(data, keys);
 
-    options.clipRect = clipRect(options.clipRect);
+    options.clipRect = parseClipRect(options.clipRect);
+    options.headers = parseHeaders(options.headers);
 
     return _.pick(options, _.identity);
 }

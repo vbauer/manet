@@ -204,6 +204,9 @@ Few rules:
   <dt>agent</dt>
   <dd>String to define the user Agent in HTTP requests. By default, it is something like "Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 SlimerJS/0.7" (depending of the version of Firefox/XulRunner you use).</dd>
 
+  <dt>headers</dt>
+  <dd>This property specifies additional HTTP request headers that will be sent to the server for every request issued (for pages and resources). Format: "key1=value1;key2=value2;..." Headers names and values get encoded in US-ASCII before being sent. Please note that setting the 'User-Agent' will overwrite the value set via "agent" parameter.</dd>
+
   <dt>user</dt>
   <dd>User name to give to HTTP Basic authentication.</dd>
 
@@ -274,6 +277,8 @@ GET /?url=github.com&delay=1000
 # Force page reloading. Return a screenshot without using file cache.
 GET /?url=github.com&force=true
 
+# Specify custom HTTP headers.
+GET /?url=google.com&headers=User-Agent=Firefox;Accept-Charset=utf-8
 ```
 
 

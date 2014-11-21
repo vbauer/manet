@@ -12,6 +12,7 @@
         DEF_JS_ENABLED = true,
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
+        DEF_HEADERS = {},
         URL_PREFIX_HTTP = 'http://',
         URL_PREFIX_HTTPS = 'https://';
 
@@ -76,6 +77,7 @@
     function createPage(options) {
         var page = webpage.create();
         page.zoomFactor = def(options.zoom, DEF_ZOOM);
+        page.customHeaders = def(options.headers, DEF_HEADERS);
         page.viewportSize = pageViewPortSize(options);
         page.settings = pageSettings(options);
         page.clipRect = pageClipRect(options);
