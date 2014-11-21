@@ -290,6 +290,10 @@ It is a simple playground to build HTTP requests and try them.
 
 ## Development
 
+* To install project dependencies:
+```bash
+npm install
+```
 * To run [jshint](https://github.com/jshint/jshint/) checks:
 ```bash
 npm run lint
