@@ -13,6 +13,7 @@
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
         DEF_HEADERS = {},
+
         URL_PREFIX_HTTP = 'http://',
         URL_PREFIX_HTTPS = 'https://';
 
@@ -31,9 +32,12 @@
         }
     }
 
-    function exit(e) {
+    function exit(page, e) {
         if (e) {
             log('Error: ' + e);
+        }
+        if (page) {
+            page.close();
         }
         phantom.exit();
     }
@@ -87,7 +91,7 @@
 
     /* Screenshot rendering */
 
-    function renderScreenshotFile(page, options, outputFile) {
+    function renderScreenshotFile(page, options, outputFile, onFinish) {
         var delay = def(options.delay, DEF_DELAY),
             quality = def(options.quality, DEF_QUALITY),
             format = def(options.format, DEF_FORMAT);
@@ -101,10 +105,9 @@
                 });
 
                 log('Rendered screenshot: ' + outputFile);
+                onFinish(page);
             } catch (e) {
-                exit(e);
-            } finally {
-                exit();
+                onFinish(page, e);
             }
         }, delay);
     }
@@ -116,21 +119,21 @@
         return (http || https) ? url : (URL_PREFIX_HTTP + url);
     }
 
-    function captureScreenshot(base64, outputFile) {
+    function captureScreenshot(base64, outputFile, onFinish) {
         try {
             var options = parseOptions(base64),
-                page = createPage(options),
-                url = fixUrl(options.url);
+                url = fixUrl(options.url),
+                page = createPage(options);
 
             page.open(url, function () {
                 try {
-                    renderScreenshotFile(page, options, outputFile);
+                    renderScreenshotFile(page, options, outputFile, onFinish);
                 } catch (e) {
-                    exit(e);
+                    onFinish(page, e);
                 }
             });
         } catch (e) {
-            exit(e);
+            onFinish(null, e);
         }
     }
 
@@ -142,6 +145,6 @@
         base64 = argument(0),
         outputFile = argument(1);
 
-    captureScreenshot(base64, outputFile);
+    captureScreenshot(base64, outputFile, exit);
 
 })();
