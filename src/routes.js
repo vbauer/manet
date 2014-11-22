@@ -38,7 +38,7 @@ function createSchema() {
 }
 
 
-/* Options */
+/* Functions to parse options */
 
 function parseClipRect(cr) {
     var params = (cr || '').match(REGEXP_CLIP_RECT);
@@ -54,6 +54,10 @@ function parseClipRect(cr) {
     return null;
 }
 
+function parseUrl(url) {
+    return decodeURI(url);
+}
+
 function parseHeaders(headers) {
     var res = qs.parse(headers, {
         delimiter: ';'
@@ -61,12 +65,16 @@ function parseHeaders(headers) {
     return _.isEmpty(res) ? null : res;
 }
 
+
+/* Options reader */
+
 function readOptions(data, schema) {
     var keys = _.keys(schema.describe().children),
         options = _.pick(data, keys);
 
-    options.clipRect = parseClipRect(options.clipRect);
+    options.url = parseUrl(options.url);
     options.headers = parseHeaders(options.headers);
+    options.clipRect = parseClipRect(options.clipRect);
 
     return _.pick(options, _.identity);
 }
