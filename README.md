@@ -202,7 +202,12 @@ Few rules:
   <dd>Indicate the file format for output image (default is "png"). Possible values: jpg, jpeg, png, gif, pdf</dd>
 
   <dt>agent</dt>
-  <dd>String to define the user Agent in HTTP requests. By default, it is something like "Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 SlimerJS/0.7" (depending of the version of Firefox/XulRunner you use).</dd>
+  <dd>String to define the "User-Agent" in HTTP requests. By default, it is something like:
+    <ul>
+        <li><b>PhantomJS:</b> Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.0 (development) Safari/534.34</li>
+        <li><b>SlimerJS:</b> Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101 SlimerJS/0.7</li>
+    </ul>
+  </dd>
 
   <dt>headers</dt>
   <dd>This property specifies additional HTTP request headers that will be sent to the server for every request issued (for pages and resources). Format: "key1=value1;key2=value2;..." Headers names and values get encoded in US-ASCII before being sent. Please note that setting the 'User-Agent' will overwrite the value set via "agent" parameter.</dd>
