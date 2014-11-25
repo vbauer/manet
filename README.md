@@ -5,7 +5,7 @@
 
 <img align="right" style="margin-left: 15px" width="300" height="360" title="Self-Portrait with Palette, 1879" src="misc/manet.jpg">
 
-**Manet** is a REST API server which allows to capture screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
+**Manet** is a REST API server which allows capturing screenshots of websites using various parameters. It is a good way to make sure that your websites are responsive or to make thumbnails.
 
 **Manet** could use different engines to work: [SlimerJS](http://slimerjs.org) or [PhantomJs](http://phantomjs.org).
 
@@ -107,7 +107,7 @@ Rules of overriding:
   <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "slimerjs"). Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
-  <dd>Configuration file "default.json" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to overide command for executing SlimerJS. It allows to use full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
+  <dd>Configuration file "default.json" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
 
   <dt>--storage</dt>
   <dd>File storage for cache (default is global temp directory).</dd>
@@ -188,7 +188,7 @@ Few rules:
   <dd>This property defines the rectangular area of the web page to be rasterized. Format: "top,left,width,height", example: "20,20,640,480".</dd>
 
   <dt>zoom</dt>
-  <dd>Contains the zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>
+  <dd>Zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>
 
   <!--
   <dt>quality</dt>
