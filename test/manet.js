@@ -32,7 +32,7 @@ describe('manet', function () {
 
             res.setEncoding(encoding);
             res.on('data', function (chunk) {
-                return data += chunk;
+                data += chunk;
             });
             res.on('end', function () {
                 return callback(data, res);

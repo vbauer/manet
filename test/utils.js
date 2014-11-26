@@ -62,7 +62,7 @@ describe('utils', function () {
         });
 
         it('should start fs watch dog correctly', function () {
-            var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function() {});
+            var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function () {});
             assert.notEqual(null, watchdog);
             clearInterval(watchdog);
         });
@@ -74,39 +74,39 @@ describe('utils', function () {
 
         it('should not execute empty command', function (done) {
             assert.throws(function () {
-                utils.execProcess(null, null, function() {});
+                utils.execProcess(null, null);
             });
             assert.throws(function () {
-                utils.execProcess(null, [], function() {});
+                utils.execProcess(null, []);
             });
             assert.throws(function () {
-                utils.execProcess('', null, function() {});
+                utils.execProcess('', null);
             });
             assert.throws(function () {
-                utils.execProcess('', [], function() {});
+                utils.execProcess('', []);
             });
             done();
         });
 
         it('execute "ls"', function (done) {
-            utils.execProcess('ls', null, function(code) {
+            utils.execProcess('ls', null, function (code) {
                 assert.equal(0, code);
             });
-            utils.execProcess('ls', [], function(code) {
+            utils.execProcess('ls', [], function (code) {
                 assert.equal(0, code);
             });
             done();
         });
 
         it('execute "ls -la"', function (done) {
-            utils.execProcess('ls', ['-la'], function(code) {
+            utils.execProcess('ls', ['-la'], function (code) {
                 assert.equal(0, code);
             });
             done();
         });
 
         it('execute "ls -l -a"', function (done) {
-            utils.execProcess('ls', ['-l', '-a'], function(code) {
+            utils.execProcess('ls', ['-l', '-a'], function (code) {
                 assert.equal(0, code);
             });
             done();

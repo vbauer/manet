@@ -7,6 +7,16 @@ var fs = require('fs'),
     childProcess = require('child_process');
 
 
+/* Basic types */
+
+function toInt(value) {
+    var res = parseInt(value, 10);
+    if (isNaN(res)) {
+        throw "Illegal integer value: " + value;
+    }
+    return res;
+}
+
 /* Validation */
 
 function validate(object, schema) {
@@ -33,6 +43,10 @@ function runFsWatchdog(dir, timeout, callback) {
     if (dir && (timeout > 0)) {
         return setInterval(function () {
             fs.readdir(dir, function (err, files) {
+                if (err) {
+                    return logger.error(err);
+                }
+
                 files.forEach(function (file) {
                     var filePath = path.join(dir, file);
                     fs.stat(filePath, function (err, stat) {
@@ -66,11 +80,15 @@ function execProcess(cmd, args, onClose) {
     proc.stderr.on('data', function (data) {
         logger.error('Process error: %s', data.toString());
     });
-    proc.on('close', function(code) {
-        var procEnd = process.hrtime(procStart);
-        var end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
+    proc.on('close', function (code) {
+        var procEnd = process.hrtime(procStart),
+            end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
+
         logger.debug('Execution time: %d sec', end);
-        onClose(code);
+
+        if (onClose) {
+            onClose(code);
+        }
     });
 }
 
@@ -78,6 +96,7 @@ function execProcess(cmd, args, onClose) {
 /* Exported functions */
 
 module.exports = {
+    toInt: toInt,
     validate: validate,
     encodeBase64: encodeBase64,
     filePath: filePath,

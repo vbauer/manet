@@ -1,5 +1,5 @@
 
-(function() {
+(function () {
 "use strict";
 
     /* Constants */
@@ -43,7 +43,7 @@
     }
 
     function def(o, d) {
-        return ((o === null) || (typeof(o) === "undefined")) ? d : o;
+        return ((o === null) || (typeof (o) === "undefined")) ? d : o;
     }
 
     function parseOptions(base64) {
@@ -96,7 +96,7 @@
             quality = def(options.quality, DEF_QUALITY),
             format = def(options.format, DEF_FORMAT);
 
-        setTimeout(function() {
+        setTimeout(function () {
             try {
                 page.render(outputFile, {
                     onlyViewport: !!options.height,
@@ -113,8 +113,8 @@
     }
 
     function fixUrl(url) {
-        var http = !url.indexOf(URL_PREFIX_HTTP),
-            https = !url.indexOf(URL_PREFIX_HTTPS);
+        var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
+            https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
 
         return (http || https) ? url : (URL_PREFIX_HTTP + url);
     }

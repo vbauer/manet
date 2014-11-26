@@ -41,17 +41,18 @@ function createSchema() {
 /* Functions to parse options */
 
 function parseClipRect(cr) {
-    var params = (cr || '').match(REGEXP_CLIP_RECT);
+    try {
+        var params = (cr || '').match(REGEXP_CLIP_RECT);
 
-    if (params && (params.length === 5)) {
         return {
-            top: parseInt(params[1]),
-            left: parseInt(params[2]),
-            width: parseInt(params[3]),
-            height: parseInt(params[4])
+            top: utils.toInt(params[1]),
+            left: utils.toInt(params[2]),
+            width: utils.toInt(params[3]),
+            height: utils.toInt(params[4])
         };
+    } catch (err) {
+        return null;
     }
-    return null;
 }
 
 function parseUrl(url) {
@@ -89,12 +90,12 @@ function index(config) {
 
         if (data.error) {
             return res.json(data.error.details);
-        } else {
-            var options = readOptions(data.value, schema);
-            return capture.screenshot(options, config, function (file) {
-                return res.sendFile(file);
-            });
         }
+
+        var options = readOptions(data.value, schema);
+        return capture.screenshot(options, config, function (file) {
+            return res.sendFile(file);
+        });
     };
 }
 

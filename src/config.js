@@ -42,7 +42,7 @@ function read() {
     var val = utils.validate(load(), createSchema());
 
     if (val.error) {
-        _.forEach(val.error.details, function(detail) {
+        _.forEach(val.error.details, function (detail) {
             logger.error(detail.message);
         });
         process.exit(1);
