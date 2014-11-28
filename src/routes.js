@@ -41,18 +41,16 @@ function createSchema() {
 /* Functions to parse options */
 
 function parseClipRect(cr) {
-    try {
-        var params = (cr || '').match(REGEXP_CLIP_RECT);
-
+    var params = (cr || '').match(REGEXP_CLIP_RECT);
+    if (params && (params.length === 5)) {
         return {
-            top: utils.toInt(params[1]),
-            left: utils.toInt(params[2]),
-            width: utils.toInt(params[3]),
-            height: utils.toInt(params[4])
+            top: parseInt(params[1]),
+            left: parseInt(params[2]),
+            width: parseInt(params[3]),
+            height: parseInt(params[4])
         };
-    } catch (err) {
-        return null;
     }
+    return null;
 }
 
 function parseUrl(url) {

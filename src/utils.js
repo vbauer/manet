@@ -7,16 +7,6 @@ var fs = require('fs'),
     childProcess = require('child_process');
 
 
-/* Basic types */
-
-function toInt(value) {
-    var res = parseInt(value, 10);
-    if (isNaN(res)) {
-        throw "Illegal integer value: " + value;
-    }
-    return res;
-}
-
 /* Validation */
 
 function validate(object, schema) {
@@ -96,7 +86,6 @@ function execProcess(cmd, args, onClose) {
 /* Exported functions */
 
 module.exports = {
-    toInt: toInt,
     validate: validate,
     encodeBase64: encodeBase64,
     filePath: filePath,
