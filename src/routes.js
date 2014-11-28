@@ -79,7 +79,12 @@ function readOptions(data, schema) {
 }
 
 
-/* Controllers */
+/* Controller */
+
+function enableCORS(res) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Expose-Headers", "Content-Type");
+}
 
 function index(config) {
     return function (req, res) {
@@ -92,6 +97,9 @@ function index(config) {
 
         var options = readOptions(data.value, schema);
         return capture.screenshot(options, config, function (file) {
+            if (config.cors) {
+                enableCORS(res);
+            }
             return res.sendFile(file);
         });
     };

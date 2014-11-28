@@ -118,6 +118,9 @@ Rules of overriding:
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information (default is false).</dd>
 
+  <dt>--cors</dt>
+  <dd>Enable [Cross-Origin Resource Sharing](http://www.w3.org/TR/cors/) (default is false).</dd>
+
   <dt>--ui</dt>
   <dd>Enable or disable sandbox UI (default is true).</dd>
 
@@ -134,6 +137,7 @@ Default configuration file *("default.json")*:
     "cache": 3600,
     "port": 8891,
     "ui": true,
+    "cors": false,
     "silent": false,
     "engine": "phantomjs",
     "commands": {
