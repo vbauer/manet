@@ -119,7 +119,7 @@ Rules of overriding:
   <dd>Run Manet server with or without logging information (default is false).</dd>
 
   <dt>--cors</dt>
-  <dd>Enable [Cross-Origin Resource Sharing](http://www.w3.org/TR/cors/) (default is false).</dd>
+  <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is false).</dd>
 
   <dt>--ui</dt>
   <dd>Enable or disable sandbox UI (default is true).</dd>
