@@ -91,25 +91,25 @@ describe('utils', function () {
         it('execute "ls"', function (done) {
             utils.execProcess('ls', null, function (code) {
                 assert.equal(0, code);
+                utils.execProcess('ls', [], function (code) {
+                    assert.equal(0, code);
+                    done();
+                });
             });
-            utils.execProcess('ls', [], function (code) {
-                assert.equal(0, code);
-            });
-            done();
         });
 
-        it('execute "ls -la"', function (done) {
-            utils.execProcess('ls', ['-la'], function (code) {
+        it('execute "ls -l"', function (done) {
+            utils.execProcess('ls', ['-l'], function (code) {
                 assert.equal(0, code);
+                done();
             });
-            done();
         });
 
         it('execute "ls -l -a"', function (done) {
             utils.execProcess('ls', ['-l', '-a'], function (code) {
                 assert.equal(0, code);
+                done();
             });
-            done();
         });
 
     });
