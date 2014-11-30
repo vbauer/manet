@@ -8,7 +8,10 @@ var express = require('express'),
     config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
-    utils = require('./utils');
+    utils = require('./utils'),
+
+    DEF_LOGGER_LEVEL = 'debug',
+    DEF_LOGGER_SILENT = false;
 
 
 /* Logging system */
@@ -31,9 +34,9 @@ function initLogging(conf) {
 
     logger.remove(logger.transports.Console);
     logger.add(logger.transports.Console, {
-        level: 'debug',
-        colorize: true,
-        silent: conf.silent || false
+        level: conf.level || DEF_LOGGER_LEVEL,
+        silent: conf.silent || DEF_LOGGER_SILENT,
+        colorize: true
     });
 }
 

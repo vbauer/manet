@@ -48,7 +48,7 @@ function screenshot(options, config, onFinish) {
 
     if (options.force || !fs.existsSync(file)) {
         runCapturingProcess(opts, config, file, base64, function () {
-            logger.info('Process finished work: %s', base64);
+            logger.debug('Process finished work: %s', base64);
             return onFinish(file);
         });
     } else {

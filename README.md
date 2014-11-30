@@ -118,6 +118,9 @@ Rules of overriding:
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information (default is false).</dd>
 
+  <dt>--level</dt>
+  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is "debug").</dd>
+
   <dt>--cors</dt>
   <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is false).</dd>
 
@@ -139,6 +142,7 @@ Default configuration file *("default.json")*:
     "ui": true,
     "cors": false,
     "silent": false,
+    "level": "debug",
     "engine": "phantomjs",
     "commands": {
         "slimerjs": {

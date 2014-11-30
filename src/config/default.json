@@ -5,6 +5,7 @@
     "ui": true,
     "cors": false,
     "silent": false,
+    "level": "debug",
     "engine": "phantomjs",
     "commands": {
         "slimerjs": {
