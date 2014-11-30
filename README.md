@@ -300,6 +300,8 @@ GET /?url=google.com&headers=User-Agent=Firefox;Accept-Charset=utf-8
 Sandbox UI is available on "/" by direct GET request without `"url"` query parameter.
 It is a simple playground to build HTTP requests and try them.
 
+Demo instance is available on [Heroku](https://heroku.com): [https://manet.herokuapp.com](https://manet.herokuapp.com/)
+
 
 ## Development
 
