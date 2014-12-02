@@ -51,7 +51,7 @@
     "dependencies": {
         "express": "^4.10.2",
         "body-parser": "^1.9.2",
-        "connect-nocache": "^1.1.0",
+        "helmet": "^0.5.2",
         "nconf": "^0.6.9",
         "joi": "^4.9.0",
         "qs": "^2.3.3",

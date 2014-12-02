@@ -4,7 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     logger = require('winston'),
     fs = require('fs'),
-    nocache = require('connect-nocache'),
+    helmet = require('helmet'),
     config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
@@ -84,12 +84,13 @@ function createWebApplication(conf) {
         urlencoded = bodyParser.urlencoded({
             extended: false
         }),
-        json = bodyParser.json();
+        json = bodyParser.json(),
+        noCache = helmet.noCache();
 
     app.use(express.static(utils.filePath('../public')));
 
-    app.get('/', addUsage(conf, [nocache(), filters.merge]), index);
-    app.post('/', addUsage(conf, [urlencoded, json, nocache(), filters.merge]), index);
+    app.get('/', addUsage(conf, [noCache, filters.merge]), index);
+    app.post('/', addUsage(conf, [urlencoded, json, noCache, filters.merge]), index);
 
     return app;
 }
