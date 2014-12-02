@@ -127,6 +127,9 @@ Rules of overriding:
   <dt>--ui</dt>
   <dd>Enable or disable sandbox UI (default is true).</dd>
 
+  <dt>--timeout</dt>
+  <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is 60000).</dd>
+
 </dl>
 
 ### Configuration file
@@ -137,6 +140,7 @@ Default configuration file *("default.json")*:
 
 ```json
 {
+    "timeout": 60000,
     "cache": 3600,
     "port": 8891,
     "ui": true,

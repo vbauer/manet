@@ -1,5 +1,6 @@
 
 {
+    "timeout": 60000,
     "cache": 3600,
     "port": 8891,
     "ui": true,

@@ -32,11 +32,13 @@ function cliCommand(config) {
 function runCapturingProcess(options, config, outputFile, base64, onFinish) {
     var scriptFile = utils.filePath(SCRIPT_FILE),
         command = cliCommand(config).split(/[ ]+/),
-        cmd = _.first(command),
-        args = _.union(_.rest(command), [scriptFile, base64, outputFile]);
+        cmd = _.union(command, [scriptFile, base64, outputFile]),
+        opts = {
+            timeout: config.timeout
+        };
 
     logger.debug('Options for script: %j, base64: %s', options, base64);
-    utils.execProcess(cmd, args, onFinish);
+    utils.execProcess(cmd, opts, onFinish);
 }
 
 function screenshot(options, config, onFinish) {

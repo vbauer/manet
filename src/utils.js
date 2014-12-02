@@ -4,7 +4,7 @@ var fs = require('fs'),
     joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
-    childProcess = require('child_process');
+    exec = require('exec');
 
 
 /* Validation */
@@ -60,24 +60,24 @@ function runFsWatchdog(dir, timeout, callback) {
 
 /* Functions to work with processes */
 
-function execProcess(cmd, args, onClose) {
-    var proc = childProcess.spawn(cmd, args),
-        procStart = process.hrtime();
+function execProcess(command, options, onClose) {
+    var procStart = process.hrtime(),
+        opts = options || {};
 
-    proc.stdout.on('data', function (data) {
-        logger.debug('Process output: %s', data.toString());
-    });
-    proc.stderr.on('data', function (data) {
-        logger.error('Process error: %s', data.toString());
-    });
-    proc.on('close', function (code) {
-        var procEnd = process.hrtime(procStart),
-            end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
+    exec(command, opts, function(err, out, code) {
+        logger.debug('Process output: %s', out);
 
-        logger.debug('Execution time: %d sec', end);
+        if (err) {
+            logger.error('Process error: %s', err);
+        } else {
+            var procEnd = process.hrtime(procStart),
+                end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
 
-        if (onClose) {
-            onClose(code);
+            logger.debug('Execution time: %d sec', end);
+
+            if (onClose) {
+                onClose(code);
+            }
         }
     });
 }
