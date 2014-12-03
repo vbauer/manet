@@ -49,13 +49,13 @@ function screenshot(options, config, onFinish) {
     logger.info('Capture site screenshot: %s', options.url);
 
     if (options.force || !fs.existsSync(file)) {
-        runCapturingProcess(opts, config, file, base64, function () {
+        runCapturingProcess(opts, config, file, base64, function (code) {
             logger.debug('Process finished work: %s', base64);
-            return onFinish(file);
+            return onFinish(file, code);
         });
     } else {
         logger.debug('Take screenshot from file storage: %s', base64);
-        return onFinish(file);
+        return onFinish(file, 0);
     }
 }
 
