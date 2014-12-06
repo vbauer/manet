@@ -140,14 +140,17 @@ Default configuration file *("default.json")*:
 
 ```json
 {
-    "timeout": 60000,
     "cache": 3600,
     "port": 8891,
-    "ui": true,
     "cors": false,
+    "ui": true,
+
     "silent": false,
     "level": "debug",
+
     "engine": "phantomjs",
+    "timeout": 60000,
+
     "commands": {
         "slimerjs": {
             "linux": "xvfb-run -a slimerjs",
@@ -163,7 +166,12 @@ Default configuration file *("default.json")*:
             "darwin": "phantomjs",
             "win32": "phantomjs"
         }
-    }
+    },
+
+    "whitelist": [
+        ".*"
+    ]
+
 }
 ```
 

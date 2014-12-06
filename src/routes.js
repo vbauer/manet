@@ -86,25 +86,43 @@ function enableCORS(res) {
     res.setHeader('Access-Control-Expose-Headers', 'Content-Type');
 }
 
+function error(res, message) {
+    return res.json({ error: message });
+}
+
+function isUrlAllowed(config, url) {
+    var whitelist = config.whitelist || [];
+
+    return _.some(whitelist, function(regexp) {
+        return url.match(regexp);
+    });
+}
+
+
 function index(config) {
     return function (req, res) {
         var schema = createSchema(),
             data = utils.validate(req.data, schema);
 
         if (data.error) {
-            return res.json(data.error.details);
-        }
+            return error(res, data.error.details);
+        } else {
+            var options = readOptions(data.value, schema);
 
-        var options = readOptions(data.value, schema);
-        return capture.screenshot(options, config, function (file, code) {
-            if (code === 0) {
-                if (config.cors) {
-                    enableCORS(res);
-                }
-                return res.sendFile(file);
+            if (!isUrlAllowed(config, options.url)) {
+                return error(res, 'URL is not allowed');
             }
-            return res.json({ error: 'Can not capture site screenshot' });
-        });
+
+            return capture.screenshot(options, config, function (file, code) {
+                if (code === 0) {
+                    if (config.cors) {
+                        enableCORS(res);
+                    }
+                    return res.sendFile(file);
+                }
+                return error(res, 'Can not capture site screenshot');
+            });
+        }
     };
 }
 

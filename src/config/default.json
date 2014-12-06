@@ -1,13 +1,16 @@
 
 {
-    "timeout": 60000,
     "cache": 3600,
     "port": 8891,
-    "ui": true,
     "cors": false,
+    "ui": true,
+
     "silent": false,
     "level": "debug",
+
     "engine": "phantomjs",
+    "timeout": 60000,
+
     "commands": {
         "slimerjs": {
             "linux": "xvfb-run -a slimerjs",
@@ -23,5 +26,10 @@
             "darwin": "phantomjs",
             "win32": "phantomjs"
         }
-    }
+    },
+
+    "whitelist": [
+        ".*"
+    ]
+
 }
