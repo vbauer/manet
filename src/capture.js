@@ -3,7 +3,7 @@
 var _ = require('lodash'),
     fs = require('fs'),
     logger = require('winston'),
-    util = require('util'),
+    path = require('path'),
     utils = require('./utils'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
@@ -17,7 +17,7 @@ var _ = require('lodash'),
 
 function outputFile(options, conf, base64) {
     var format = options.format || DEF_FORMAT;
-    return util.format('%s/%s.%s', conf.storage, base64, format);
+    return conf.storage + path.sep + base64 + '.' + format;
 }
 
 function cliCommand(config) {
