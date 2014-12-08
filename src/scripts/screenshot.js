@@ -79,12 +79,17 @@
     }
 
     function createPage(options) {
-        var page = webpage.create();
+        var page = webpage.create(),
+            clipRect = pageClipRect(options);
+
         page.zoomFactor = def(options.zoom, DEF_ZOOM);
         page.customHeaders = def(options.headers, DEF_HEADERS);
         page.viewportSize = pageViewPortSize(options);
         page.settings = pageSettings(options);
-        page.clipRect = pageClipRect(options);
+        if (clipRect) {
+            page.clipRect = clipRect;
+        }
+
         return page;
     }
 
