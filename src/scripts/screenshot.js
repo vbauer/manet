@@ -20,15 +20,19 @@
 
     /* Common functions */
 
+    function isPhantomJs() {
+        return console && console.log;
+    }
+
     function argument(index) {
-        return phantom.args ? phantom.args[index] : system.args[index];
+        return isPhantomJs() ? phantom.args[index] : system.args[index];
     }
 
     function log(message) {
-        if (system.stdout) {
-            system.stdout.write(message);
-        } else {
+        if (isPhantomJs()) {
             console.log(message);
+        } else {
+            system.stdout.write(message);
         }
     }
 
@@ -78,6 +82,11 @@
         return (cr && cr.top && cr.left && cr.width && cr.height) ? cr : null;
     }
 
+    function pageQuality(options) {
+        var quality = def(options.quality, DEF_QUALITY);
+        return isPhantomJs() ? (quality * 100) : quality;
+    }
+
     function createPage(options) {
         var page = webpage.create(),
             clipRect = pageClipRect(options);
@@ -98,8 +107,8 @@
 
     function renderScreenshotFile(page, options, outputFile, onFinish) {
         var delay = def(options.delay, DEF_DELAY),
-            quality = def(options.quality, DEF_QUALITY),
-            format = def(options.format, DEF_FORMAT);
+            format = def(options.format, DEF_FORMAT),
+            quality = pageQuality(options);
 
         setTimeout(function () {
             try {
