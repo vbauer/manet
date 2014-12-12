@@ -17,14 +17,18 @@ describe('config', function () {
             var conf = config.read();
 
             assert.equal('phantomjs', conf.engine);
+            assert.equal('debug', conf.level);
             assert.equal(true, conf.silent);
             assert.equal(true, conf.ui);
+            assert.equal(false, conf.cors);
+            assert.equal(60000, conf.timeout);
             assert.equal(3600, conf.cache);
             assert.equal(8891, conf.port);
             assert.equal(false, _.isEmpty(conf));
             assert.equal(false, _.isEmpty(conf.commands));
             assert.equal(false, _.isEmpty(conf.commands.phantomjs));
             assert.equal(false, _.isEmpty(conf.commands.slimerjs));
+            assert.equal(false, _.isEmpty(conf.whitelist));
         });
 
     });
