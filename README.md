@@ -247,6 +247,9 @@ Few rules:
   <dt>force</dt>
   <dd>Use the force reloading of web page without using cache (default is false).</dd>
 
+  <dt>callback</dt>
+  <dd>Return an empty response immediately (HTTP 200 OK), then send a POST request to the callback URL when the screenshot is ready (with image in the body).</dd>
+
 </dl>
 
 
@@ -304,6 +307,9 @@ GET /?url=github.com&force=true
 
 # Specify custom HTTP headers.
 GET /?url=google.com&headers=User-Agent=Firefox;Accept-Charset=utf-8
+
+# Asynchronous call.
+GET /?url=github.com&callback=http://localhost:8891
 ```
 
 
