@@ -44,7 +44,7 @@
     },
 
     "scripts": {
-        "lint": "jshint src test public/js/app.js",
+        "lint": "jshint src test example public/js/app.js",
         "test": "mocha"
     },
 
