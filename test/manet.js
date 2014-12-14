@@ -19,6 +19,8 @@ describe('manet', function () {
     this.timeout(15000);
 
 
+    /* Common functions */
+
     function sendRequest(method, url, encoding, callback) {
         var options = {
             host: DEF_HOSTNAME,
@@ -56,27 +58,52 @@ describe('manet', function () {
     }
 
 
+    /* Chain of responsibility */
+
     it('server should start correctly', function (done) {
         manet.main(function (server) {
             assert.notEqual(null, server);
 
-            // Check sandbox UI
-            sendRequest('GET', '/', 'utf8', function (d1, r1) {
-                checkResponse(r1, d1, 'text/html; charset=utf-8');
-                checkHtml(d1);
-
-                // Check GET
-                sendRequest('GET', '/?url=google.com', 'binary', function (d2, r2) {
-                    checkResponse(r2, d2, 'image/png');
-
-                    // Check POST
+            var checkSandboxUI = function (callback) {
+                    sendRequest('GET', '/', 'utf8', function (d1, r1) {
+                        checkResponse(r1, d1, 'text/html; charset=utf-8');
+                        checkHtml(d1);
+                        callback();
+                    });
+                },
+                checkGet = function (callback) {
+                    sendRequest('GET', '/?url=google.com', 'binary', function (d2, r2) {
+                        checkResponse(r2, d2, 'image/png');
+                        callback();
+                    });
+                },
+                checkCache = checkGet,
+                checkPost = function (callback) {
                     sendRequest('POST', '/?url=google.com', 'binary', function (d3, r3) {
                         checkResponse(r3, d3, 'image/png');
-                        server.close();
-                        done();
+                        callback();
                     });
-                });
-            });
+                },
+                stopServer = function () {
+                    server.close();
+                    done();
+                },
+                chain = [
+                    checkSandboxUI,
+                    checkGet,
+                    checkCache,
+                    checkPost,
+                    stopServer
+                ],
+                chainIndex = 0,
+                chainHandler = function () {
+                    if (++chainIndex < chain.length) {
+                        var callback = chain[chainIndex];
+                        callback(chainHandler);
+                    }
+                };
+
+            chainHandler();
         });
     });
 
