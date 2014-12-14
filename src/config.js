@@ -15,26 +15,21 @@ var _ = require('lodash'),
 
 function createSchema() {
     return joi.object().keys({
-        cache: joi
-            .number()
-            .integer()
-            .min(1)
-            .label('Cache'),
         port: joi
             .number()
             .integer()
             .min(1)
             .max(65535)
-            .label('Port number'),
+            .label('Webserver port number'),
         cors: joi
             .boolean()
             .label('Enable CORS'),
         ui: joi
             .boolean()
-            .label('Sandbox UI'),
+            .label('Enable sandbox UI'),
         silent: joi
             .boolean()
-            .label('Silent mode'),
+            .label('Enable silent mode'),
         level: joi
             .string()
             .lowercase()
@@ -44,7 +39,7 @@ function createSchema() {
             .string()
             .lowercase()
             .allow('phantomjs', 'slimerjs')
-            .label('Engine'),
+            .label('Engine name'),
         timeout: joi
             .number()
             .integer()
@@ -52,10 +47,18 @@ function createSchema() {
             .label('Timeout'),
         command: joi
             .string()
-            .label('Command'),
+            .label('Command to run screenshot capturing'),
         storage: joi
             .string()
-            .label('Storage path')
+            .label('Storage path'),
+        cache: joi
+            .number()
+            .integer()
+            .min(1)
+            .label('Cache life time'),
+        cleanup: joi
+            .boolean()
+            .label('Cleanup storage at startup')
     });
 }
 

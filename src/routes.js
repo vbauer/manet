@@ -2,7 +2,7 @@
 
 var _ = require('lodash'),
     qs = require('qs'),
-    fs = require('fs'),
+    fs = require('fs-extra'),
     joi = require('joi'),
     util = require('util'),
     logger = require('winston'),

@@ -1,6 +1,6 @@
 "use strict";
 
-var fs = require('fs'),
+var fs = require('fs-extra'),
     joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
@@ -25,8 +25,8 @@ function encodeBase64(json) {
 
 /* Functions to work with FS */
 
-function filePath(file) {
-    return path.normalize(path.join(__dirname, file));
+function filePath(file, dir) {
+    return path.normalize(path.join((dir || __dirname), file));
 }
 
 function runFsWatchdog(dir, timeout, callback) {

@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('lodash'),
-    fs = require('fs'),
+    fs = require('fs-extra'),
     logger = require('winston'),
     path = require('path'),
     utils = require('./utils'),

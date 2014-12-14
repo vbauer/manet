@@ -1,6 +1,5 @@
 
 {
-    "cache": 3600,
     "port": 8891,
     "cors": false,
     "ui": true,
@@ -10,6 +9,9 @@
 
     "engine": "phantomjs",
     "timeout": 60000,
+
+    "cache": 3600,
+    "cleanup": false,
 
     "commands": {
         "slimerjs": {

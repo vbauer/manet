@@ -9,6 +9,7 @@ var _ = require('lodash'),
 
 
 process.env.silent = true;
+process.env.cleanup = true;
 
 
 describe('manet', function () {
@@ -88,6 +89,7 @@ describe('manet', function () {
                     server.close();
                     done();
                 },
+
                 chain = [
                     checkSandboxUI,
                     checkGet,

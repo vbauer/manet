@@ -1,9 +1,10 @@
 "use strict";
 
-var express = require('express'),
+var _ = require('lodash'),
+    express = require('express'),
     bodyParser = require('body-parser'),
     logger = require('winston'),
-    fs = require('fs'),
+    fs = require('fs-extra'),
     helmet = require('helmet'),
     config = require('./config'),
     routes = require('./routes'),
@@ -52,7 +53,21 @@ function initExitHandling() {
 }
 
 
-/* Init file system watchdog */
+/* Init FS services */
+
+function cleanupFsStorage(conf) {
+    if (conf.cleanup) {
+        var storagePath = conf.storage,
+            files = fs.readdirSync(storagePath);
+
+        _.forEach(files, function(file) {
+            var filePath = utils.filePath(file, storagePath);
+            try {
+                fs.removeSync(filePath, {force: true});
+            } catch (err) {}
+        });
+    }
+}
 
 function initFsWatchdog(conf) {
     var timeout = conf.cache * 1000,
@@ -66,6 +81,11 @@ function initFsWatchdog(conf) {
             logger.info('Deleted file: %s', file);
         });
     });
+}
+
+function initFsStorage(conf) {
+    cleanupFsStorage(conf);
+    initFsWatchdog(conf);
 }
 
 
@@ -114,7 +134,7 @@ function main(onStart) {
 
     initLogging(conf);
     initExitHandling();
-    initFsWatchdog(conf);
+    initFsStorage(conf);
 
     runWebServer(conf, onStart);
 }
