@@ -13,10 +13,13 @@ var fs = require('fs-extra'),
 /* URI & URL */
 
 function fixUrl(url) {
-    var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
-        https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
+    if (url) {
+        var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
+            https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
 
-    return (http || https) ? url : (URL_PREFIX_HTTP + url);
+        return (http || https) ? url : (URL_PREFIX_HTTP + url);
+    }
+    return null;
 }
 
 

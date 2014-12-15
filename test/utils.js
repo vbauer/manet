@@ -9,6 +9,24 @@ describe('utils', function () {
 
     process.env.silent = true;
 
+    describe('fixUrl', function () {
+
+        it('null-value', function () {
+            assert.equal(null, utils.fixUrl(null));
+        });
+
+        it('HTTP scheme', function () {
+            var url = 'http://android-arsenal.com';
+            assert.equal(url, utils.fixUrl(url));
+        });
+
+        it('HTTPS scheme', function () {
+            var url = 'https://android-arsenal.com';
+            assert.equal(url, utils.fixUrl(url));
+        });
+
+    });
+
     describe('encodeBase64', function () {
 
         it('BASE64 for not empty JSON object', function () {
