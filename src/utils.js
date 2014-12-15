@@ -4,7 +4,20 @@ var fs = require('fs-extra'),
     joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
-    exec = require('exec');
+    exec = require('exec'),
+
+    URL_PREFIX_HTTP = 'http://',
+    URL_PREFIX_HTTPS = 'https://';
+
+
+/* URI & URL */
+
+function fixUrl(url) {
+    var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
+        https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
+
+    return (http || https) ? url : (URL_PREFIX_HTTP + url);
+}
 
 
 /* Validation */
@@ -86,6 +99,7 @@ function execProcess(command, options, onClose) {
 /* Exported functions */
 
 module.exports = {
+    fixUrl: fixUrl,
     validate: validate,
     encodeBase64: encodeBase64,
     filePath: filePath,

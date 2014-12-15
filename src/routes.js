@@ -79,7 +79,7 @@ function readOptions(data, schema) {
 }
 
 
-/* Controller */
+/* Utility functions */
 
 function enableCORS(res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -88,15 +88,58 @@ function enableCORS(res) {
 
 function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
+function badCapturing() { return error('Can not capture site screenshot'); }
 
 function isUrlAllowed(config, url) {
-    var whitelist = config.whitelist || [];
+    var whiteList = config.whitelist || [];
 
-    return _.some(whitelist, function(regexp) {
+    return _.some(whiteList, function(regexp) {
         return url.match(regexp);
     });
 }
 
+
+/* Result processors */
+
+function sendImageInResponse(config, res) {
+    return function (file, code) {
+        if (!code) {
+            if (config.cors) {
+                enableCORS(res);
+            }
+            res.sendFile(file, function (err) {
+                if (err) {
+                    logger.error('Error while sending file: %s', err.message);
+                    res.status(err.status).end();
+                }
+            });
+        } else {
+            res.json(badCapturing());
+        }
+    };
+}
+
+function sendImageToUrl(options) {
+    return function (file, code) {
+        var callbackUrl = utils.fixUrl(options.callback);
+        if (!code) {
+            var fileStream = fs.createReadStream(file);
+            fileStream.on('error', function(err) {
+                logger.error('Error while reading file: %s', err.message);
+            });
+            fileStream.pipe(request.post(callbackUrl, function(err) {
+                if (err) {
+                    logger.error('Error while streaming file: %s', err.message);
+                }
+            }));
+        } else {
+            request.post(callbackUrl, badCapturing());
+        }
+    };
+}
+
+
+/* Controller */
 
 function index(config) {
     return function (req, res) {
@@ -112,49 +155,17 @@ function index(config) {
             if (!isUrlAllowed(config, siteUrl)) {
                 res.json(error('URL is not allowed'));
             } else {
-                var badCapturing = 'Can not capture site screenshot',
-                    callbackUrl = options.callback,
-                    sendImageInResponse = function (file, code) {
-                        if (!code) {
-                            if (config.cors) {
-                                enableCORS(res);
-                            }
-                            res.sendFile(file, function(err) {
-                                if (err) {
-                                    logger.error('Error while sending file: %s', err.message);
-                                    res.status(err.status).end();
-                                }
-                            });
-                        } else {
-                            res.json(error(badCapturing));
-                        }
-                    },
-                    sendImageToUrl = function (file, code) {
-                        if (!code) {
-                            var fileStream = fs.createReadStream(file);
-                            fileStream.on('error', function(err) {
-                                logger.error('Error while reading file: %s', err.message);
-                            });
-                            fileStream.pipe(request.post(callbackUrl, function(err) {
-                                if (err) {
-                                    logger.error('Error while streaming file: %s', err.message);
-                                }
-                            }));
-                        } else {
-                            request.post(callbackUrl, error(badCapturing));
-                        }
-                    };
-
+                var callbackUrl = options.callback;
                 if (callbackUrl) {
                     res.json(message(util.format(
                         'Screenshot will be sent to "%s" when processed', callbackUrl
                     )));
 
                     logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
-                    capture.screenshot(options, config, sendImageToUrl);
+                    capture.screenshot(options, config, sendImageToUrl(options));
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
-                    capture.screenshot(options, config, sendImageInResponse);
+                    capture.screenshot(options, config, sendImageInResponse(config, res));
                 }
             }
 

@@ -12,10 +12,7 @@
         DEF_JS_ENABLED = true,
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
-        DEF_HEADERS = {},
-
-        URL_PREFIX_HTTP = 'http://',
-        URL_PREFIX_HTTPS = 'https://';
+        DEF_HEADERS = {};
 
 
     /* Common functions */
@@ -126,20 +123,12 @@
         }, delay);
     }
 
-    function fixUrl(url) {
-        var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
-            https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
-
-        return (http || https) ? url : (URL_PREFIX_HTTP + url);
-    }
-
     function captureScreenshot(base64, outputFile, onFinish) {
         try {
             var options = parseOptions(base64),
-                url = fixUrl(options.url),
                 page = createPage(options);
 
-            page.open(url, function () {
+            page.open(options.url, function () {
                 try {
                     renderScreenshotFile(page, options, outputFile, onFinish);
                 } catch (e) {

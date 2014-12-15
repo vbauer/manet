@@ -28,7 +28,7 @@
             <fieldset>
 
                 <div class="pure-control-group">
-                    <label for="open">
+                    <label for="address">
                         <button id="open" name="open" class="pure-button pure-button-primary" title="Capture screenshot">Open</button>
                     </label>
                     <input id="address" name="address" type="text" readonly>
@@ -36,7 +36,7 @@
 
                 <div class="pure-control-group">
                     <label for="url">Site address</label>
-                    <input id="url" name="url" type="text" placeholder="URL" value="google.com">
+                    <input id="url" name="url" type="text" placeholder="URL" maxlength="1024" value="google.com">
                 </div>
 
                 <div class="pure-control-group">
@@ -77,17 +77,17 @@
 
                 <div class="pure-control-group">
                     <label for="agent">User agent</label>
-                    <input id="agent" name="agent" type="text" placeholder="User-Agent">
+                    <input id="agent" name="agent" type="text" maxlength="1024" placeholder="User-Agent">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="user">User name</label>
-                    <input id="user" name="user" type="text" placeholder="User">
+                    <input id="user" name="user" type="text" maxlength="256" placeholder="User">
                 </div>
 
                 <div class="pure-control-group">
                     <label for="password">Password</label>
-                    <input id="password" name="password" type="text" placeholder="Password">
+                    <input id="password" name="password" type="text" maxlength="256" placeholder="Password">
                 </div>
 
                 <div class="pure-control-group">
@@ -103,6 +103,11 @@
                 <div class="pure-control-group">
                     <label for="force" class="pure-checkbox">Force reload</label>
                     <input id="force" name="force" type="checkbox">
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="callback">Callback URL</label>
+                    <input id="callback" name="callback" type="text" maxlength="1024" placeholder="URL">
                 </div>
 
             </fieldset>
