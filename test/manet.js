@@ -4,12 +4,13 @@ var _ = require('lodash'),
     assert = require('assert'),
     http = require('http'),
     w3cjs = require('w3cjs'),
+    querystring = require('querystring'),
     config = require('../src/config'),
     manet = require('../src/manet');
 
 
-process.env.silent = true;
 process.env.cleanup = true;
+process.env.silent = true;
 
 
 describe('manet', function () {
@@ -17,7 +18,8 @@ describe('manet', function () {
     var conf = config.read(),
         DEF_HOSTNAME = 'localhost';
 
-    this.timeout(15000);
+    // Configure timeout = 1 min.
+    this.timeout(60000);
 
 
     /* Common functions */
@@ -58,10 +60,29 @@ describe('manet', function () {
         assert.equal(200, res.statusCode);
     }
 
+    function checkApiCall(q) {
+        var params = _.defaults(q || {}, {
+                url: 'google.com'
+            }),
+            apiUrl = '/?' + querystring.stringify(params),
+            contentType = 'image/png',
+            dataType = 'binary';
+
+        return function (callback) {
+            sendRequest('GET', apiUrl, dataType, function (d1, r1) {
+                checkResponse(r1, d1, contentType);
+                sendRequest('POST', apiUrl, dataType, function (d2, r2) {
+                    checkResponse(r2, d2, contentType);
+                    callback();
+                });
+            });
+        };
+    }
+
 
     /* Chain of responsibility */
 
-    it('server should start correctly', function (done) {
+    it('smoke testing of server', function (done) {
         manet.main(function (server) {
             assert.notEqual(null, server);
 
@@ -72,19 +93,15 @@ describe('manet', function () {
                         callback();
                     });
                 },
-                checkGet = function (callback) {
-                    sendRequest('GET', '/?url=google.com', 'binary', function (d2, r2) {
-                        checkResponse(r2, d2, 'image/png');
-                        callback();
-                    });
-                },
-                checkCache = checkGet,
-                checkPost = function (callback) {
-                    sendRequest('POST', '/?url=google.com', 'binary', function (d3, r3) {
-                        checkResponse(r3, d3, 'image/png');
-                        callback();
-                    });
-                },
+                checkUrl = checkApiCall(),
+                checkCache = checkUrl,
+                checkWidthAndHeight = checkApiCall({
+                    width: 320,
+                    height: 200
+                }),
+                checkForce = checkApiCall({
+                    force: true
+                }),
                 stopServer = function () {
                     server.close();
                     done();
@@ -92,9 +109,10 @@ describe('manet', function () {
 
                 chain = [
                     checkSandboxUI,
-                    checkGet,
+                    checkUrl,
                     checkCache,
-                    checkPost,
+                    checkWidthAndHeight,
+                    checkForce,
                     stopServer
                 ],
                 chainIndex = 0,
