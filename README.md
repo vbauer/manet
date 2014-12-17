@@ -131,7 +131,7 @@ Rules of overriding:
   <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is 60000).</dd>
 
   <dt>--options:{option}</dt>
-  <dd>Default query parameters. See also `"Query parameters"` for more details. Example: `--options:width 101`</dd>
+  <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101"</dd>
 
 </dl>
 
