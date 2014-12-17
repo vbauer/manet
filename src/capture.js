@@ -53,18 +53,31 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 function screenshot(options, config, onFinish) {
     var opts = cleanupOptions(options),
         base64 = utils.encodeBase64(opts),
-        file = outputFile(opts, config, base64);
+        file = outputFile(opts, config, base64),
+
+        retrieveImageFromStorage = function () {
+            logger.debug('Take screenshot from file storage: %s', base64);
+            onFinish(file, 0);
+        },
+        retrieveImageFromSite = function () {
+            runCapturingProcess(opts, config, file, base64, function (code) {
+                logger.debug('Process finished work: %s', base64);
+                return onFinish(file, code);
+            });
+        };
 
     logger.info('Capture site screenshot: %s', options.url);
 
-    if (options.force || !fs.existsSync(file)) {
-        runCapturingProcess(opts, config, file, base64, function (code) {
-            logger.debug('Process finished work: %s', base64);
-            return onFinish(file, code);
-        });
+    if (options.force) {
+        retrieveImageFromSite();
     } else {
-        logger.debug('Take screenshot from file storage: %s', base64);
-        return onFinish(file, 0);
+        fs.exists(file, function (exists) {
+            if (exists) {
+                retrieveImageFromStorage();
+            } else {
+                retrieveImageFromSite();
+            }
+        });
     }
 }
 
