@@ -45,6 +45,10 @@ function createSchema() {
             .integer()
             .min(1)
             .label('Timeout'),
+        options: joi
+            .object()
+            .default({})
+            .label('Engine default options'),
         command: joi
             .string()
             .label('Command to run screenshot capturing'),
@@ -58,7 +62,11 @@ function createSchema() {
             .label('Cache life time'),
         cleanup: joi
             .boolean()
-            .label('Cleanup storage at startup')
+            .label('Cleanup storage at startup'),
+        whitelist: joi
+            .array()
+            .default([])
+            .label('List of allowed sites (RegExps)')
     });
 }
 

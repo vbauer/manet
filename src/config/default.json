@@ -9,6 +9,7 @@
 
     "engine": "phantomjs",
     "timeout": 60000,
+    "options": {},
 
     "cache": 3600,
     "cleanup": false,

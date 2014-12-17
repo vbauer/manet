@@ -26,10 +26,10 @@ function cliCommand(config) {
     return command || DEF_COMMAND;
 }
 
-function cleanupOptions(options) {
+function cleanupOptions(options, config) {
     var opts = _.omit(options, ['force', 'callback']);
     opts.url = utils.fixUrl(options.url);
-    return opts;
+    return _.defaults(opts, config.options);
 }
 
 
@@ -51,7 +51,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 /* External API */
 
 function screenshot(options, config, onFinish) {
-    var opts = cleanupOptions(options),
+    var opts = cleanupOptions(options, config),
         base64 = utils.encodeBase64(opts),
         file = outputFile(opts, config, base64),
 
