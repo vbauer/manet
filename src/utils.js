@@ -35,14 +35,32 @@ function validate(object, schema) {
 /* BASE64 functions */
 
 function encodeBase64(json) {
-    return new Buffer(JSON.stringify(json), 'binary').toString('base64');
+    var text = JSON.stringify(json),
+        buffer = new Buffer(text, 'binary');
+
+    return buffer.toString('base64');
 }
 
 
 /* Functions to work with FS */
 
 function filePath(file, dir) {
-    return path.normalize(path.join((dir || __dirname), file));
+    return path.normalize(path.join(dir || __dirname, file));
+}
+
+function processOldFile(filePath, timeout, callback) {
+    fs.stat(filePath, function (err, stat) {
+        if (err) {
+            logger.error(err);
+        } else {
+            var now = new Date().getTime(),
+                endTime = new Date(stat.ctime).getTime() + timeout;
+
+            if (now > endTime) {
+                callback(filePath);
+            }
+        }
+    });
 }
 
 function runFsWatchdog(dir, timeout, callback) {
@@ -50,23 +68,13 @@ function runFsWatchdog(dir, timeout, callback) {
         return setInterval(function () {
             fs.readdir(dir, function (err, files) {
                 if (err) {
-                    return logger.error(err);
-                }
-
-                files.forEach(function (file) {
-                    var filePath = path.join(dir, file);
-                    fs.stat(filePath, function (err, stat) {
-                        var endTime, now;
-                        if (err) {
-                            return logger.error(err);
-                        }
-                        now = new Date().getTime();
-                        endTime = new Date(stat.ctime).getTime() + timeout;
-                        if (now > endTime) {
-                            return callback(filePath);
-                        }
+                    logger.error(err);
+                } else {
+                    files.forEach(function (file) {
+                        var filePath = path.join(dir, file);
+                        processOldFile(filePath, timeout, callback);
                     });
-                });
+                }
             });
         }, timeout);
     }

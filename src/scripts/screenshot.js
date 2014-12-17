@@ -109,11 +109,13 @@
 
         setTimeout(function () {
             try {
-                page.render(outputFile, {
+                var renderOptions = {
                     onlyViewport: !!options.height,
                     quality: quality,
                     format: format
-                });
+                };
+
+                page.render(outputFile, renderOptions);
 
                 log('Rendered screenshot: ' + outputFile);
                 onFinish(page);
