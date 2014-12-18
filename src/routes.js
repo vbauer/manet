@@ -110,7 +110,7 @@ function sendImageInResponse(config, res) {
             res.sendFile(file, function (err) {
                 if (err) {
                     logger.error('Error while sending file: %s', err.message);
-                    res.status(err.status).end();
+                    res.status(500).end();
                 }
             });
         } else {
