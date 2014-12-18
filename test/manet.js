@@ -99,6 +99,15 @@ describe('manet', function () {
                     width: 320,
                     height: 200
                 }),
+                checkClipRect = checkApiCall({
+                    clipRect: '20,20,80,80'
+                }),
+                checkZoomIn = checkApiCall({
+                    zoom: 2
+                }),
+                checkZoomOut = checkApiCall({
+                    zoom: 2.0
+                }),
                 checkForce = checkApiCall({
                     force: true
                 }),
@@ -112,6 +121,9 @@ describe('manet', function () {
                     checkUrl,
                     checkCache,
                     checkWidthAndHeight,
+                    checkClipRect,
+                    checkZoomIn,
+                    checkZoomOut,
                     checkForce,
                     stopServer
                 ],
