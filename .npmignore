@@ -1,4 +1,5 @@
 .jshintrc
+.editorconfig
 .travis.yml
 Procfile
 misc
