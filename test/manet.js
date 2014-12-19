@@ -18,8 +18,8 @@ describe('manet', function () {
     var conf = config.read(),
         DEF_HOSTNAME = 'localhost';
 
-    // Configure timeout = 1 min.
-    this.timeout(60000);
+    // Configure timeout = 2 min.
+    this.timeout(120000);
 
 
     /* Common functions */
@@ -60,12 +60,12 @@ describe('manet', function () {
         assert.equal(200, res.statusCode);
     }
 
-    function checkApiCall(q) {
+    function checkApiCall(q, ct) {
         var params = _.defaults(q || {}, {
                 url: 'google.com'
             }),
             apiUrl = '/?' + querystring.stringify(params),
-            contentType = 'image/png',
+            contentType = ct || 'image/png',
             dataType = 'binary';
 
         return function (callback) {
@@ -111,6 +111,23 @@ describe('manet', function () {
                 checkForce = checkApiCall({
                     force: true
                 }),
+                checkQualityAndFormat = checkApiCall({
+                    quality: 0.5,
+                    format: "jpg"
+                }, 'image/jpeg'),
+                checkDelay = checkApiCall({
+                    delay: 100
+                }),
+                checkAgent = checkApiCall({
+                    agent: 'Mozilla/5.0 (compatible, MSIE 11, ' +
+                        'Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
+                }),
+                checkJs = checkApiCall({
+                    js: false
+                }),
+                checkImages = checkApiCall({
+                    js: false
+                }),
                 stopServer = function () {
                     server.close();
                     done();
@@ -125,6 +142,11 @@ describe('manet', function () {
                     checkZoomIn,
                     checkZoomOut,
                     checkForce,
+                    checkQualityAndFormat,
+                    checkDelay,
+                    checkAgent,
+                    checkJs,
+                    checkImages,
                     stopServer
                 ],
                 chainIndex = 0,
