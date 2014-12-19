@@ -7,8 +7,8 @@
         'width', 'height', 'zoom', 'quality',
         'js', 'images',
         'user', 'password',
-        'force',
-        'callback'
+        'callback', 'headers',
+        'force'
     ];
 
     function cleanBoolValue(name, value) {
