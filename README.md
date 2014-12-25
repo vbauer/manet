@@ -1,5 +1,5 @@
 
-# Manet [![Build Status](https://img.shields.io/travis/vbauer/manet.svg)](https://travis-ci.org/vbauer/manet) [![NPM](https://img.shields.io/npm/v/manet.svg)](https://www.npmjs.org/package/manet) [![Heroku](https://heroku-badge.herokuapp.com/?app=manet)](https://manet.herokuapp.com)
+# Manet [![Build Status](https://img.shields.io/travis/vbauer/manet.svg)](https://travis-ci.org/vbauer/manet) [![Heroku](https://heroku-badge.herokuapp.com/?app=manet)](https://manet.herokuapp.com) [![Dependency Status](https://david-dm.org/vbauer/manet.png)](https://david-dm.org/vbauer/manet) [![NPM](https://img.shields.io/npm/v/manet.svg)](https://www.npmjs.org/package/manet)
 
 > There is only one true thing: instantly paint what you see. When you've got it, you've got it. When you haven't, you begin again. All the rest is humbug.
 
