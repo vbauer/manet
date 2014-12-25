@@ -7,7 +7,7 @@
         'width', 'height', 'zoom', 'quality',
         'js', 'images',
         'user', 'password',
-        'callback', 'headers',
+        'callback', 'headers', 'clipRect',
         'force'
     ];
 
