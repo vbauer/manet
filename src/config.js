@@ -45,6 +45,10 @@ function createSchema() {
             .integer()
             .min(1)
             .label('Timeout'),
+        statuscodes: joi
+            .array()
+            .default([])
+            .label('Blacklist certain HTTP status response codes, defaults to allowing all status codes from server,'),
         options: joi
             .object()
             .default({})
