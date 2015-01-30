@@ -33,14 +33,14 @@
         }
     }
 
-    function exit(page, e) {
+    function exit(page, e, invalid) {
         if (e) {
             log('Error: ' + e);
         }
         if (page) {
             page.close();
         }
-        phantom.exit();
+        phantom.exit(invalid);
     }
 
     function def(o, d) {
@@ -128,13 +128,30 @@
     function captureScreenshot(base64, outputFile, onFinish) {
         try {
             var options = parseOptions(base64),
-                page = createPage(options);
+                page = createPage(options),
+                isValidResponse = true,
+                statusCode = 0;
 
-            page.open(options.url, function () {
-                try {
-                    renderScreenshotFile(page, options, outputFile, onFinish);
-                } catch (e) {
-                    onFinish(page, e);
+            if (options.statuscodes.length) {
+                // only add listener if we have status codes to check
+                page.onResourceReceived = function (response) {
+                    if (options.url === response.url) {
+                        statusCode = parseInt(response.status);
+                        if (options.statuscodes.indexOf(statusCode) > -1) {
+                            isValidResponse = false;
+                        }
+                    }
+                };
+            }
+            page.open(options.url, function (e) {
+                if(isValidResponse) {
+                    try {
+                        renderScreenshotFile(page, options, outputFile, onFinish);
+                    } catch (e) {
+                        onFinish(page, e);
+                    }
+                } else {
+                    onFinish(page, false, statusCode);
                 }
             });
         } catch (e) {
