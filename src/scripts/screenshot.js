@@ -143,7 +143,7 @@
                     }
                 };
             }
-            page.open(options.url, function (e) {
+            page.open(options.url, function () {
                 if(isValidResponse) {
                     try {
                         renderScreenshotFile(page, options, outputFile, onFinish);

@@ -48,7 +48,7 @@ function createSchema() {
         statuscodes: joi
             .array()
             .default([])
-            .label('Blacklist certain HTTP status response codes, defaults to allowing all status codes from server,'),
+            .label('Blacklist certain HTTP status response codes'),
         options: joi
             .object()
             .default({})
