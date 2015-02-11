@@ -132,12 +132,14 @@
                 isValidResponse = true,
                 statusCode = 0;
 
-            if (options.statuscodes.length) {
+            if (options.statusCodeBlacklist.length || options.statusCodeCeiling > 0) {
                 // only add listener if we have status codes to check
                 page.onResourceReceived = function (response) {
                     if (options.url === response.url) {
                         statusCode = parseInt(response.status);
-                        if (options.statuscodes.indexOf(statusCode) > -1) {
+                        if (options.statusCodeBlacklist.indexOf(statusCode) > -1) {
+                            isValidResponse = false;
+                        } else if (statusCode >= options.statusCodeCeiling) {
                             isValidResponse = false;
                         }
                     }

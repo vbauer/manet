@@ -45,10 +45,15 @@ function createSchema() {
             .integer()
             .min(1)
             .label('Timeout'),
-        statuscodes: joi
+        statusCodeBlacklist: joi
             .array()
             .default([])
-            .label('Blacklist certain HTTP status response codes'),
+            .label('Blacklist: Prevent certain HTTP status response codes.'),
+        statusCodeCeiling: joi
+            .number()
+            .integer()
+            .default(0)
+            .label('Ceiling: Limit desired HTTP status response codes.'),
         options: joi
             .object()
             .default({})
@@ -67,6 +72,9 @@ function createSchema() {
         cleanup: joi
             .boolean()
             .label('Cleanup storage at startup'),
+        cleanupRuntime: joi
+            .boolean()
+            .label('Cleanup storage after sending image'),
         whitelist: joi
             .array()
             .default([])
