@@ -9,7 +9,8 @@
 
     "engine": "phantomjs",
     "timeout": 60000,
-    "statuscodes": [],
+    "statusCodeCeiling": 0,
+    "statusCodeBlacklist": [],
     "options": {},
 
     "cache": 3600,

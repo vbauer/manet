@@ -133,10 +133,14 @@ Rules of overriding:
   <dt>--options:{option}</dt>
   <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101"</dd>
   
-  <dt>--statuscodes value</dt>
-  <dd>Blacklist certain HTTP status response codes, defaults to allowing all status codes from server. Example (to not capture 404 pages and instead return error): "--statuscode 404"</dd>
-  <dd>Example (to not capture 404 or 500 pages and instead return error): "--statuscode 404 --statuscode 500"</dd>
-  <dd>For a large amount of blacklisting, it's better to update the config.json file instead.</dd>
+  <dt>--statusCodeBlacklist</dt>
+  <dd>Blacklist certain HTTP status response codes, defaults to allowing all status codes from server. Must pass more than one when using argument method</dd>
+  <dd>Example (to not capture 404 or 500 pages and instead return error): "--statusCodeBlacklist 404 --statusCodeBlacklist 500"</dd>
+  <dd>For a large amount of blacklisting, it's better to update the default.json file instead.</dd>
+  
+  <dt>--statusCodeCeiling</dt>
+  <dd>Add a ceiling to limit desired HTTP status response codes.</dd>
+  <dd>Example to not capture 400s or higher: "--statusCodeCeiling 400"</dd>
 
 </dl>
 
@@ -157,7 +161,8 @@ Default configuration file *("default.json")*:
 
     "engine": "phantomjs",
     "timeout": 60000,
-    "statuscodes": [],
+    "statusCodeCeiling": 0,
+    "statusCodeBlacklist": [],
     "options": {},
 
     "cache": 3600,

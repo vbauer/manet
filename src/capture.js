@@ -29,7 +29,8 @@ function cliCommand(config) {
 function cleanupOptions(options, config) {
     var opts = _.omit(options, ['force', 'callback']);
     opts.url = utils.fixUrl(options.url);
-    opts.statuscodes = config.statuscodes;
+    opts.statusCodeCeiling = config.statusCodeCeiling;
+    opts.statusCodeBlacklist = config.statusCodeBlacklist;
     return _.defaults(opts, config.options);
 }
 
