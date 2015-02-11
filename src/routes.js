@@ -112,6 +112,11 @@ function sendImageInResponse(config, res) {
                     logger.error('Error while sending file: %s', err.message);
                     res.status(err.status || 500).end();
                 }
+                if (config.cleanupRuntime) {
+                    fs.unlink(file, function () {
+                        logger.debug('Deleted file: %s', file);
+                    });
+                }
             });
         } else {
             res.json(badCapturing());

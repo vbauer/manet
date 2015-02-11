@@ -167,6 +167,7 @@ Default configuration file *("default.json")*:
 
     "cache": 3600,
     "cleanup": false,
+    "cleanupRuntime": false,
 
     "commands": {
         "slimerjs": {

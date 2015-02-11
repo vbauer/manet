@@ -72,6 +72,9 @@ function createSchema() {
         cleanup: joi
             .boolean()
             .label('Cleanup storage at startup'),
+        cleanupRuntime: joi
+            .boolean()
+            .label('Cleanup storage after sending image'),
         whitelist: joi
             .array()
             .default([])

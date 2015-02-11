@@ -15,6 +15,7 @@
 
     "cache": 3600,
     "cleanup": false,
+    "cleanupRuntime": false,
 
     "commands": {
         "slimerjs": {
