@@ -65,6 +65,8 @@ function processOldFile(filePath, timeout, callback) {
 
 function runFsWatchdog(dir, timeout, callback) {
     if (dir && (timeout > 0)) {
+        logger.debug('Initialize FS watchdog: directory: %s, timeout: %d', dir, timeout);
+
         return setInterval(function () {
             fs.readdir(dir, function (err, files) {
                 if (err) {

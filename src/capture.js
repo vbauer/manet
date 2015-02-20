@@ -68,7 +68,7 @@ function screenshot(options, config, onFinish) {
 
     logger.info('Capture site screenshot: %s', options.url);
 
-    if (options.force) {
+    if (options.force || !config.cache) {
         retrieveImageFromSite();
     } else {
         fs.exists(file, function (exists) {

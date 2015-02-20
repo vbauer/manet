@@ -58,7 +58,6 @@ function createSchema() {
         cache: joi
             .number()
             .integer()
-            .min(1)
             .label('Cache life time'),
         cleanup: joi
             .boolean()
@@ -78,6 +77,7 @@ function load() {
         })
         .get();
 
+    config.cache = Math.max(config.cache, 0);
     config.storage = path.resolve(config.storage || os.tmpdir());
 
     return config;

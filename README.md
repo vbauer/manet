@@ -113,7 +113,7 @@ Rules of overriding:
   <dd>File storage for cache (default is global temp directory).</dd>
 
   <dt>--cache</dt>
-  <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use no-positive value, <= 0)</dd>
+  <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
 
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information (default is false).</dd>
@@ -131,7 +131,7 @@ Rules of overriding:
   <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is 60000).</dd>
 
   <dt>--options:{option}</dt>
-  <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101"</dd>
+  <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101".</dd>
 
 </dl>
 
