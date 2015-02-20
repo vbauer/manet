@@ -4,6 +4,7 @@ var _ = require('lodash'),
     fs = require('fs-extra'),
     logger = require('winston'),
     path = require('path'),
+    imagemin = require('imagemin'),
     utils = require('./utils'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
@@ -33,6 +34,26 @@ function cleanupOptions(options, config) {
 }
 
 
+/* Image processing */
+
+function minimizeImage(src, dest, cb) {
+    var imin = new imagemin()
+        .src(src)
+        .dest(dest)
+        .use(imagemin.jpegtran({progressive: true}))
+        .use(imagemin.optipng({optimizationLevel: 3}))
+        .use(imagemin.gifsicle({interlaced: true}))
+        .use(imagemin.svgo());
+
+    imin.run(function (err, files) {
+        if (err) {
+            logger.error(err);
+        }
+        cb();
+    });
+}
+
+
 /* Screenshot capturing runner */
 
 function runCapturingProcess(options, config, outputFile, base64, onFinish) {
@@ -44,7 +65,16 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
         };
 
     logger.debug('Options for script: %j, base64: %s', options, base64);
-    utils.execProcess(cmd, opts, onFinish);
+
+    utils.execProcess(cmd, opts, function(code) {
+        if (config.compress) {
+            minimizeImage(outputFile, config.storage, function() {
+                onFinish(code);
+            });
+        } else {
+            onFinish(code);
+        }
+    });
 }
 
 

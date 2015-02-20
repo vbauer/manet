@@ -59,7 +59,12 @@
         "joi": "^5.1.0",
         "qs": "^2.3.3",
         "lodash": "^3.0.0",
-        "winston": "^0.9.0"
+        "winston": "^0.9.0",
+        "imagemin": "^3.1.0",
+        "imagemin-gifsicle": "^4.0.0",
+        "imagemin-jpegtran": "^4.0.0",
+        "imagemin-optipng": "^4.0.0",
+        "imagemin-svgo": "^4.0.0"
     },
 
     "devDependencies": {

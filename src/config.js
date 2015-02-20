@@ -62,6 +62,9 @@ function createSchema() {
         cleanup: joi
             .boolean()
             .label('Cleanup storage at startup'),
+        compress: joi
+            .boolean()
+            .label('Compress screenshots'),
         whitelist: joi
             .array()
             .default([])

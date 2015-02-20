@@ -115,6 +115,12 @@ Rules of overriding:
   <dt>--cache</dt>
   <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
 
+  <dt>--cleanup</dt>
+  <dd>Remove FS storage on server startup (default is false).</dd>
+
+  <dt>--compress</dt>
+  <dd>Compress captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is false). File sizes are significantly reduced due to this, but it requires additional processing time.</dd>
+
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information (default is false).</dd>
 
@@ -143,7 +149,6 @@ Default configuration file *("default.json")*:
 
 ```json
 {
-    "cache": 3600,
     "port": 8891,
     "cors": false,
     "ui": true,
@@ -152,7 +157,11 @@ Default configuration file *("default.json")*:
     "level": "debug",
 
     "engine": "phantomjs",
+    "options": {},
     "timeout": 60000,
+    "compress": false,
+    "cache": 3600,
+    "cleanup": false,
 
     "commands": {
         "slimerjs": {
@@ -174,7 +183,6 @@ Default configuration file *("default.json")*:
     "whitelist": [
         ".*"
     ]
-
 }
 ```
 
