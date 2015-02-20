@@ -45,7 +45,7 @@ function minimizeImage(src, dest, cb) {
         .use(imagemin.gifsicle({interlaced: true}))
         .use(imagemin.svgo());
 
-    imin.run(function (err, files) {
+    imin.run(function (err) {
         if (err) {
             logger.error(err);
         }
