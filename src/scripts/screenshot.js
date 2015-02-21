@@ -81,7 +81,7 @@
 
     function pageQuality(options) {
         var quality = def(options.quality, DEF_QUALITY);
-        return isPhantomJs() ? (quality * 100) : quality;
+        return isPhantomJs() ? String(quality * 100) : quality;
     }
 
     function createPage(options) {
