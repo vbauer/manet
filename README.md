@@ -119,7 +119,7 @@ Rules of overriding:
   <dd>Remove FS storage on server startup (default is false).</dd>
 
   <dt>--compress</dt>
-  <dd>Compress captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is false). File sizes are significantly reduced due to this, but it requires additional processing time.</dd>
+  <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is false). File sizes are significantly reduced due to this, but it requires additional processing time.</dd>
 
   <dt>--silent</dt>
   <dd>Run Manet server with or without logging information (default is false).</dd>
