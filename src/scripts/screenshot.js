@@ -131,6 +131,7 @@
                 page = createPage(options);
 
             page.open(options.url, function () {
+                applyDefaultStyle(page);
                 try {
                     renderScreenshotFile(page, options, outputFile, onFinish);
                 } catch (e) {
@@ -142,6 +143,15 @@
         }
     }
 
+    function applyDefaultStyle(page) {
+        page.evaluate(function () {
+            var style = document.createElement('style'),
+                content = document.createTextNode('body { background: #fff }');
+            style.setAttribute('type', 'text/css');
+            style.appendChild(content);
+            document.head.insertBefore(style, document.head.firstChild);
+        });
+    }
 
     /* Fire starter */
 
