@@ -2,7 +2,7 @@
 (function () {
 "use strict";
 
-    /* Constants */
+    /* Modules & Constants */
 
     var DEF_ZOOM = 1,
         DEF_QUALITY = 1,
@@ -12,7 +12,8 @@
         DEF_JS_ENABLED = true,
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
-        DEF_HEADERS = {};
+        DEF_HEADERS = {},
+        DEF_STYLES = 'src/config/default-styles.css';
 
 
     /* Common functions */
@@ -131,8 +132,8 @@
                 page = createPage(options);
 
             page.open(options.url, function () {
-                applyDefaultStyle(page);
                 try {
+                    applyDefaultStyles(page);
                     renderScreenshotFile(page, options, outputFile, onFinish);
                 } catch (e) {
                     onFinish(page, e);
@@ -143,20 +144,26 @@
         }
     }
 
-    function applyDefaultStyle(page) {
-        page.evaluate(function () {
+    function applyDefaultStyles(page) {
+        var defStyles = fs.read(DEF_STYLES);
+
+        page.evaluate(function(defStyles) {
             var style = document.createElement('style'),
-                content = document.createTextNode('body { background: #fff }');
+                content = document.createTextNode(defStyles),
+                head = document.head;
+
             style.setAttribute('type', 'text/css');
             style.appendChild(content);
-            document.head.insertBefore(style, document.head.firstChild);
-        });
+
+            head.insertBefore(style, head.firstChild);
+        }, defStyles);
     }
 
     /* Fire starter */
 
     var system = require('system'),
         webpage = require('webpage'),
+        fs = require('fs'),
         base64 = argument(0),
         outputFile = argument(1);
 
