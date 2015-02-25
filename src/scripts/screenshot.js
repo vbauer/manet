@@ -13,7 +13,7 @@
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
         DEF_HEADERS = {},
-        DEF_STYLES = 'src/config/default-styles.css';
+        DEF_STYLES = 'default-styles.css';
 
 
     /* Common functions */
@@ -53,6 +53,24 @@
         log('Script options: ' + optionsJSON);
 
         return JSON.parse(optionsJSON);
+    }
+
+    function readFile(path) {
+        var file = null,
+            content = null;
+
+        try {
+            file = fs.open(path, 'r');
+            content = fs.read();
+        } catch (e) {
+            log(e);
+        }
+
+        if (file) {
+            file.close();
+        }
+
+        return content;
     }
 
 
@@ -145,18 +163,24 @@
     }
 
     function applyDefaultStyles(page) {
-        var defStyles = fs.read(DEF_STYLES);
+        // TODO: Path to the default CSS styles is incorrect.
+        var defStyles = readFile(DEF_STYLES);
+        if (defStyles) {
+            addStyles(page, defStyles);
+        }
+    }
 
-        page.evaluate(function(defStyles) {
+    function addStyles(page, styles) {
+        page.evaluate(function(styles) {
             var style = document.createElement('style'),
-                content = document.createTextNode(defStyles),
+                content = document.createTextNode(styles),
                 head = document.head;
 
             style.setAttribute('type', 'text/css');
             style.appendChild(content);
 
             head.insertBefore(style, head.firstChild);
-        }, defStyles);
+        }, styles);
     }
 
     /* Fire starter */
