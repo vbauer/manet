@@ -11,7 +11,7 @@ var _ = require('lodash'),
     filters = require('./filters'),
     utils = require('./utils'),
 
-    DEF_LOGGER_LEVEL = 'debug',
+    DEF_LOGGER_LEVEL = 'info',
     DEF_LOGGER_SILENT = false;
 
 
@@ -135,6 +135,8 @@ function main(onStart) {
     initLogging(conf);
     initExitHandling();
     initFsStorage(conf);
+
+    logger.debug('Configuration parameters: %j', conf);
 
     runWebServer(conf, onStart);
 }

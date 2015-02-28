@@ -19,7 +19,7 @@ describe('config', function () {
 
             // Parameters are configured in "default.json" file.
             assert.equal('phantomjs', conf.engine);
-            assert.equal('debug', conf.level);
+            assert.equal('info', conf.level);
             assert.equal(true, conf.ui);
             assert.equal(false, conf.cors);
             assert.equal(false, conf.compress);

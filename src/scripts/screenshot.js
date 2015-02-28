@@ -82,7 +82,7 @@
 
     function pageQuality(options, format) {
         // XXX: Quality parameter doesn't work for PNG files.
-        if (format != 'png') {
+        if (format !== 'png') {
             var quality = def(options.quality, DEF_QUALITY);
             return isPhantomJs() ? String(quality * 100) : quality;
         }
@@ -109,7 +109,7 @@
 
     function renderScreenshotFile(page, options, outputFile, onFinish) {
         var delay = def(options.delay, DEF_DELAY),
-            format = def(options.format, DEF_FORMAT).toLowerCase(),
+            format = def(options.format, DEF_FORMAT),
             quality = pageQuality(options, format);
 
         setTimeout(function () {

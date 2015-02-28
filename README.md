@@ -125,7 +125,7 @@ Rules of overriding:
   <dd>Run Manet server with or without logging information (default is false).</dd>
 
   <dt>--level</dt>
-  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is "debug").</dd>
+  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is "info"). If want to investigate some problem with Manet, use "debug" level: --level=debug</dd>
 
   <dt>--cors</dt>
   <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is false).</dd>
@@ -154,7 +154,7 @@ Default configuration file *("default.json")*:
     "ui": true,
 
     "silent": false,
-    "level": "debug",
+    "level": "info",
 
     "engine": "phantomjs",
     "options": {},
@@ -222,7 +222,7 @@ Few rules:
   <dd>Zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>
 
   <dt>quality</dt>
-  <dd>The compression quality. A number between 0 and 1 (default value: 1).</dd>
+  <dd>The compression quality. A number between 0 and 1 (default value: 1). Quality parameter doesn't work for PNG file format.</dd>
 
   <dt>delay</dt>
   <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: 100).</dd>

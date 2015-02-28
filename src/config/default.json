@@ -5,7 +5,7 @@
     "ui": true,
 
     "silent": false,
-    "level": "debug",
+    "level": "info",
 
     "engine": "phantomjs",
     "options": {},
