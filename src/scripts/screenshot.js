@@ -80,9 +80,13 @@
         return (cr && cr.top && cr.left && cr.width && cr.height) ? cr : null;
     }
 
-    function pageQuality(options) {
-        var quality = def(options.quality, DEF_QUALITY);
-        return isPhantomJs() ? String(quality * 100) : quality;
+    function pageQuality(options, format) {
+        // XXX: Quality parameter doesn't work for PNG files.
+        if (format != 'png') {
+            var quality = def(options.quality, DEF_QUALITY);
+            return isPhantomJs() ? String(quality * 100) : quality;
+        }
+        return null;
     }
 
     function createPage(options) {
@@ -105,8 +109,8 @@
 
     function renderScreenshotFile(page, options, outputFile, onFinish) {
         var delay = def(options.delay, DEF_DELAY),
-            format = def(options.format, DEF_FORMAT),
-            quality = pageQuality(options);
+            format = def(options.format, DEF_FORMAT).toLowerCase(),
+            quality = pageQuality(options, format);
 
         setTimeout(function () {
             try {
