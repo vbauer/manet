@@ -13,7 +13,7 @@
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
         DEF_HEADERS = {},
-        DEF_STYLES = 'default-styles.css';
+        DEF_STYLES = 'body { background: #fff; }';
 
 
     /* Common functions */
@@ -53,24 +53,6 @@
         log('Script options: ' + optionsJSON);
 
         return JSON.parse(optionsJSON);
-    }
-
-    function readFile(path) {
-        var file = null,
-            content = null;
-
-        try {
-            file = fs.open(path, 'r');
-            content = fs.read();
-        } catch (e) {
-            log(e);
-        }
-
-        if (file) {
-            file.close();
-        }
-
-        return content;
     }
 
 
@@ -151,7 +133,7 @@
 
             page.open(options.url, function () {
                 try {
-                    applyDefaultStyles(page);
+                    addStyles(page, DEF_STYLES);
                     renderScreenshotFile(page, options, outputFile, onFinish);
                 } catch (e) {
                     onFinish(page, e);
@@ -159,14 +141,6 @@
             });
         } catch (e) {
             onFinish(null, e);
-        }
-    }
-
-    function applyDefaultStyles(page) {
-        // TODO: Path to the default CSS styles is incorrect.
-        var defStyles = readFile(DEF_STYLES);
-        if (defStyles) {
-            addStyles(page, defStyles);
         }
     }
 
@@ -187,7 +161,6 @@
 
     var system = require('system'),
         webpage = require('webpage'),
-        fs = require('fs'),
         base64 = argument(0),
         outputFile = argument(1);
 

@@ -186,20 +186,6 @@ Default configuration file *("default.json")*:
 }
 ```
 
-### CSS customization
-
-It is possible to configure custom CSS rules, which will be applied before screenshot rendering. Use `src/config/default-styles.css` file to do it.
-
-Default configuration:
-
-```css
-body {
-    background: #fff;
-}
-```
-
-As you can see, Manet already has got pre-defined color for body background. It was made especially to prevent transparent background for some sites.
-
 
 ## REST API
 
