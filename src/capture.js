@@ -64,7 +64,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
             timeout: config.timeout
         };
 
-    logger.debug('Options for script: %j, base64: %s', options, base64);
+    logger.debug('Options for script: %s, base64: %s', JSON.stringify(options), base64);
 
     utils.execProcess(cmd, opts, function(code) {
         if (config.compress) {

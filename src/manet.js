@@ -130,13 +130,15 @@ function runWebServer(conf, onStart) {
 /* Initialize and run server */
 
 function main(onStart) {
-    var conf = config.read();
+    var confPath = config.defaultConfigPath(),
+        conf = config.read();
 
     initLogging(conf);
     initExitHandling();
     initFsStorage(conf);
 
-    logger.debug('Configuration parameters: %j', conf);
+    logger.debug('Default configuration file: %s', confPath);
+    logger.debug('Configuration parameters: %s', JSON.stringify(conf));
 
     runWebServer(conf, onStart);
 }

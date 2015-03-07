@@ -72,11 +72,16 @@ function createSchema() {
     });
 }
 
+function defaultConfigPath() {
+    return utils.filePath(DEF_CONFIG);
+}
+
 function load() {
-    var config = nconf.argv()
+    var confPath = defaultConfigPath(),
+        config = nconf.argv()
         .env()
         .file({
-            file: utils.filePath(DEF_CONFIG)
+            file: confPath
         })
         .get();
 
@@ -102,6 +107,7 @@ function read() {
 /* Exported functions */
 
 module.exports = {
+    defaultConfigPath: defaultConfigPath,
     createSchema: createSchema,
     read: read
 };
