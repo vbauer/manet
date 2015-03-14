@@ -23,7 +23,8 @@
     }
 
     function argument(index) {
-        return isPhantomJs() ? phantom.args[index] : system.args[index];
+        var delta = isPhantomJs() ? 1 : 0;
+        return system.args[index + delta];
     }
 
     function log(message) {
