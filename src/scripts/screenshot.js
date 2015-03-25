@@ -136,12 +136,16 @@
             var options = parseOptions(base64),
                 page = createPage(options);
 
-            page.open(options.url, function () {
-                try {
-                    addStyles(page, DEF_STYLES);
-                    renderScreenshotFile(page, options, outputFile, onFinish);
-                } catch (e) {
-                    onFinish(page, e);
+            page.open(options.url, function (status) {
+                if (status !== 'success') {
+                    exit();
+                } else {
+                    try {
+                        addStyles(page, DEF_STYLES);
+                        renderScreenshotFile(page, options, outputFile, onFinish);
+                    } catch (e) {
+                        onFinish(page, e);
+                    }
                 }
             });
         } catch (e) {
