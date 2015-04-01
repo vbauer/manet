@@ -66,13 +66,13 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 
     logger.debug('Options for script: %s, base64: %s', JSON.stringify(options), base64);
 
-    utils.execProcess(cmd, opts, function(code) {
+    utils.execProcess(cmd, opts, function(error) {
         if (config.compress) {
             minimizeImage(outputFile, config.storage, function() {
-                onFinish(code);
+                onFinish(error);
             });
         } else {
-            onFinish(code);
+            onFinish(error);
         }
     });
 }
@@ -87,12 +87,12 @@ function screenshot(options, config, onFinish) {
 
         retrieveImageFromStorage = function () {
             logger.debug('Take screenshot from file storage: %s', base64);
-            onFinish(file, 0);
+            onFinish(file, null);
         },
         retrieveImageFromSite = function () {
-            runCapturingProcess(opts, config, file, base64, function (code) {
+            runCapturingProcess(opts, config, file, base64, function (error) {
                 logger.debug('Process finished work: %s', base64);
-                return onFinish(file, code);
+                return onFinish(file, error);
             });
         };
 

@@ -97,35 +97,29 @@ describe('utils', function () {
             assert.throws(function () {
                 utils.execProcess(null, {});
             });
-            assert.throws(function () {
-                utils.execProcess([''], null);
-            });
-            assert.throws(function () {
-                utils.execProcess([''], {});
-            });
             done();
         });
 
         it('execute "ls"', function (done) {
-            utils.execProcess(['ls'], null, function (code) {
-                assert.equal(0, code);
-                utils.execProcess(['ls'], {}, function (code) {
-                    assert.equal(0, code);
+            utils.execProcess(['ls'], null, function (error1) {
+                assert.equal(null, error1);
+                utils.execProcess(['ls'], {}, function (error2) {
+                    assert.equal(null, error2);
                     done();
                 });
             });
         });
 
         it('execute "ls -l"', function (done) {
-            utils.execProcess(['ls', '-l'], null, function (code) {
-                assert.equal(0, code);
+            utils.execProcess(['ls', '-l'], null, function (error) {
+                assert.equal(null, error);
                 done();
             });
         });
 
         it('execute "ls -l -a"', function (done) {
-            utils.execProcess(['ls', '-l', '-a'], null, function (code) {
-                assert.equal(0, code);
+            utils.execProcess(['ls', '-l', '-a'], null, function (error) {
+                assert.equal(null, error);
                 done();
             });
         });

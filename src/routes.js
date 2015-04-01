@@ -102,8 +102,10 @@ function isUrlAllowed(config, url) {
 /* Result processors */
 
 function sendImageInResponse(config, res) {
-    return function (file, code) {
-        if (!code) {
+    return function (file, error) {
+        if (error) {
+            res.json(badCapturing());
+        } else {
             if (config.cors) {
                 enableCORS(res);
             }
@@ -113,16 +115,16 @@ function sendImageInResponse(config, res) {
                     res.status(err.status || 500).end();
                 }
             });
-        } else {
-            res.json(badCapturing());
         }
     };
 }
 
 function sendImageToUrl(options) {
-    return function (file, code) {
+    return function (file, error) {
         var callbackUrl = utils.fixUrl(options.callback);
-        if (!code) {
+        if (error) {
+            request.post(callbackUrl, badCapturing());
+        } else {
             var fileStream = fs.createReadStream(file);
             fileStream.on('error', function(err) {
                 logger.error('Error while reading file: %s', err.message);
@@ -132,8 +134,6 @@ function sendImageToUrl(options) {
                     logger.error('Error while streaming file: %s', err.message);
                 }
             }));
-        } else {
-            request.post(callbackUrl, badCapturing());
         }
     };
 }

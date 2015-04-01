@@ -4,7 +4,7 @@ var fs = require('fs-extra'),
     joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
-    exec = require('exec'),
+    childProcess = require('child_process'),
 
     URL_PREFIX_HTTP = 'http://',
     URL_PREFIX_HTTPS = 'https://';
@@ -88,22 +88,21 @@ function runFsWatchdog(dir, timeout, callback) {
 
 function execProcess(command, options, onClose) {
     var procStart = process.hrtime(),
+        cmd = command.join(' '),
         opts = options || {};
 
-    exec(command, opts, function(err, out, code) {
-        logger.debug('Process output: %s', out);
+    childProcess.exec(cmd, opts, function(error, stdout, stderr) {
+        var procEnd = process.hrtime(procStart),
+            end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
 
-        if (err) {
-            logger.error('Process error: %s', err);
-        } else {
-            var procEnd = process.hrtime(procStart),
-                end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
+        logger.debug('Process output: %s', stdout);
+        if (error) {
+            logger.error('Process error: %s', stderr);
+        }
+        logger.debug('Execution time: %d sec', end);
 
-            logger.debug('Execution time: %d sec', end);
-
-            if (onClose) {
-                onClose(code);
-            }
+        if (onClose) {
+            onClose(error);
         }
     });
 }
