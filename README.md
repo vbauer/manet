@@ -104,7 +104,7 @@ Rules of overriding:
   <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
 
   <dt>--engine</dt>
-  <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "slimerjs"). Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
+  <dd>Engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "phantomjs"). Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
   <dd>Configuration file "default.json" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
