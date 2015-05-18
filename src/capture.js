@@ -6,6 +6,7 @@ var _ = require('lodash'),
     path = require('path'),
     imagemin = require('imagemin'),
     utils = require('./utils'),
+    sha1 = require('sha1'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
 
@@ -16,9 +17,9 @@ var _ = require('lodash'),
 
 /* Configurations and options */
 
-function outputFile(options, conf, base64) {
+function outputFile(options, conf, key) {
     var format = options.format || DEF_FORMAT;
-    return conf.storage + path.sep + base64 + '.' + format;
+    return conf.storage + path.sep + key + '.' + format;
 }
 
 function cliCommand(config) {
@@ -83,7 +84,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 function screenshot(options, config, onFinish) {
     var opts = cleanupOptions(options, config),
         base64 = utils.encodeBase64(opts),
-        file = outputFile(opts, config, base64),
+        file = outputFile(opts, config, sha1(JSON.stringify(opts))),
 
         retrieveImageFromStorage = function () {
             logger.debug('Take screenshot from file storage: %s', base64);
