@@ -9,6 +9,9 @@ describe('utils', function () {
 
     process.env.silent = true;
 
+    // Configure timeout = 5 sec.
+    this.timeout(5000);
+
     describe('fixUrl', function () {
 
         it('null-value', function () {
