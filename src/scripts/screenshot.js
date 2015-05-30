@@ -78,7 +78,7 @@
 
     function pageClipRect(options) {
         var cr = options.clipRect;
-        return (cr && cr.top && cr.left && cr.width && cr.height) ? cr : null;
+        return (cr && cr.top >= 0 && cr.left >= 0 && cr.width && cr.height) ? cr : null;
     }
 
     function pageQuality(options, format) {
