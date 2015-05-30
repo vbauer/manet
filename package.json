@@ -1,6 +1,6 @@
 {
     "name": "manet",
-    "version": "0.3.7",
+    "version": "0.3.8",
     "description": "Website screenshot service powered by Node.js, SlimerJS and PhantomJS",
     "license": "MIT",
 
