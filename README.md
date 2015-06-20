@@ -353,10 +353,25 @@ mocha --watch -R spec
 ```
 
 
+## Deployment options
+
+### Docker
+
+**Docker** is an open platform to build, ship, and run distributed applications, whether on laptops, data center VMs, or the cloud.
+Pietro Delsante provides `Dockerfile` to run Manet inside a Docker container: [manet-dockerfile](https://github.com/pdelsante/manet-dockerfile).
+
+### Heroku
+
+ First of all read https://devcenter.heroku.com/articles/deploying-nodejs (section "Deploy your application to Heroku").
+ You need to create Heroku instance with as described in this documentation.
+ [Procfile](Procfile) is already existed in the project and describes Heroku how to start Manet.
+
+
 ## Thanks to
 
 * SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
 * PhantomJS author [Ariya Hidayat](https://github.com/ariya/phantomjs) and PhantomJS [community](https://github.com/ariya/phantomjs/graphs/contributors).
+* [Pietro Delsante](https://github.com/pdelsante) for the [manet-dockerfile](https://github.com/pdelsante/manet-dockerfile) to run project inside a Docker container.
 
 
 ## License
