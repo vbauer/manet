@@ -45,7 +45,7 @@ function minimizeImage(src, dest, cb) {
         'imagemin-svgo'
     ];
 
-    squirrel(iminModules, function(err, imagemin) {
+    squirrel(iminModules, function(err, Imagemin) {
         var safeCb = function (err) {
             if (err) {
                 logger.error(err);
@@ -56,13 +56,13 @@ function minimizeImage(src, dest, cb) {
         if (err) {
             safeCb(err);
         } else {
-            var imin = new imagemin()
+            var imin = new Imagemin()
                 .src(src)
                 .dest(dest)
-                .use(imagemin.jpegtran({progressive: true}))
-                .use(imagemin.optipng({optimizationLevel: 3}))
-                .use(imagemin.gifsicle({interlaced: true}))
-                .use(imagemin.svgo());
+                .use(Imagemin.jpegtran({progressive: true}))
+                .use(Imagemin.optipng({optimizationLevel: 3}))
+                .use(Imagemin.gifsicle({interlaced: true}))
+                .use(Imagemin.svgo());
 
             imin.run(safeCb);
         }
