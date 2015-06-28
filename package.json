@@ -59,6 +59,10 @@
         "qs": "^3.0.0",
         "lodash": "^3.0.0",
         "winston": "^1.0.0",
+        "squirrel": "^1.0.0"
+    },
+
+    "pluginDependencies": {
         "imagemin": "^3.1.0",
         "imagemin-gifsicle": "^4.0.0",
         "imagemin-jpegtran": "^4.0.0",

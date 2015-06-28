@@ -4,7 +4,7 @@ var _ = require('lodash'),
     fs = require('fs-extra'),
     logger = require('winston'),
     path = require('path'),
-    imagemin = require('imagemin'),
+    squirrel = require('squirrel'),
     utils = require('./utils'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
@@ -37,19 +37,35 @@ function cleanupOptions(options, config) {
 /* Image processing */
 
 function minimizeImage(src, dest, cb) {
-    var imin = new imagemin()
-        .src(src)
-        .dest(dest)
-        .use(imagemin.jpegtran({progressive: true}))
-        .use(imagemin.optipng({optimizationLevel: 3}))
-        .use(imagemin.gifsicle({interlaced: true}))
-        .use(imagemin.svgo());
+    var iminModules = [
+        'imagemin',
+        'imagemin-gifsicle',
+        'imagemin-jpegtran',
+        'imagemin-optipng',
+        'imagemin-svgo'
+    ];
 
-    imin.run(function (err) {
+    squirrel(iminModules, function(err, imagemin) {
+        var safeCb = function (err) {
+            if (err) {
+                logger.error(err);
+            }
+            cb();
+        };
+
         if (err) {
-            logger.error(err);
+            safeCb(err);
+        } else {
+            var imin = new imagemin()
+                .src(src)
+                .dest(dest)
+                .use(imagemin.jpegtran({progressive: true}))
+                .use(imagemin.optipng({optimizationLevel: 3}))
+                .use(imagemin.gifsicle({interlaced: true}))
+                .use(imagemin.svgo());
+
+            imin.run(safeCb);
         }
-        cb();
     });
 }
 
