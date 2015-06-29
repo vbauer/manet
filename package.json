@@ -8,7 +8,7 @@
     "homepage": "https://github.com/vbauer/manet",
     "bugs": "https://github.com/vbauer/manet/issues",
 
-    "main": "./src/manet.js",
+    "main": "./src/runner.js",
 
     "bin": {
         "manet": "./bin/manet"
@@ -44,7 +44,6 @@
     },
 
     "scripts": {
-        "start": "./bin/manet",
         "lint": "jshint src test example public/js/app.js",
         "test": "mocha"
     },
