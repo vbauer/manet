@@ -2,13 +2,15 @@
 
 var _ = require('lodash'),
     nconf = require('nconf'),
+    cloudEnv = require('cloud-env'),
     logger = require('winston'),
     joi = require('joi'),
     path = require('path'),
     os = require('os'),
     utils = require('./utils'),
 
-    DEF_CONFIG = 'config/default.json';
+    DEF_CONFIG = 'config/default.json',
+    ENV_PORT = 'PORT';
 
 
 /* Functions to work with application configuration */
@@ -87,7 +89,7 @@ function load() {
 
     config.cache = Math.max(config.cache, 0);
     config.storage = path.resolve(config.storage || os.tmpdir());
-    config.port = process.env.PORT || config.port;
+    config.port = cloudEnv.get(ENV_PORT, config.port);
 
     return config;
 }
