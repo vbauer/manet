@@ -10,6 +10,7 @@ var _ = require('lodash'),
     utils = require('./utils'),
 
     DEF_CONFIG = 'config/default.json',
+    ENV_IP = 'IP',
     ENV_PORT = 'PORT';
 
 
@@ -89,6 +90,7 @@ function load() {
 
     config.cache = Math.max(config.cache, 0);
     config.storage = path.resolve(config.storage || os.tmpdir());
+    config.host = cloudEnv.get(ENV_IP, config.host);
     config.port = cloudEnv.get(ENV_PORT, config.port);
 
     return config;

@@ -117,7 +117,7 @@ function createWebApplication(conf) {
 
 function runWebServer(conf, onStart) {
     var app = createWebApplication(conf),
-        server = app.listen(conf.port, function () {
+        server = app.listen(conf.port, conf.host, function () {
             if (onStart) {
                 onStart(server);
             }
