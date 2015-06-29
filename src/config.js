@@ -87,7 +87,7 @@ function load() {
 
     config.cache = Math.max(config.cache, 0);
     config.storage = path.resolve(config.storage || os.tmpdir());
-    config.port = process.env.OPENSHIFT_NODEJS_PORT || config.port;
+    config.port = process.env.PORT || config.port;
 
     return config;
 }
