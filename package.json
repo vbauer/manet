@@ -49,26 +49,26 @@
     },
 
     "dependencies": {
-        "express": "^4.13.0",
-        "request": "^2.58.0",
-        "body-parser": "^1.13.1",
+        "express": "^4.13.1",
+        "request": "^2.60.0",
+        "body-parser": "^1.13.2",
         "helmet": "^0.10.0",
         "fs-extra": "^0.22.1",
         "nconf": "^0.7.1",
-        "cloud-env": "^0.1.0",
-        "joi": "^6.5.0",
+        "cloud-env": "^0.1.1",
+        "joi": "^6.6.1",
         "qs": "^4.0.0",
-        "lodash": "^3.9.3",
+        "lodash": "^3.10.0",
         "winston": "^1.0.1",
         "squirrel": "^1.0.0"
     },
 
     "pluginDependencies": {
-        "imagemin": "^3.1.0",
-        "imagemin-gifsicle": "^4.0.0",
-        "imagemin-jpegtran": "^4.0.0",
-        "imagemin-optipng": "^4.0.0",
-        "imagemin-svgo": "^4.0.0"
+        "imagemin": "^3.2.0",
+        "imagemin-gifsicle": "^4.2.0",
+        "imagemin-jpegtran": "^4.3.0",
+        "imagemin-optipng": "^4.3.0",
+        "imagemin-svgo": "^4.1.2"
     },
 
     "devDependencies": {
