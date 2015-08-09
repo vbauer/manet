@@ -49,16 +49,16 @@
     },
 
     "dependencies": {
-        "express": "^4.13.1",
+        "express": "^4.13.3",
         "request": "^2.60.0",
-        "body-parser": "^1.13.2",
+        "body-parser": "^1.13.3",
         "helmet": "^0.10.0",
-        "fs-extra": "^0.22.1",
-        "nconf": "^0.7.1",
+        "fs-extra": "^0.23.1",
+        "nconf": "^0.7.2",
         "cloud-env": "^0.1.1",
         "joi": "^6.6.1",
         "qs": "^4.0.0",
-        "lodash": "^3.10.0",
+        "lodash": "^3.10.1",
         "winston": "^1.0.1",
         "squirrel": "^1.0.0"
     },
