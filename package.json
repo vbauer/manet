@@ -50,7 +50,7 @@
 
     "dependencies": {
         "express": "^4.13.3",
-        "request": "^2.60.0",
+        "request": "^2.61.0",
         "body-parser": "^1.13.3",
         "helmet": "^0.10.0",
         "fs-extra": "^0.23.1",
