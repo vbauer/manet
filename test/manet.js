@@ -15,8 +15,7 @@ process.env.silent = true;
 
 describe('manet', function () {
 
-    var conf = config.read(),
-        DEF_HOSTNAME = 'localhost';
+    var conf = config.read();
 
     // Configure timeout = 2 min.
     this.timeout(120000);
@@ -26,7 +25,7 @@ describe('manet', function () {
 
     function sendRequest(method, url, encoding, callback) {
         var options = {
-            host: DEF_HOSTNAME,
+            host: conf.host,
             port: conf.port,
             method: method,
             path: url
