@@ -53,11 +53,11 @@
         "request": "^2.61.0",
         "body-parser": "^1.13.3",
         "helmet": "^0.10.0",
-        "fs-extra": "^0.23.1",
+        "fs-extra": "^0.24.0",
         "nconf": "^0.7.2",
         "cloud-env": "^0.1.1",
         "joi": "^6.6.1",
-        "qs": "^4.0.0",
+        "qs": "^5.0.0",
         "lodash": "^3.10.1",
         "winston": "^1.0.1",
         "squirrel": "^1.0.0"
@@ -73,7 +73,7 @@
 
     "devDependencies": {
         "jshint": "^2.8.0",
-        "mocha": "^2.2.5",
+        "mocha": "^2.3.0",
         "w3cjs": "^0.3.0"
     }
 }
