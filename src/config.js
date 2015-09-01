@@ -18,6 +18,9 @@ var _ = require('lodash'),
 
 function createSchema() {
     return joi.object().keys({
+        host: joi
+            .string()
+            .label('Webserver host'),
         port: joi
             .number()
             .integer()
