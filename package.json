@@ -60,7 +60,8 @@
         "qs": "^5.0.0",
         "lodash": "^3.10.1",
         "winston": "^1.0.1",
-        "squirrel": "^1.0.0"
+        "squirrel": "^1.0.0",
+        "url-pattern": "^0.10.0"
     },
 
     "pluginDependencies": {

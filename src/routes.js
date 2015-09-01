@@ -7,6 +7,7 @@ var _ = require('lodash'),
     util = require('util'),
     logger = require('winston'),
     request = require('request'),
+    UrlPattern = require('url-pattern'),
     capture = require('./capture'),
     utils = require('./utils'),
 
@@ -93,8 +94,9 @@ function badCapturing() { return error('Can not capture site screenshot'); }
 function isUrlAllowed(config, url) {
     var whiteList = config.whitelist || [];
 
-    return _.some(whiteList, function(regexp) {
-        return url.match(regexp);
+    return _.some(whiteList, function(urlPattern) {
+        var pattern = new UrlPattern(urlPattern);
+        return pattern.match(url);
     });
 }
 

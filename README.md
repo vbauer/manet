@@ -100,6 +100,9 @@ Rules of overriding:
 
 <dl>
 
+  <dt>--host</dt>
+  <dd>Web server host (default: "0.0.0.0"). Usually, it is unnecessary to change this parameter.</dd>
+
   <dt>--port</dt>
   <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
 
@@ -139,6 +142,8 @@ Rules of overriding:
   <dt>--options:{option}</dt>
   <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101".</dd>
 
+  <dt>--whitelist</dt>
+  <dd>List of <a href="https://github.com/snd/url-pattern">URL patterns</a> that are allowed to be processed by Manet (all URLs are permitted by default).</dd>
 </dl>
 
 ### Configuration file
@@ -149,6 +154,7 @@ Default configuration file *("default.json")*:
 
 ```json
 {
+    "host": "0.0.0.0",
     "port": 8891,
     "cors": false,
     "ui": true,
@@ -181,7 +187,7 @@ Default configuration file *("default.json")*:
     },
 
     "whitelist": [
-        ".*"
+        "*"
     ]
 }
 ```
