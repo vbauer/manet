@@ -72,7 +72,9 @@
             loadImages: def(options.images, DEF_IMAGES_ENABLED),
             userName: options.user,
             password: options.password,
-            userAgent: options.agent
+            userAgent: options.agent,
+            XSSAuditingEnabled: false,
+            webSecurityEnabled: false
         };
     }
 
@@ -142,15 +144,32 @@
                 }
             };
             page.open(options.url, function (status) {
-                if (status !== 'success') {
-                    exit();
-                } else {
+                var onPageReady = function() {
                     try {
                         addStyles(page, DEF_STYLES);
                         renderScreenshotFile(page, options, outputFile, onFinish);
                     } catch (e) {
                         onFinish(page, e);
                     }
+                },
+                checkReadyState = function() {
+                    setTimeout(function () {
+                        var readyState = page.evaluate(function () {
+                            return document.readyState;
+                        });
+
+                        if ('complete' === readyState) {
+                            onPageReady();
+                        } else {
+                            checkReadyState();
+                        }
+                    });
+                };
+
+                if (status !== 'success') {
+                    exit();
+                } else {
+                    checkReadyState();
                 }
             });
         } catch (e) {

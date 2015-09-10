@@ -178,11 +178,11 @@ Default configuration file *("default.json")*:
             "win32": "slimerjs.bat"
         },
         "phantomjs": {
-            "linux": "phantomjs --ignore-ssl-errors=true",
-            "freebsd": "phantomjs --ignore-ssl-errors=true",
-            "sunos": "phantomjs --ignore-ssl-errors=true",
-            "darwin": "phantomjs --ignore-ssl-errors=true",
-            "win32": "phantomjs --ignore-ssl-errors=true"
+            "linux": "phantomjs --ignore-ssl-errors=true --web-security=false",
+            "freebsd": "phantomjs --ignore-ssl-errors=true --web-security=false",
+            "sunos": "phantomjs --ignore-ssl-errors=true --web-security=false",
+            "darwin": "phantomjs --ignore-ssl-errors=true --web-security=false",
+            "win32": "phantomjs --ignore-ssl-errors=true --web-security=false"
         }
     },
 
