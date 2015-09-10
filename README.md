@@ -368,9 +368,12 @@ Pietro Delsante provides `Dockerfile` to run Manet inside a Docker container: [m
 
 ### Heroku
 
- First of all read https://devcenter.heroku.com/articles/deploying-nodejs (section "Deploy your application to Heroku").
- You need to create Heroku instance with as described in this documentation.
- [Procfile](Procfile) is already existed in the project and describes Heroku how to start Manet.
+First of all read https://devcenter.heroku.com/articles/deploying-nodejs (section "Deploy your application to Heroku").
+You need to create Heroku instance with as described in this documentation.
+
+[Procfile](Procfile) file for **PhantomJS** is already existed in root of the project. This file describes Heroku how to start Manet.
+
+**SlimerJS** does not work on Heroku, because it has not got a [headless mode](https://github.com/laurentj/slimerjs/issues/80) and it is quite compliated to install **xvfb** on this platform (but you can try your luck).
 
 
 ## Thanks to
