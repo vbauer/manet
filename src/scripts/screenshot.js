@@ -136,6 +136,11 @@
             var options = parseOptions(base64),
                 page = createPage(options);
 
+            page.onResourceReceived = function(response) {
+                if (response.stage == 'end') {
+                    log('Resource was downloaded: ' + response.url);
+                }
+            };
             page.open(options.url, function (status) {
                 if (status !== 'success') {
                     exit();
