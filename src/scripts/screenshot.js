@@ -137,7 +137,7 @@
                 page = createPage(options);
 
             page.onResourceReceived = function(response) {
-                if (response.stage == 'end') {
+                if (response.stage === 'end') {
                     log('Resource was downloaded: ' + response.url);
                 }
             };
