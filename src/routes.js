@@ -91,6 +91,12 @@ function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
 function badCapturing() { return error('Can not capture site screenshot'); }
 
+function sendError(res, err) {
+    var msg = err.message || err;
+    logger.error(msg);
+    res.status(500).json(error(msg)).end();
+}
+
 function isUrlAllowed(config, url) {
     var whiteList = config.whitelist || [];
 
@@ -103,37 +109,36 @@ function isUrlAllowed(config, url) {
 
 /* Result processors */
 
-function sendImageInResponse(config, res) {
+function sendImageInResponse(res, config) {
     return function (file, error) {
         if (error) {
-            res.json(badCapturing());
+            sendError(res, badCapturing());
         } else {
             if (config.cors) {
                 enableCORS(res);
             }
             res.sendFile(file, function (err) {
                 if (err) {
-                    logger.error('Error while sending file: %s', err.message);
-                    res.status(err.status || 500).end();
+                    sendError(res, 'Error while sending image file: ' + err.message);
                 }
             });
         }
     };
 }
 
-function sendImageToUrl(options) {
+function sendImageToUrl(res, options) {
     return function (file, error) {
         var callbackUrl = utils.fixUrl(options.callback);
         if (error) {
-            request.post(callbackUrl, badCapturing());
+            request.post(callbackUrl, error(badCapturing()));
         } else {
             var fileStream = fs.createReadStream(file);
             fileStream.on('error', function(err) {
-                logger.error('Error while reading file: %s', err.message);
+                sendError(res, 'Error while reading image file: ' + err.message);
             });
             fileStream.pipe(request.post(callbackUrl, function(err) {
                 if (err) {
-                    logger.error('Error while streaming file: %s', err.message);
+                    sendError(res, 'Error while streaming image file: ' + err.message);
                 }
             }));
         }
@@ -155,7 +160,7 @@ function index(config) {
                 siteUrl = options.url;
 
             if (!isUrlAllowed(config, siteUrl)) {
-                res.json(error('URL is not allowed'));
+                sendError(res, util.format('URL "%s" is not allowed', siteUrl));
             } else {
                 var callbackUrl = options.callback;
                 if (callbackUrl) {
@@ -164,10 +169,10 @@ function index(config) {
                     )));
 
                     logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
-                    capture.screenshot(options, config, sendImageToUrl(options));
+                    capture.screenshot(options, config, sendImageToUrl(res, options));
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
-                    capture.screenshot(options, config, sendImageInResponse(config, res));
+                    capture.screenshot(options, config, sendImageInResponse(res, config));
                 }
             }
 
