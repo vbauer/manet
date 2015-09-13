@@ -55,6 +55,10 @@ sudo apt-get install xvfb
 ```bash
 npm install -g phantomjs
 ```
+or (to use second version):
+```bash
+npm install -g phantomjs2
+```
 
 **IMPORTANT:** PhantomJS is used by default (see `default.json` file).
 
