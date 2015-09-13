@@ -104,6 +104,25 @@
             page.clipRect = clipRect;
         }
 
+        page.onResourceReceived = function(response) {
+            if (response.stage === 'end') {
+                log('Resource was downloaded: ' + response.url);
+            }
+        };
+
+        page.onError = function(msg, trace) {
+            log('ERROR: ' + msg);
+            if (trace && trace.length) {
+                log('TRACE:');
+                trace.forEach(function(t) {
+                    var f = t.file,
+                        l = t.line,
+                        fun = t.function ? ' (in function "' + t.function +'")' : '';
+                    log(' -> ' + f + ': ' + l + fun);
+                });
+            }
+        };
+
         return page;
     }
 
@@ -138,11 +157,6 @@
             var options = parseOptions(base64),
                 page = createPage(options);
 
-            page.onResourceReceived = function(response) {
-                if (response.stage === 'end') {
-                    log('Resource was downloaded: ' + response.url);
-                }
-            };
             page.open(options.url, function (status) {
                 var onPageReady = function() {
                     try {
