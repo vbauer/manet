@@ -50,14 +50,14 @@
 
     "dependencies": {
         "express": "^4.13.3",
-        "request": "^2.61.0",
-        "body-parser": "^1.13.3",
+        "request": "^2.62.0",
+        "body-parser": "^1.14.0",
         "helmet": "^0.10.0",
         "fs-extra": "^0.24.0",
         "nconf": "^0.7.2",
         "cloud-env": "^0.1.1",
-        "joi": "^6.6.1",
-        "qs": "^5.0.0",
+        "joi": "^6.7.1",
+        "qs": "^5.1.0",
         "lodash": "^3.10.1",
         "winston": "^1.0.1",
         "squirrel": "^1.0.0",
