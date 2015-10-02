@@ -6,6 +6,7 @@ var _ = require('lodash'),
     logger = require('winston'),
     fs = require('fs-extra'),
     helmet = require('helmet'),
+    cluster = require('cluster'),
     config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
@@ -115,15 +116,40 @@ function createWebApplication(conf) {
     return app;
 }
 
-function runWebServer(conf, onStart) {
-    var app = createWebApplication(conf),
-        server = app.listen(conf.port, conf.host, function () {
+function listen(conf, onStart, app) {
+    var server = app.listen(conf.port, conf.host, function () {
             if (onStart) {
                 onStart(server);
             }
         });
+}
 
-    logger.info('Manet server started on port %d', conf.port);
+function runWebServer(conf, onStart) {
+    var app = createWebApplication(conf);
+
+    var workers = conf.workers;
+    if (workers && workers > 1) {
+        if (cluster.isMaster) {
+            cluster.on('exit', function(worker, code, signal) {
+                console.warn('worker %d suddenly died, respawning', worker.process.pid);
+                cluster.fork();
+            });
+
+        for (var i=0; i<workers; i++) {
+            cluster.fork();
+        }
+
+        logger.info('Manet server cluster started on port %d with %d workers', conf.port, workers);
+        } else {
+            listen(conf, onStart, app);
+            logger.info('Worker %d started', process.pid);
+        }
+    }
+    else
+    {
+        listen(conf, onStart, app);
+        logger.info('Manet server started on port %d', conf.port);
+    }
 }
 
 
