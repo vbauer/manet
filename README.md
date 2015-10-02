@@ -148,6 +148,9 @@ Rules of overriding:
 
   <dt>--whitelist</dt>
   <dd>List of <a href="https://github.com/snd/url-pattern">URL patterns</a> that are allowed to be processed by Manet (all URLs are permitted by default).</dd>
+
+  <dt>--workers</dt>
+  <dd>Numbers of workers to start (default is 1).</dd>
 </dl>
 
 ### Configuration file
@@ -162,6 +165,7 @@ Default configuration file *("default.json")*:
     "port": 8891,
     "cors": false,
     "ui": true,
+    "workers" : 1,
 
     "silent": false,
     "level": "info",

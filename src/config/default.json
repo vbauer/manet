@@ -4,6 +4,7 @@
     "port": 8891,
     "cors": false,
     "ui": true,
+    "workers" : 1,
 
     "silent": false,
     "level": "info",
