@@ -50,16 +50,16 @@
 
     "dependencies": {
         "express": "^4.13.3",
-        "request": "^2.62.0",
-        "body-parser": "^1.14.0",
+        "request": "^2.64.0",
+        "body-parser": "^1.14.1",
         "helmet": "^0.12.0",
         "fs-extra": "^0.24.0",
-        "nconf": "^0.8.0",
+        "nconf": "^0.8.1",
         "cloud-env": "^0.1.1",
-        "joi": "^6.7.1",
+        "joi": "^6.9.0",
         "qs": "^5.1.0",
         "lodash": "^3.10.1",
-        "winston": "^1.0.1",
+        "winston": "^1.0.2",
         "squirrel": "^1.0.0",
         "url-pattern": "^0.10.2"
     },
@@ -74,7 +74,7 @@
 
     "devDependencies": {
         "jshint": "^2.8.0",
-        "mocha": "^2.3.2",
+        "mocha": "^2.3.3",
         "w3cjs": "^0.3.0"
     }
 }
