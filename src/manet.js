@@ -116,41 +116,16 @@ function createWebApplication(conf) {
     return app;
 }
 
-function listen(conf, onStart, app) {
-    var server = app.listen(conf.port, conf.host, function () {
-        if (onStart) {
-            onStart(server);
-        }
-    });
-}
-
 function runWebServer(conf, onStart) {
-    var app = createWebApplication(conf);
-    var workers = conf.workers;
-
-    if (workers && workers > 1) {
-        if (cluster.isMaster) {
-            cluster.on('exit', function(worker) {
-                console.warn('worker %d suddenly died, respawning', worker.process.pid);
-                cluster.fork();
-            });
-
-            for (var i = 0; i < workers; i++) {
-                cluster.fork();
+    var app = createWebApplication(conf),
+        host = conf.host,
+        port = conf.port,
+        server = app.listen(port, host, function () {
+            if (onStart) {
+                onStart(server);
             }
-
-            logger.info(
-                'Manet server cluster started on port %d with %d workers',
-                conf.port, workers
-            );
-        } else {
-            listen(conf, onStart, app);
-            logger.info('Worker %d started', process.pid);
-        }
-    } else {
-        listen(conf, onStart, app);
-        logger.info('Manet server started on port %d', conf.port);
-    }
+        });
+    logger.info('Manet server started on %s:%d', host, port);
 }
 
 

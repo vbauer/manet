@@ -33,11 +33,6 @@ function createSchema() {
         ui: joi
             .boolean()
             .label('Enable sandbox UI'),
-        workers: joi
-            .number()
-            .integer()
-            .min(1)
-            .label('Workers'),
         silent: joi
             .boolean()
             .label('Enable silent mode'),
