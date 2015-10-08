@@ -8,7 +8,8 @@
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
-        'force'
+        'force',
+        'engine'
     ];
 
     function cleanBoolValue(name, value) {

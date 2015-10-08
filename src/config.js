@@ -45,7 +45,7 @@ function createSchema() {
             .string()
             .lowercase()
             .allow('phantomjs', 'slimerjs')
-            .label('Engine name'),
+            .label('Default engine'),
         timeout: joi
             .number()
             .integer()

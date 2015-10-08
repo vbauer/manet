@@ -9,8 +9,8 @@ var _ = require('lodash'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
 
-    DEF_ENGINE = 'slimerjs',
-    DEF_COMMAND = 'slimerjs',
+    DEF_ENGINE = 'phantomjs',
+    DEF_COMMAND = 'phantomjs',
     DEF_FORMAT = 'png';
 
 
@@ -27,10 +27,17 @@ function cliCommand(config) {
     return command || DEF_COMMAND;
 }
 
-function cleanupOptions(options, config) {
+function createOptions(options, config) {
     var opts = _.omit(options, ['force', 'callback']);
     opts.url = utils.fixUrl(options.url);
     return _.defaults(opts, config.options);
+}
+
+function createConfig(options, config) {
+    var conf = _.cloneDeep(config),
+        engine = options.engine;
+    conf.engine = engine || conf.engine;
+    return conf;
 }
 
 
@@ -100,16 +107,17 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 /* External API */
 
 function screenshot(options, config, onFinish) {
-    var opts = cleanupOptions(options, config),
+    var conf = createConfig(options, config),
+        opts = createOptions(options, config),
         base64 = utils.encodeBase64(opts),
-        file = outputFile(opts, config, base64),
+        file = outputFile(opts, conf, base64),
 
         retrieveImageFromStorage = function () {
             logger.debug('Take screenshot from file storage: %s', base64);
             onFinish(file, null);
         },
         retrieveImageFromSite = function () {
-            runCapturingProcess(opts, config, file, base64, function (error) {
+            runCapturingProcess(opts, conf, file, base64, function (error) {
                 logger.debug('Process finished work: %s', base64);
                 return onFinish(file, error);
             });
@@ -117,7 +125,7 @@ function screenshot(options, config, onFinish) {
 
     logger.info('Capture site screenshot: %s', options.url);
 
-    if (options.force || !config.cache) {
+    if (options.force || !conf.cache) {
         retrieveImageFromSite();
     } else {
         fs.exists(file, function (exists) {

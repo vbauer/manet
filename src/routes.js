@@ -12,6 +12,7 @@ var _ = require('lodash'),
     utils = require('./utils'),
 
     OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
+    ENGINE_TYPES = ['phantomjs', 'slimerjs'],
     REGEXP_CLIP_RECT = /^(\d*),(\d*),([1-9]\d*),([1-9]\d*)$/;
 
 
@@ -25,6 +26,7 @@ function createSchema() {
         headers: joi.string().trim(),
         delay: joi.number().integer().min(0),
         format: joi.string().lowercase().trim().allow(OUTPUT_FORMATS),
+        engine: joi.string().lowercase().trim().allow(ENGINE_TYPES),
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
