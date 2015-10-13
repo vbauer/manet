@@ -60,7 +60,7 @@ or (to use second version):
 npm install -g phantomjs2
 ```
 
-**IMPORTANT:** PhantomJS is used by default (see `default.json` file).
+**IMPORTANT:** PhantomJS is used by default (see `default.yaml` file).
 
 
 ### Installation
@@ -91,7 +91,7 @@ Manet server uses hierarchical configurations to cover differnet usage use-cases
 
 * Command-line parameters
 * Environment variables
-* Built-in configuration JSON file *("config/default.json")*
+* Built-in configuration [YAML](http://yaml.org) file *("config/default.yaml")*
 
 Rules of overriding:
 
@@ -111,10 +111,10 @@ Rules of overriding:
   <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
 
   <dt>--engine</dt>
-  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "phantomjs"). Specific command will be detected by configuration file (default.json) using engine parameter and OS platform.</dd>
+  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "phantomjs"). Specific command will be detected by configuration file (default.yaml) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
-  <dd>Configuration file "default.json" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
+  <dd>Configuration file "default.yaml" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
 
   <dt>--storage</dt>
   <dd>File storage for cache (default is global temp directory).</dd>
@@ -155,46 +155,39 @@ Rules of overriding:
 
 Built-in configuration could be found in `manet` directory. For example, on Ubuntu it is located here: *"/usr/local/lib/node_modules/manet/"*.
 
-Default configuration file *("default.json")*:
+Default configuration file *("default.yaml")*:
 
-```json
-{
-    "host": "127.0.0.1",
-    "port": 8891,
-    "cors": false,
-    "ui": true,
+```yaml
+host: 127.0.0.1
+port: 8891
+cors: false
+ui: true
 
-    "silent": false,
-    "level": "info",
+silent: false
+level: info
 
-    "engine": "phantomjs",
-    "options": {},
-    "timeout": 60000,
-    "compress": false,
-    "cache": 3600,
-    "cleanup": false,
+engine: phantomjs
+timeout: 60000
+compress: false
+cache: 3600
+cleanup: false
 
-    "commands": {
-        "slimerjs": {
-            "linux": "xvfb-run -a slimerjs",
-            "freebsd": "xvfb-run -a slimerjs",
-            "sunos": "xvfb-run -a slimerjs",
-            "darwin": "slimerjs",
-            "win32": "slimerjs.bat"
-        },
-        "phantomjs": {
-            "linux": "phantomjs --ignore-ssl-errors=true --web-security=false",
-            "freebsd": "phantomjs --ignore-ssl-errors=true --web-security=false",
-            "sunos": "phantomjs --ignore-ssl-errors=true --web-security=false",
-            "darwin": "phantomjs --ignore-ssl-errors=true --web-security=false",
-            "win32": "phantomjs --ignore-ssl-errors=true --web-security=false"
-        }
-    },
+commands:
+    slimerjs:
+        linux: "xvfb-run -a slimerjs"
+        freebsd: "xvfb-run -a slimerjs"
+        sunos: "xvfb-run -a slimerjs"
+        darwin: "slimerjs"
+        win32: "slimerjs.bat"
+    phantomjs:
+        linux: "phantomjs --ignore-ssl-errors=true --web-security=false"
+        freebsd: "phantomjs --ignore-ssl-errors=true --web-security=false"
+        sunos: "phantomjs --ignore-ssl-errors=true --web-security=false"
+        darwin: "phantomjs --ignore-ssl-errors=true --web-security=false"
+        win32: "phantomjs --ignore-ssl-errors=true --web-security=false"
 
-    "whitelist": [
-        "*"
-    ]
-}
+whitelist:
+    - "*"
 ```
 
 

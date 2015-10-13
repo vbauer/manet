@@ -17,7 +17,7 @@ describe('config', function () {
             var conf = config.read();
             assert.equal(false, _.isEmpty(conf));
 
-            // Parameters are configured in "default.json" file.
+            // Parameters are configured in "default.yaml" file.
             assert.equal('127.0.0.1', conf.host);
             assert.equal('phantomjs', conf.engine);
             assert.equal('info', conf.level);
