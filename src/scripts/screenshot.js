@@ -56,6 +56,16 @@
         return JSON.parse(optionsJSON);
     }
 
+    function composeOptions(base64, outputFile) {
+        try {
+            var options = parseOptions(base64);
+            options.outputFile = outputFile;
+            return options;
+        } catch (e) {
+            exit(page, e);
+        }
+    }
+
 
     /* Web page creation */
 
@@ -127,13 +137,24 @@
             log('CONSOLE: ' + msg + ' (from line #' + line + ' in "' + source + '")');
         };
 
+        page.onNavigationRequested = function(url, type, willNavigate, main) {
+            var prevUrl = options.url;
+            if (main && url != prevUrl) {
+                page.close();
+                options.url = url;
+                setTimeout(function() {
+                    captureScreenshot(options);
+                });
+            }
+        };
+
         return page;
     }
 
 
     /* Screenshot rendering */
 
-    function renderScreenshotFile(page, options, outputFile, onFinish) {
+    function renderScreenshotFile(page, options) {
         var delay = def(options.delay, DEF_DELAY),
             format = def(options.format, DEF_FORMAT),
             quality = pageQuality(options, format);
@@ -144,30 +165,30 @@
                     onlyViewport: !!options.height,
                     quality: quality,
                     format: format
-                };
+                },
+                outputFile = options.outputFile;
 
                 page.render(outputFile, renderOptions);
 
                 log('Rendered screenshot: ' + outputFile);
-                onFinish(page);
+                exit(page);
             } catch (e) {
-                onFinish(page, e);
+                exit(page, e);
             }
         }, delay);
     }
 
-    function captureScreenshot(base64, outputFile, onFinish) {
+    function captureScreenshot(options) {
         try {
-            var options = parseOptions(base64),
-                page = createPage(options);
+            var page = createPage(options);
 
             page.open(options.url, function (status) {
                 var onPageReady = function() {
                     try {
                         addStyles(page, DEF_STYLES);
-                        renderScreenshotFile(page, options, outputFile, onFinish);
+                        renderScreenshotFile(page, options);
                     } catch (e) {
-                        onFinish(page, e);
+                        exit(page, e);
                     }
                 },
                 checkReadyState = function() {
@@ -191,7 +212,7 @@
                 }
             });
         } catch (e) {
-            onFinish(null, e);
+            exit(null, e);
         }
     }
 
@@ -213,8 +234,9 @@
     var system = require('system'),
         webpage = require('webpage'),
         base64 = argument(0),
-        outputFile = argument(1);
+        outputFile = argument(1),
+        options = composeOptions(base64, outputFile);
 
-    captureScreenshot(base64, outputFile, exit);
+    captureScreenshot(options);
 
 })();
