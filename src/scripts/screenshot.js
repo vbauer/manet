@@ -123,6 +123,10 @@
             }
         };
 
+        page.onConsoleMessage = function(msg, line, source) {
+            log('CONSOLE: ' + msg + ' (from line #' + line + ' in "' + source + '")');
+        };
+
         return page;
     }
 
