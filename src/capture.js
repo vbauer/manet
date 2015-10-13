@@ -5,6 +5,7 @@ var _ = require('lodash'),
     logger = require('winston'),
     path = require('path'),
     squirrel = require('squirrel'),
+    crypto = require('crypto'),
     utils = require('./utils'),
 
     SCRIPT_FILE = 'scripts/screenshot.js',
@@ -17,8 +18,9 @@ var _ = require('lodash'),
 /* Configurations and options */
 
 function outputFile(options, conf) {
-    var sha1 = require('crypto').createHash('sha1').update(JSON.stringify(options)).digest('hex');
-    var format = options.format || DEF_FORMAT;
+    var json = JSON.stringify(options),
+        sha1 = crypto.createHash('sha1').update(json).digest('hex'),
+        format = options.format || DEF_FORMAT;
     return conf.storage + path.sep + sha1 + '.' + format;
 }
 
