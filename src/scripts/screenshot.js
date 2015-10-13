@@ -62,7 +62,7 @@
             options.outputFile = outputFile;
             return options;
         } catch (e) {
-            exit(page, e);
+            exit(null, e);
         }
     }
 
@@ -139,7 +139,7 @@
 
         page.onNavigationRequested = function(url, type, willNavigate, main) {
             var prevUrl = options.url;
-            if (main && url != prevUrl) {
+            if (main && url !== prevUrl) {
                 page.close();
                 options.url = url;
                 setTimeout(function() {
