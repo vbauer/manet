@@ -37,7 +37,8 @@ function initLogging(conf) {
     logger.add(logger.transports.Console, {
         level: conf.level || DEF_LOGGER_LEVEL,
         silent: conf.silent || DEF_LOGGER_SILENT,
-        colorize: true
+        colorize: true,
+        timestamp: true
     });
 }
 
