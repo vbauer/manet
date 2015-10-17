@@ -2,6 +2,7 @@
 
 var _ = require('lodash'),
     nconf = require('nconf'),
+    yaml = require('js-yaml'),
     cloudEnv = require('cloud-env'),
     logger = require('winston'),
     joi = require('joi'),
@@ -9,7 +10,7 @@ var _ = require('lodash'),
     os = require('os'),
     utils = require('./utils'),
 
-    DEF_CONFIG = 'config/default.json',
+    DEF_CONFIG = 'config/default.yaml',
     ENV_IP = 'IP',
     ENV_PORT = 'PORT';
 
@@ -87,7 +88,11 @@ function load() {
         config = nconf.argv()
         .env()
         .file({
-            file: confPath
+            file: confPath,
+            format: {
+                parse: yaml.safeLoad,
+                stringify: yaml.safeDump,
+            }
         })
         .get();
 
@@ -95,6 +100,7 @@ function load() {
     config.storage = path.resolve(config.storage || os.tmpdir());
     config.host = cloudEnv.get(ENV_IP, config.host);
     config.port = cloudEnv.get(ENV_PORT, config.port);
+    config.path = confPath;
 
     return config;
 }
@@ -115,7 +121,6 @@ function read() {
 /* Exported functions */
 
 module.exports = {
-    defaultConfigPath: defaultConfigPath,
     createSchema: createSchema,
     read: read
 };
