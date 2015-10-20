@@ -105,7 +105,7 @@ Rules of overriding:
 <dl>
 
   <dt>--host</dt>
-  <dd>Web server host (default: "127.0.0.1"). Usually, it is unnecessary to change this parameter.</dd>
+  <dd>Web server host (default: "0.0.0.0"). Usually, it is unnecessary to change this parameter.</dd>
 
   <dt>--port</dt>
   <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
@@ -158,7 +158,7 @@ Built-in configuration could be found in `manet` directory. For example, on Ubun
 Default configuration file *("default.yaml")*:
 
 ```yaml
-host: 127.0.0.1
+host: 0.0.0.0
 port: 8891
 cors: false
 ui: true
