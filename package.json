@@ -52,7 +52,7 @@
         "express": "^4.13.3",
         "request": "^2.65.0",
         "body-parser": "^1.14.1",
-        "helmet": "^0.12.0",
+        "helmet": "^0.13.0",
         "fs-extra": "^0.24.0",
         "nconf": "^0.8.2",
         "js-yaml": "^3.4.3",
