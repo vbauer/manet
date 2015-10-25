@@ -105,13 +105,13 @@ Rules of overriding:
 <dl>
 
   <dt>--host</dt>
-  <dd>Web server host (default: "0.0.0.0"). Usually, it is unnecessary to change this parameter.</dd>
+  <dd>Web server host (default: `"0.0.0.0"`). Usually, it is unnecessary to change this parameter.</dd>
 
   <dt>--port</dt>
-  <dd>Web server port number. REST API and UI will be available on this port (default: 8891).</dd>
+  <dd>Web server port number. REST API and UI will be available on this port (default: `8891`).</dd>
 
   <dt>--engine</dt>
-  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "phantomjs"). Specific command will be detected by configuration file (default.yaml) using engine parameter and OS platform.</dd>
+  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is `"phantomjs"`). Specific command will be detected by configuration file (default.yaml) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
   <dd>Configuration file "default.yaml" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
@@ -123,28 +123,28 @@ Rules of overriding:
   <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
 
   <dt>--cleanupStartup</dt>
-  <dd>Clean up FS storage on server startup (default is false). It removes all files which were stored previously.</dd>
+  <dd>Clean up FS storage on server startup (default is `false`). It removes all files which were stored previously.</dd>
 
   <dt>--cleanupRuntime</dt>
-  <dd>Clean up FS storage at server runtime (default is false). It removes file with captured image after sending on client.</dd>
+  <dd>Clean up FS storage at server runtime (default is `false`). It removes file with captured image after sending on client.</dd>
 
   <dt>--compress</dt>
-  <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is false). File sizes are significantly reduced due to this, but it requires additional processing time. Furthermore, imagemin is an optional dependency. It will be downloaded and installed in runtime during the first request, so it will take an additional time (one time).</dd>
+  <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is `false`). File sizes are significantly reduced due to this, but it requires additional processing time. Furthermore, imagemin is an optional dependency. It will be downloaded and installed in runtime during the first request, so it will take an additional time (one time).</dd>
 
   <dt>--silent</dt>
-  <dd>Run Manet server with or without logging information (default is false).</dd>
+  <dd>Run Manet server with or without logging information (default is `false`).</dd>
 
   <dt>--level</dt>
-  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is "info"). If want to investigate some problem with Manet, use "debug" level: --level=debug</dd>
+  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is `"info"`). If want to investigate some problem with Manet, use "debug" level: --level=debug</dd>
 
   <dt>--cors</dt>
-  <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is false).</dd>
+  <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is `false`).</dd>
 
   <dt>--ui</dt>
-  <dd>Enable or disable sandbox UI (default is true).</dd>
+  <dd>Enable or disable sandbox UI (default is `true`).</dd>
 
   <dt>--timeout</dt>
-  <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is 60000).</dd>
+  <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is `60000`).</dd>
 
   <dt>--options:{option}</dt>
   <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101".</dd>
@@ -218,7 +218,7 @@ Few rules:
   <dd>Website address (URL). This is the only required parameter for the HTTP request. It is unnecessary for the most cases to configure scheme. Example: "github.com".</dd>
 
   <dt>width</dt>
-  <dd>This property allows to change the width of the viewport, e.g., the size of the window where the webpage is displayed (default: 1024)</dd>
+  <dd>This property allows to change the width of the viewport, e.g., the size of the window where the webpage is displayed (default: `1024`)</dd>
 
   <dt>height</dt>
   <dd>This property allows to change the height of the viewport. If width is defined and height is not defined, than full page will be captured.</dd>
@@ -227,16 +227,16 @@ Few rules:
   <dd>This property defines the rectangular area of the web page to be rasterized. Format: "top,left,width,height", example: "20,20,640,480".</dd>
 
   <dt>zoom</dt>
-  <dd>Zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: 1).</dd>
+  <dd>Zoom factor of the webpage display. Setting a value to this property decreases or increases the size of the web page rendering. A value between 0 and 1 decreases the size of the page, and a value higher than 1 increases its size. 1 means no zoom (normal size). (default: `1`).</dd>
 
   <dt>quality</dt>
-  <dd>The compression quality. A number between 0 and 1 (default value: 1). Quality parameter doesn't work for PNG file format.</dd>
+  <dd>The compression quality. A number between 0 and 1 (default value: `1`). Quality parameter doesn't work for PNG file format.</dd>
 
   <dt>delay</dt>
-  <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: 100).</dd>
+  <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: `100`).</dd>
 
   <dt>format</dt>
-  <dd>Indicate the file format for output image (default is "png"). Possible values: jpg, jpeg, png, gif, pdf</dd>
+  <dd>Indicate the file format for output image (default is `"png"`). Possible values: jpg, jpeg, png, gif, pdf</dd>
 
   <dt>agent</dt>
   <dd>String to define the "User-Agent" in HTTP requests. By default, it is something like:
@@ -256,19 +256,19 @@ Few rules:
   <dd>Password to give to HTTP Basic authentication.</dd>
 
   <dt>js</dt>
-  <dd>false to deactivate javascript in web pages (default is true).</dd>
+  <dd>false to deactivate javascript in web pages (default is `true`).</dd>
 
   <dt>images</dt>
-  <dd>false to deactivate the loading of images (default is true).</dd>
+  <dd>false to deactivate the loading of images (default is `true`).</dd>
 
   <dt>force</dt>
-  <dd>Use the force reloading of web page without using cache (default is false).</dd>
+  <dd>Use the force reloading of web page without using cache (default is `false`).</dd>
 
   <dt>callback</dt>
   <dd>Return an empty response immediately (HTTP 200 OK), then send a POST request to the callback URL when the screenshot is ready (with image in the body).</dd>
 
   <dt>engine</dt>
-  <dd>Override default engine parameter. Possible values: phantomjs, slimerjs.</dd>
+  <dd>Override default engine parameter. Possible values: `phantomjs`, `slimerjs`.</dd>
 
 </dl>
 
@@ -386,6 +386,7 @@ You need to create Heroku instance with as described in this documentation.
 * SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
 * PhantomJS author [Ariya Hidayat](https://github.com/ariya/phantomjs) and PhantomJS [community](https://github.com/ariya/phantomjs/graphs/contributors).
 * [Pietro Delsante](https://github.com/pdelsante) for the [manet-dockerfile](https://github.com/pdelsante/manet-dockerfile) to run project inside a Docker container.
+* All [contributors](https://github.com/vbauer/manet/graphs/contributors) for their help and pull requests.
 
 
 ## License
