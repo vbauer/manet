@@ -137,7 +137,7 @@ function sendImageInResponse(res, config) {
     };
 }
 
-function sendImageToUrl(res, options) {
+function sendImageToUrl(res, config, options) {
     return function (file, error) {
         var callbackUrl = utils.fixUrl(options.callback);
         if (error) {
@@ -181,7 +181,7 @@ function index(config) {
                     )));
 
                     logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
-                    capture.screenshot(options, config, sendImageToUrl(res, options));
+                    capture.screenshot(options, config, sendImageToUrl(res, config, options));
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
                     capture.screenshot(options, config, sendImageInResponse(res, config));
