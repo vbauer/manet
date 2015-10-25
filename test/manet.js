@@ -25,7 +25,7 @@ describe('manet', function () {
 
     function sendRequest(method, url, encoding, callback) {
         var options = {
-            host: conf.host,
+            host: conf.host.replace('0.0.0.0', '127.0.0.1'),
             port: conf.port,
             method: method,
             path: url
