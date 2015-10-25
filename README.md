@@ -122,8 +122,11 @@ Rules of overriding:
   <dt>--cache</dt>
   <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
 
-  <dt>--cleanup</dt>
-  <dd>Remove FS storage on server startup (default is false).</dd>
+  <dt>--cleanupStartup</dt>
+  <dd>Clean up FS storage on server startup (default is false). It removes all files which were stored previously.</dd>
+
+  <dt>--cleanupRuntime</dt>
+  <dd>Clean up FS storage at server runtime (default is false). It removes file with captured image after sending on client.</dd>
 
   <dt>--compress</dt>
   <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is false). File sizes are significantly reduced due to this, but it requires additional processing time. Furthermore, imagemin is an optional dependency. It will be downloaded and installed in runtime during the first request, so it will take an additional time (one time).</dd>
@@ -170,7 +173,8 @@ engine: phantomjs
 timeout: 60000
 compress: false
 cache: 3600
-cleanup: false
+cleanupStartup: false
+cleanupRuntime: false
 
 commands:
     slimerjs:

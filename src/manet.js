@@ -57,7 +57,7 @@ function initExitHandling() {
 /* Init FS services */
 
 function cleanupFsStorage(conf) {
-    if (conf.cleanup) {
+    if (conf.cleanupStartup) {
         var storagePath = conf.storage,
             files = fs.readdirSync(storagePath);
 

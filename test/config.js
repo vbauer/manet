@@ -24,6 +24,7 @@ describe('config', function () {
             assert.equal(true, conf.ui);
             assert.equal(false, conf.cors);
             assert.equal(false, conf.compress);
+            assert.equal(false, conf.cleanupRuntime);
             assert.equal(60000, conf.timeout);
             assert.equal(3600, conf.cache);
             assert.equal(8891, conf.port);
@@ -33,7 +34,7 @@ describe('config', function () {
             assert.equal(false, _.isEmpty(conf.whitelist));
 
             // Parameters are configured in tests.
-            assert.equal(true, conf.cleanup);
+            assert.equal(true, conf.cleanupStartup);
             assert.equal(true, conf.silent);
         });
 

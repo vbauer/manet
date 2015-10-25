@@ -111,6 +111,14 @@ function isUrlAllowed(config, url) {
 
 /* Result processors */
 
+function onImageFileSent(file, config) {
+    if (config.cleanupRuntime) {
+        fs.unlink(file, function () {
+            logger.debug('Deleted file: %s', file);
+        });
+    }
+}
+
 function sendImageInResponse(res, config) {
     return function (file, error) {
         if (error) {
@@ -123,6 +131,7 @@ function sendImageInResponse(res, config) {
                 if (err) {
                     sendError(res, 'Error while sending image file: ' + err.message);
                 }
+                onImageFileSent(file, config);
             });
         }
     };
@@ -142,6 +151,7 @@ function sendImageToUrl(res, options) {
                 if (err) {
                     sendError(res, 'Error while streaming image file: ' + err.message);
                 }
+                onImageFileSent(file, config);
             }));
         }
     };

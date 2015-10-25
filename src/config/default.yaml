@@ -11,7 +11,8 @@ engine: phantomjs
 timeout: 60000
 compress: false
 cache: 3600
-cleanup: false
+cleanupStartup: false
+cleanupRuntime: false
 
 commands:
     slimerjs:

@@ -66,9 +66,12 @@ function createSchema() {
             .number()
             .integer()
             .label('Cache life time'),
-        cleanup: joi
+        cleanupStartup: joi
             .boolean()
             .label('Cleanup storage at startup'),
+        cleanupRuntime: joi
+            .boolean()
+            .label('Cleanup storage after sending image'),
         compress: joi
             .boolean()
             .label('Compress screenshots'),

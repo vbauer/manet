@@ -9,7 +9,7 @@ var _ = require('lodash'),
     manet = require('../src/manet');
 
 
-process.env.cleanup = true;
+process.env.cleanupStartup = true;
 process.env.silent = true;
 
 
