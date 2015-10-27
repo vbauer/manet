@@ -53,9 +53,12 @@ function minimizeImage(src, dest, cb) {
         'imagemin-jpegtran',
         'imagemin-optipng',
         'imagemin-svgo'
-    ];
+    ],
+    options = {
+        allowInstall: true
+    };
 
-    squirrel(iminModules, function(err, Imagemin) {
+    squirrel(iminModules, options, function(err, Imagemin) {
         var safeCb = function (err) {
             if (err) {
                 logger.error(err);
