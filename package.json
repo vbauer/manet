@@ -66,9 +66,9 @@
     },
 
     "pluginDependencies": {
-        "imagemin": "^3.2.0",
+        "imagemin": "^3.2.2",
         "imagemin-gifsicle": "^4.2.0",
-        "imagemin-jpegtran": "^4.3.0",
+        "imagemin-jpegtran": "^4.3.1",
         "imagemin-optipng": "^4.3.0",
         "imagemin-svgo": "^4.1.2"
     },
