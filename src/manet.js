@@ -19,11 +19,12 @@ var _ = require('lodash'),
 
 function initLogging(conf) {
     logger.setLevels({
-        debug: 0,
-        info: 1,
-        silly: 2,
-        warn: 3,
-        error: 4
+        error: 0,
+        warn: 1,
+        info: 2,
+        verbose: 3,
+        debug: 4,
+        silly: 5
     });
     logger.addColors({
         debug: 'green',
