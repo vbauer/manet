@@ -6,6 +6,14 @@ var _ = require('lodash'),
     utils = require('./utils');
 
 
+/* Internal API */
+
+function getBasic(conf) {
+    var security = conf.security;
+    return security ? security.basic : null;
+}
+
+
 /* Filters */
 
 function merge(req, res, next) {
@@ -23,27 +31,22 @@ function usage(conf) {
                 return res.sendFile(utils.filePath('../public/usage.html'));
             }
             return next();
-        }
+        };
     }
     return null;
 }
 
-function getBasic(conf) {
-    var security = conf.security;
-    return security ? security.basic : null;
-}
-
 function basic(conf) {
-    var basic = getBasic(conf);
-    return basic ? passport.authenticate('basic', { session: false }) : null;
+    var creds = getBasic(conf);
+    return creds ? passport.authenticate('basic', { session: false }) : null;
 }
 
 function configureWebSecurity(conf) {
-    var basic = getBasic(conf);
-    if (basic) {
+    var creds = getBasic(conf);
+    if (creds) {
         passport.use(new passportHttp.BasicStrategy(
             function(username, password, done) {
-                if (basic.username === username && basic.password === password) {
+                if (creds.username === username && creds.password === password) {
                     return done(null, basic);
                 }
                 return done(null, false);
