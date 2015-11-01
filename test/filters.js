@@ -6,33 +6,28 @@ var _ = require('lodash'),
 
 
 describe('filters', function () {
-
-    var URL = 'github.com';
-
-    function req(url, param) {
-        var r = {};
-        r[param || 'data'] = {
-            url: url
+    var URL = 'github.com',
+        req = function (url, param) {
+            var r = {};
+            r[param || 'data'] = {
+                url: url
+            };
+            return r;
+        },
+        res = function (value) {
+            return {
+                sendFile: function () {
+                    return value;
+                }
+            };
         };
-        return r;
-    }
-
-    function res(value) {
-        return {
-            sendFile: function () {
-                return value;
-            }
-        };
-    }
-
 
     describe('merge', function () {
-
-        function next(req) {
+        var next = function (req) {
             return function () {
                 return req.data.url;
             };
-        }
+        };
 
         it('should take url from body', function () {
             var r = req(URL, 'body');
@@ -52,13 +47,13 @@ describe('filters', function () {
     });
 
     describe('usage', function () {
+        var next = _.constant,
+            usage = filters.usage({ ui: true });
 
-        var next = function(value) {
-            return function () {
-                return value;
-            };
-        },
-        usage = filters.usage({ ui: true });
+        it('should depend on configuration', function () {
+            assert.equal(true, null === filters.usage({}));
+            assert.equal(false, null === filters.usage({ ui: true }));
+        });
 
         it('should process url parameter', function () {
             assert.equal(true, usage(req(URL), res(false), next(true)));
@@ -67,6 +62,15 @@ describe('filters', function () {
         it('should process next function', function () {
             assert.equal(true, usage(req(null), res(true), next(false)));
             assert.equal(true, usage(req(''), res(true), next(false)));
+        });
+
+    });
+
+    describe('basic', function () {
+
+        it('should depend on configuration', function () {
+            assert.equal(true, null === filters.basic({}));
+            assert.equal(false, null === filters.basic({ security: { basic: {} } }));
         });
 
     });
