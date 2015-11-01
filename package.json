@@ -53,6 +53,8 @@
         "request": "^2.65.0",
         "body-parser": "^1.14.1",
         "helmet": "^0.14.0",
+        "passport": "^0.3.0",
+        "passport-http": "^0.3.0",
         "fs-extra": "^0.26.0",
         "nconf": "^0.8.2",
         "js-yaml": "^3.4.3",

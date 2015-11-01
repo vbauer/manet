@@ -53,19 +53,20 @@ describe('filters', function () {
 
     describe('usage', function () {
 
-        function next(value) {
+        var next = function(value) {
             return function () {
                 return value;
             };
-        }
+        },
+        usage = filters.usage({ ui: true });
 
         it('should process url parameter', function () {
-            assert.equal(true, filters.usage(req(URL), res(false), next(true)));
+            assert.equal(true, usage(req(URL), res(false), next(true)));
         });
 
         it('should process next function', function () {
-            assert.equal(true, filters.usage(req(null), res(true), next(false)));
-            assert.equal(true, filters.usage(req(''), res(true), next(false)));
+            assert.equal(true, usage(req(null), res(true), next(false)));
+            assert.equal(true, usage(req(''), res(true), next(false)));
         });
 
     });

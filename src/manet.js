@@ -6,6 +6,7 @@ var _ = require('lodash'),
     logger = require('winston'),
     fs = require('fs-extra'),
     helmet = require('helmet'),
+    passport = require('passport'),
     config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
@@ -91,28 +92,28 @@ function initFsStorage(conf) {
 }
 
 
-/* Web service */
-
-function addUsage(conf, chain) {
-    if (conf.ui) {
-        chain.push(filters.usage);
-    }
-    return chain;
-}
+/* Web application */
 
 function createWebApplication(conf) {
     var app = express(),
         index = routes.index(conf),
-        urlencoded = bodyParser.urlencoded({
-            extended: false
-        }),
+        urlencoded = bodyParser.urlencoded({ extended: false }),
         json = bodyParser.json(),
-        noCache = helmet.noCache();
+        noCache = helmet.noCache(),
+        basic = filters.basic(conf),
+        usage = filters.usage(conf),
+        merge = filters.merge,
+        notNull = function(f) {
+            return _.without(f, null);
+        };
+
+    filters.configureWebSecurity(conf);
 
     app.use(express.static(utils.filePath('../public')));
+    app.use(passport.initialize());
 
-    app.get('/', addUsage(conf, [noCache, filters.merge]), index);
-    app.post('/', addUsage(conf, [urlencoded, json, noCache, filters.merge]), index);
+    app.get('/', notNull([basic, merge, usage, noCache]), index);
+    app.post('/', notNull([basic, merge, usage, urlencoded, json, noCache]), index);
 
     return app;
 }

@@ -30,3 +30,8 @@ commands:
 
 whitelist:
     - "*"
+
+security:
+    basic:
+#        username: admin
+#        password: admin
