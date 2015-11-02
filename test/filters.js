@@ -5,70 +5,67 @@ var _ = require('lodash'),
     filters = require('../src/filters');
 
 
-describe('filters', function () {
-    var URL = 'github.com',
-        req = function (url, param) {
-            var r = {};
+describe('filters', () => {
+
+    let URL = 'github.com',
+        req = (url, param) => {
+            let r = {};
             r[param || 'data'] = {
                 url: url
             };
             return r;
         },
-        res = function (value) {
+        res = (value) => {
             return {
-                sendFile: function () {
-                    return value;
-                }
+                sendFile: () => value
             };
         };
 
-    describe('merge', function () {
-        var next = function (req) {
-            return function () {
-                return req.data.url;
-            };
+    describe('merge', () => {
+        let next = (req) => {
+            return () => req.data.url;
         };
 
-        it('should take url from body', function () {
-            var r = req(URL, 'body');
+        it('should take url from body', () => {
+            let r = req(URL, 'body');
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
-        it('should take url from query', function () {
-            var r = req(URL, 'query');
+        it('should take url from query', () => {
+            let r = req(URL, 'query');
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
-        it('should take from url query in priority', function () {
-            var r = _.defaults(req(URL, 'query'), req(URL + URL, 'body'));
+        it('should take from url query in priority', () => {
+            let r = _.defaults(req(URL, 'query'), req(URL + URL, 'body'));
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
     });
 
-    describe('usage', function () {
-        var next = _.constant,
+    describe('usage', () => {
+        let next = _.constant,
             usage = filters.usage({ ui: true });
 
-        it('should depend on configuration', function () {
+        it('should depend on configuration', () => {
             assert.equal(true, null === filters.usage({}));
             assert.equal(false, null === filters.usage({ ui: true }));
         });
 
-        it('should process url parameter', function () {
+        it('should process url parameter', () => {
             assert.equal(true, usage(req(URL), res(false), next(true)));
         });
 
-        it('should process next function', function () {
+        it('should process next function', () => {
             assert.equal(true, usage(req(null), res(true), next(false)));
             assert.equal(true, usage(req(''), res(true), next(false)));
         });
 
     });
 
-    describe('basic', function () {
+    describe('basic', () => {
 
-        it('should depend on configuration', function () {
+        it('should depend on configuration', () => {
             assert.equal(true, null === filters.basic({}));
             assert.equal(false, null === filters.basic({ security: { basic: {} } }));
         });

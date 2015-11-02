@@ -9,12 +9,12 @@ process.env.silent = true;
 process.env.engine = 'phantomjs';
 
 
-describe('config', function () {
+describe('config', () => {
 
-    describe('read', function () {
+    describe('read', () => {
 
-        it('default configuration should exist', function () {
-            var conf = config.read();
+        it('default configuration should exist', () => {
+            let conf = config.read();
             assert.equal(false, _.isEmpty(conf));
 
             // Parameters are configured in "default.yaml" file.

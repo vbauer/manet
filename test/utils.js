@@ -12,27 +12,27 @@ describe('utils', function () {
     // Configure timeout = 5 sec.
     this.timeout(5000);
 
-    describe('fixUrl', function () {
+    describe('fixUrl', () => {
 
-        it('null-value', function () {
-            assert.equal(null, utils.fixUrl(null));
-        });
+        it('null-value', () =>
+            assert.equal(null, utils.fixUrl(null))
+        );
 
-        it('HTTP scheme', function () {
-            var url = 'http://android-arsenal.com';
+        it('HTTP scheme', () => {
+            let url = 'http://android-arsenal.com';
             assert.equal(url, utils.fixUrl(url));
         });
 
-        it('HTTPS scheme', function () {
-            var url = 'https://android-arsenal.com';
+        it('HTTPS scheme', () => {
+            let url = 'https://android-arsenal.com';
             assert.equal(url, utils.fixUrl(url));
         });
 
     });
 
-    describe('encodeBase64', function () {
+    describe('encodeBase64', () => {
 
-        it('BASE64 for not empty JSON object', function () {
+        it('BASE64 for not empty JSON object', () => {
             assert.equal(
                 'eyJmb3JjZSI6dHJ1ZX0=',
                 utils.encodeBase64({
@@ -41,49 +41,40 @@ describe('utils', function () {
             );
         });
 
-        it('BASE64 for empty JSON object', function () {
-            assert.equal(
-                'e30=',
-                utils.encodeBase64({})
-            );
-        });
+        it('BASE64 for empty JSON object', () =>
+            assert.equal('e30=', utils.encodeBase64({}))
+        );
 
-        it('BASE64 for null-object', function () {
-            assert.equal(
-                'bnVsbA==',
-                utils.encodeBase64(null)
-            );
-        });
+        it('BASE64 for null-object', () =>
+            assert.equal('bnVsbA==', utils.encodeBase64(null))
+        );
 
-        it('BASE64 for non-JSON object', function () {
-            assert.equal(
-                'IlN0cmluZyI=',
-                utils.encodeBase64('String')
-            );
-        });
+        it('BASE64 for non-JSON object', () =>
+            assert.equal('IlN0cmluZyI=', utils.encodeBase64('String'))
+        );
 
     });
 
-    describe('filePath', function () {
+    describe('filePath', () => {
 
-        it('not null', function () {
-            var file = utils.filePath('.');
+        it('not null', () => {
+            let file = utils.filePath('.');
             assert.notEqual(null, file);
             assert.notEqual('', file);
         });
 
     });
 
-    describe('runFsWatchdog', function () {
+    describe('runFsWatchdog', () => {
 
-        it('should not start fs watch dog', function () {
+        it('should not start fs watch dog', () => {
             assert.equal(null, utils.runFsWatchdog(null, 0, null));
             assert.equal(null, utils.runFsWatchdog(null, 60, null));
             assert.equal(null, utils.runFsWatchdog('/tmp', 0, null));
         });
 
-        it('should start fs watch dog correctly', function () {
-            var watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function () {});
+        it('should start fs watch dog correctly', () => {
+            let watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function () {});
             assert.notEqual(null, watchdog);
             clearInterval(watchdog);
         });
@@ -91,37 +82,33 @@ describe('utils', function () {
     });
 
 
-    describe('execProcess', function () {
+    describe('execProcess', () => {
 
-        it('should not execute empty command', function (done) {
-            assert.throws(function () {
-                utils.execProcess(null, null);
-            });
-            assert.throws(function () {
-                utils.execProcess(null, {});
-            });
+        it('should not execute empty command', (done) => {
+            assert.throws(() => utils.execProcess(null, null));
+            assert.throws(() => utils.execProcess(null, {}));
             done();
         });
 
-        it('execute "ls"', function (done) {
-            utils.execProcess(['ls'], null, function (error1) {
+        it('execute "ls"', (done) => {
+            utils.execProcess(['ls'], null, (error1) => {
                 assert.equal(null, error1);
-                utils.execProcess(['ls'], {}, function (error2) {
+                utils.execProcess(['ls'], {}, (error2) => {
                     assert.equal(null, error2);
                     done();
                 });
             });
         });
 
-        it('execute "ls -l"', function (done) {
-            utils.execProcess(['ls', '-l'], null, function (error) {
+        it('execute "ls -l"', (done) => {
+            utils.execProcess(['ls', '-l'], null, (error) => {
                 assert.equal(null, error);
                 done();
             });
         });
 
-        it('execute "ls -l -a"', function (done) {
-            utils.execProcess(['ls', '-l', '-a'], null, function (error) {
+        it('execute "ls -l -a"', (done) => {
+            utils.execProcess(['ls', '-l', '-a'], null, (error) => {
                 assert.equal(null, error);
                 done();
             });

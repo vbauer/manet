@@ -15,7 +15,7 @@ process.env.silent = true;
 
 describe('manet', function () {
 
-    var conf = config.read();
+    let conf = config.read();
 
     // Configure timeout = 2 min.
     this.timeout(120000);
@@ -24,30 +24,26 @@ describe('manet', function () {
     /* Common functions */
 
     function sendRequest(method, url, encoding, callback) {
-        var options = {
+        let options = {
             host: conf.host.replace('0.0.0.0', '127.0.0.1'),
             port: conf.port,
             method: method,
             path: url
         };
 
-        http.request(options, function (res) {
-            var data = '';
+        http.request(options, (res) => {
+            let data = '';
 
             res.setEncoding(encoding);
-            res.on('data', function (chunk) {
-                data += chunk;
-            });
-            res.on('end', function () {
-                return callback(data, res);
-            });
+            res.on('data', (chunk) => data += chunk);
+            res.on('end', () => callback(data, res));
         }).end();
     }
 
     function checkHtml(html) {
         w3cjs.validate({
             input: html,
-            callback: function (res) {
+            callback: (res) => {
                 assert.equal(true, _.isEmpty(res.messages));
             }
         });
@@ -60,38 +56,36 @@ describe('manet', function () {
     }
 
     function checkApiCall(q, ct) {
-        var params = _.defaults(q || {}, {
+        let params = _.defaults(q || {}, {
                 url: 'google.com'
             }),
             apiUrl = '/?' + querystring.stringify(params),
             contentType = ct || 'image/png',
             dataType = 'binary';
 
-        return function (callback) {
-            sendRequest('GET', apiUrl, dataType, function (d1, r1) {
+        return (callback) =>
+            sendRequest('GET', apiUrl, dataType, (d1, r1) => {
                 checkResponse(r1, d1, contentType);
-                sendRequest('POST', apiUrl, dataType, function (d2, r2) {
+                sendRequest('POST', apiUrl, dataType, (d2, r2) => {
                     checkResponse(r2, d2, contentType);
                     callback();
                 });
             });
-        };
     }
 
 
     /* Chain of responsibility */
 
-    it('smoke testing of server', function (done) {
-        manet.main(function (server) {
+    it('smoke testing of server', (done) => {
+        manet.main((server) => {
             assert.notEqual(null, server);
 
-            var checkSandboxUI = function (callback) {
-                    sendRequest('GET', '/', 'utf8', function (d1, r1) {
-                        checkResponse(r1, d1, 'text/html; charset=utf-8');
-                        checkHtml(d1);
-                        callback();
-                    });
-                },
+            let checkSandboxUI = (callback) =>
+                sendRequest('GET', '/', 'utf8', function (d1, r1) {
+                    checkResponse(r1, d1, 'text/html; charset=utf-8');
+                    checkHtml(d1);
+                    callback();
+                }),
                 checkUrl = checkApiCall(),
                 checkCache = checkUrl,
                 checkWidthAndHeight = checkApiCall({
@@ -127,7 +121,7 @@ describe('manet', function () {
                 checkImages = checkApiCall({
                     js: false
                 }),
-                stopServer = function () {
+                stopServer = () => {
                     server.close();
                     done();
                 },
@@ -149,7 +143,7 @@ describe('manet', function () {
                     stopServer
                 ],
                 chainIndex = 0,
-                chainHandler = function () {
+                chainHandler = () => {
                     if (++chainIndex < chain.length) {
                         var callback = chain[chainIndex];
                         callback(chainHandler);
