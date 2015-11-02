@@ -34,3 +34,6 @@ tmp/
 .idea/
 *.ipr
 *.iws
+
+# Example project
+example/*.png
