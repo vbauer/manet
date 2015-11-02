@@ -19,13 +19,13 @@ describe('utils', function () {
         );
 
         it('HTTP scheme', () => {
-            let url = 'http://android-arsenal.com';
-            assert.equal(url, utils.fixUrl(url));
+            const URL = 'http://android-arsenal.com';
+            assert.equal(URL, utils.fixUrl(URL));
         });
 
         it('HTTPS scheme', () => {
-            let url = 'https://android-arsenal.com';
-            assert.equal(url, utils.fixUrl(url));
+            const URL = 'https://android-arsenal.com';
+            assert.equal(URL, utils.fixUrl(URL));
         });
 
     });

@@ -10,10 +10,10 @@ var _ = require('lodash'),
     config = require('./config'),
     routes = require('./routes'),
     filters = require('./filters'),
-    utils = require('./utils'),
+    utils = require('./utils');
 
-    DEF_LOGGER_LEVEL = 'info',
-    DEF_LOGGER_SILENT = false;
+const DEF_LOGGER_LEVEL = 'info',
+      DEF_LOGGER_SILENT = false;
 
 
 /* Logging system */

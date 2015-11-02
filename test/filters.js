@@ -7,8 +7,9 @@ var _ = require('lodash'),
 
 describe('filters', () => {
 
-    let URL = 'github.com',
-        req = (url, param) => {
+    const URL = 'github.com';
+
+    let req = (url, param) => {
             let r = {};
             r[param || 'data'] = {
                 url: url
