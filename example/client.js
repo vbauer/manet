@@ -42,14 +42,13 @@ function screenshotServiceUrl(siteUrl) {
 /**
  * Call the Manet using the current server as a callback.
  */
-function captureScreenshot(siteUrl) {
-    let serviceUrl = screenshotServiceUrl(siteUrl);
+function captureScreenshot(url) {
+    let serviceUrl = screenshotServiceUrl(url);
 
-    console.log('Sending request to capture screenshot from %s', siteUrl);
-    http.get(serviceUrl, function (res) {
-        console.log('Screenshot from %s was captured with status %s', siteUrl, res.statusCode);
-    });
-    console.log('Request to capture screenshot from %s was sent', siteUrl);
+    console.log('Sending request to capture screenshot from %s', url);
+    http.get(serviceUrl, (res) =>
+        console.log('Screenshot from %s was captured with status %s', url, res.statusCode));
+    console.log('Request to capture screenshot from %s was sent', url);
 }
 
 /**

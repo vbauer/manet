@@ -59,7 +59,7 @@ function minimizeImage(src, dest, cb) {
     squirrel(
         IMIN_MODULES, IMIN_OPTIONS,
         (err, Imagemin) => {
-            let safeCb = function (err) {
+            let safeCb = (err) => {
                 if (err) {
                     logger.error(err);
                 }
@@ -99,7 +99,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
         JSON.stringify(options), base64, JSON.stringify(cmd)
     );
 
-    utils.execProcess(cmd, opts, function(error) {
+    utils.execProcess(cmd, opts, (error) => {
         if (config.compress) {
             minimizeImage(outputFile, config.storage, () => onFinish(error));
         } else {
