@@ -9,7 +9,7 @@ var _ = require('lodash'),
 /* Internal API */
 
 function getBasic(conf) {
-    var security = conf.security;
+    let security = conf.security;
     return security ? security.basic : null;
 }
 
@@ -17,7 +17,7 @@ function getBasic(conf) {
 /* Filters */
 
 function merge(req, res, next) {
-    var query = req.query || {},
+    let query = req.query || {},
         body = req.body || {};
 
     req.data = _.defaults(query, body);
@@ -26,32 +26,24 @@ function merge(req, res, next) {
 
 function usage(conf) {
     if (conf.ui) {
-        return function(req, res, next) {
-            if (!req.data.url) {
-                return res.sendFile(utils.filePath('../public/usage.html'));
-            }
-            return next();
-        };
+        return (req, res, next) =>
+            !req.data.url ? res.sendFile(utils.filePath('../public/usage.html')) : next();
     }
     return null;
 }
 
 function basic(conf) {
-    var creds = getBasic(conf);
+    let creds = getBasic(conf);
     return creds ? passport.authenticate('basic', { session: false }) : null;
 }
 
 function configureWebSecurity(conf) {
-    var creds = getBasic(conf);
+    let creds = getBasic(conf);
     if (creds) {
-        passport.use(new passportHttp.BasicStrategy(
-            function(username, password, done) {
-                if (creds.username === username && creds.password === password) {
-                    return done(null, basic);
-                }
-                return done(null, false);
-            }
-        ));
+        passport.use(new passportHttp.BasicStrategy((username, password, done) => {
+            let correct = creds.username === username && creds.password === password;
+            done(null, correct ? basic : false);
+        }));
     }
 }
 

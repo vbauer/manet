@@ -4,17 +4,17 @@ var fs = require('fs-extra'),
     joi = require('joi'),
     path = require('path'),
     logger = require('winston'),
-    childProcess = require('child_process'),
+    childProcess = require('child_process');
 
-    URL_PREFIX_HTTP = 'http://',
-    URL_PREFIX_HTTPS = 'https://';
+const URL_PREFIX_HTTP = 'http://',
+      URL_PREFIX_HTTPS = 'https://';
 
 
 /* URI & URL */
 
 function fixUrl(url) {
     if (url) {
-        var http = url.indexOf(URL_PREFIX_HTTP) >= 0,
+        let http = url.indexOf(URL_PREFIX_HTTP) >= 0,
             https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
 
         return (http || https) ? url : (URL_PREFIX_HTTP + url);
@@ -35,7 +35,7 @@ function validate(object, schema) {
 /* BASE64 functions */
 
 function encodeBase64(json) {
-    var text = JSON.stringify(json),
+    let text = JSON.stringify(json),
         buffer = new Buffer(text, 'binary');
 
     return buffer.toString('base64');
@@ -49,11 +49,11 @@ function filePath(file, dir) {
 }
 
 function processOldFile(filePath, timeout, callback) {
-    fs.stat(filePath, function (err, stat) {
+    fs.stat(filePath, (err, stat) => {
         if (err) {
             logger.error(err);
         } else {
-            var now = new Date().getTime(),
+            let now = new Date().getTime(),
                 endTime = new Date(stat.ctime).getTime() + timeout;
 
             if (now > endTime) {
@@ -67,15 +67,13 @@ function runFsWatchdog(dir, timeout, callback) {
     if (dir && (timeout > 0)) {
         logger.info('Initialize FS watchdog: directory: %s, timeout: %d', dir, timeout);
 
-        return setInterval(function () {
-            fs.readdir(dir, function (err, files) {
+        return setInterval(() => {
+            fs.readdir(dir, (err, files) => {
                 if (err) {
                     logger.error(err);
                 } else {
-                    files.forEach(function (file) {
-                        var filePath = path.join(dir, file);
-                        processOldFile(filePath, timeout, callback);
-                    });
+                    files.forEach((file) =>
+                        processOldFile(path.join(dir, file), timeout, callback));
                 }
             });
         }, timeout);
@@ -87,12 +85,12 @@ function runFsWatchdog(dir, timeout, callback) {
 /* Functions to work with processes */
 
 function execProcess(command, options, onClose) {
-    var procStart = process.hrtime(),
+    let procStart = process.hrtime(),
         cmd = command.join(' '),
         opts = options || {};
 
-    childProcess.exec(cmd, opts, function(error, stdout, stderr) {
-        var procEnd = process.hrtime(procStart),
+    childProcess.exec(cmd, opts, (error, stdout, stderr) => {
+        let procEnd = process.hrtime(procStart),
             end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
 
         logger.debug('Process output: %s', stdout);

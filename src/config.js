@@ -1,18 +1,17 @@
 "use strict";
 
-var _ = require('lodash'),
-    nconf = require('nconf'),
+var nconf = require('nconf'),
     yaml = require('js-yaml'),
     cloudEnv = require('cloud-env'),
     logger = require('winston'),
     joi = require('joi'),
     path = require('path'),
     os = require('os'),
-    utils = require('./utils'),
+    utils = require('./utils');
 
-    DEF_CONFIG = 'config/default.yaml',
-    ENV_IP = 'IP',
-    ENV_PORT = 'PORT';
+const DEF_CONFIG = 'config/default.yaml',
+      ENV_IP = 'IP',
+      ENV_PORT = 'PORT';
 
 
 /* Functions to work with application configuration */
@@ -87,7 +86,7 @@ function defaultConfigPath() {
 }
 
 function load() {
-    var confPath = defaultConfigPath(),
+    let confPath = defaultConfigPath(),
         config = nconf.argv()
         .env()
         .file({
@@ -109,12 +108,11 @@ function load() {
 }
 
 function read() {
-    var val = utils.validate(load(), createSchema());
+    let val = utils.validate(load(), createSchema()),
+        err = val.error;
 
-    if (val.error) {
-        _.forEach(val.error.details, function (detail) {
-            logger.error(detail.message);
-        });
+    if (err) {
+        err.details.forEach((detail) => logger.error(detail.message));
         process.exit(1);
     }
     return val.value;

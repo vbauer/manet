@@ -6,38 +6,47 @@ var _ = require('lodash'),
     path = require('path'),
     squirrel = require('squirrel'),
     crypto = require('crypto'),
-    utils = require('./utils'),
+    utils = require('./utils');
 
-    SCRIPT_FILE = 'scripts/screenshot.js',
-
-    DEF_ENGINE = 'phantomjs',
-    DEF_COMMAND = 'phantomjs',
-    DEF_FORMAT = 'png';
+const SCRIPT_FILE = 'scripts/screenshot.js',
+      DEF_ENGINE = 'phantomjs',
+      DEF_COMMAND = 'phantomjs',
+      DEF_FORMAT = 'png',
+      IMIN_MODULES = [
+          'imagemin',
+          'imagemin-gifsicle',
+          'imagemin-jpegtran',
+          'imagemin-optipng',
+          'imagemin-svgo'
+      ],
+      IMIN_OPTIONS = {
+          allowInstall: true
+      };
 
 
 /* Configurations and options */
 
 function outputFile(options, conf) {
-    var json = JSON.stringify(options),
+    let json = JSON.stringify(options),
         sha1 = crypto.createHash('sha1').update(json).digest('hex'),
         format = options.format || DEF_FORMAT;
     return conf.storage + path.sep + sha1 + '.' + format;
 }
 
 function cliCommand(config) {
-    var engine = config.engine || DEF_ENGINE,
+    let engine = config.engine || DEF_ENGINE,
         command = config.command || config.commands[engine][process.platform];
     return command || DEF_COMMAND;
 }
 
 function createOptions(options, config) {
-    var opts = _.omit(options, ['force', 'callback']);
+    let opts = _.omit(options, ['force', 'callback']);
     opts.url = utils.fixUrl(options.url);
     return _.defaults(opts, config.options);
 }
 
 function createConfig(options, config) {
-    var conf = _.cloneDeep(config),
+    let conf = _.cloneDeep(config),
         engine = options.engine;
     conf.engine = engine || conf.engine;
     return conf;
@@ -47,46 +56,38 @@ function createConfig(options, config) {
 /* Image processing */
 
 function minimizeImage(src, dest, cb) {
-    var iminModules = [
-        'imagemin',
-        'imagemin-gifsicle',
-        'imagemin-jpegtran',
-        'imagemin-optipng',
-        'imagemin-svgo'
-    ],
-    options = {
-        allowInstall: true
-    };
+    squirrel(
+        IMIN_MODULES, IMIN_OPTIONS,
+        (err, Imagemin) => {
+            let safeCb = function (err) {
+                if (err) {
+                    logger.error(err);
+                }
+                cb();
+            };
 
-    squirrel(iminModules, options, function(err, Imagemin) {
-        var safeCb = function (err) {
             if (err) {
-                logger.error(err);
+                safeCb(err);
+            } else {
+                let imin = new Imagemin()
+                    .src(src)
+                    .dest(dest)
+                    .use(Imagemin.jpegtran({progressive: true}))
+                    .use(Imagemin.optipng({optimizationLevel: 3}))
+                    .use(Imagemin.gifsicle({interlaced: true}))
+                    .use(Imagemin.svgo());
+
+                imin.run(safeCb);
             }
-            cb();
-        };
-
-        if (err) {
-            safeCb(err);
-        } else {
-            var imin = new Imagemin()
-                .src(src)
-                .dest(dest)
-                .use(Imagemin.jpegtran({progressive: true}))
-                .use(Imagemin.optipng({optimizationLevel: 3}))
-                .use(Imagemin.gifsicle({interlaced: true}))
-                .use(Imagemin.svgo());
-
-            imin.run(safeCb);
         }
-    });
+    );
 }
 
 
 /* Screenshot capturing runner */
 
 function runCapturingProcess(options, config, outputFile, base64, onFinish) {
-    var scriptFile = utils.filePath(SCRIPT_FILE),
+    let scriptFile = utils.filePath(SCRIPT_FILE),
         command = cliCommand(config).split(/[ ]+/),
         cmd = _.union(command, [scriptFile, base64, outputFile]),
         opts = {
@@ -100,9 +101,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 
     utils.execProcess(cmd, opts, function(error) {
         if (config.compress) {
-            minimizeImage(outputFile, config.storage, function() {
-                onFinish(error);
-            });
+            minimizeImage(outputFile, config.storage, () => onFinish(error));
         } else {
             onFinish(error);
         }
@@ -113,34 +112,28 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
 /* External API */
 
 function screenshot(options, config, onFinish) {
-    var conf = createConfig(options, config),
+    let conf = createConfig(options, config),
         opts = createOptions(options, config),
         base64 = utils.encodeBase64(opts),
         file = outputFile(opts, conf),
 
-        retrieveImageFromStorage = function () {
+        retrieveImageFromStorage = () => {
             logger.debug('Take screenshot from file storage: %s', base64);
-            onFinish(file, null);
+            onFinish(file);
         },
-        retrieveImageFromSite = function () {
-            runCapturingProcess(opts, conf, file, base64, function (error) {
+        retrieveImageFromSite = () =>
+            runCapturingProcess(opts, conf, file, base64, (error) => {
                 logger.debug('Process finished work: %s', base64);
                 return onFinish(file, error);
             });
-        };
 
     logger.info('Capture site screenshot: %s', options.url);
 
     if (options.force || !conf.cache) {
         retrieveImageFromSite();
     } else {
-        fs.exists(file, function (exists) {
-            if (exists) {
-                retrieveImageFromStorage();
-            } else {
-                retrieveImageFromSite();
-            }
-        });
+        fs.exists(file, (exists) =>
+            exists ? retrieveImageFromStorage() : retrieveImageFromSite());
     }
 }
 

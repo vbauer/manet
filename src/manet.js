@@ -48,9 +48,7 @@ function initLogging(conf) {
 /* Termination & Errors handling */
 
 function initExitHandling() {
-    var onExit = function () {
-        process.exit(0);
-    };
+    let onExit = () => process.exit(0);
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
 }
@@ -60,12 +58,12 @@ function initExitHandling() {
 
 function cleanupFsStorage(conf) {
     if (conf.cleanupStartup) {
-        var storagePath = conf.storage,
+        let storagePath = conf.storage,
             files = fs.readdirSync(storagePath);
 
-        _.forEach(files, function(file) {
-            var filePath = utils.filePath(file, storagePath);
+        files.forEach((file) => {
             try {
+                let filePath = utils.filePath(file, storagePath);
                 fs.removeSync(filePath, {force: true});
             } catch (err) {}
         });
@@ -73,11 +71,11 @@ function cleanupFsStorage(conf) {
 }
 
 function initFsWatchdog(conf) {
-    var timeout = conf.cache * 1000,
+    let timeout = conf.cache * 1000,
         dir = conf.storage;
 
     utils.runFsWatchdog(dir, timeout, function (file) {
-        return fs.unlink(file, function (err) {
+        return fs.unlink(file, (err) => {
             if (err) {
                 return logger.error(err);
             }
@@ -95,7 +93,7 @@ function initFsStorage(conf) {
 /* Web application */
 
 function createWebApplication(conf) {
-    var app = express(),
+    let app = express(),
         index = routes.index(conf),
         urlencoded = bodyParser.urlencoded({ extended: false }),
         json = bodyParser.json(),
@@ -103,9 +101,7 @@ function createWebApplication(conf) {
         basic = filters.basic(conf),
         usage = filters.usage(conf),
         merge = filters.merge,
-        notNull = function(f) {
-            return _.without(f, null);
-        };
+        notNull = (f) => _.without(f, null);
 
     filters.configureWebSecurity(conf);
 
@@ -119,14 +115,11 @@ function createWebApplication(conf) {
 }
 
 function runWebServer(conf, onStart) {
-    var app = createWebApplication(conf),
+    let app = createWebApplication(conf),
         host = conf.host,
         port = conf.port,
-        server = app.listen(port, host, function () {
-            if (onStart) {
-                onStart(server);
-            }
-        });
+        server = app.listen(port, host, () => onStart ? onStart(server) : null);
+
     logger.info('Manet server started on %s:%d', host, port);
 }
 
@@ -134,7 +127,7 @@ function runWebServer(conf, onStart) {
 /* Initialize and run server */
 
 function main(onStart) {
-    var conf = config.read();
+    let conf = config.read();
 
     initLogging(conf);
     initExitHandling();

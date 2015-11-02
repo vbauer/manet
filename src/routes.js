@@ -9,11 +9,11 @@ var _ = require('lodash'),
     request = require('request'),
     UrlPattern = require('url-pattern'),
     capture = require('./capture'),
-    utils = require('./utils'),
+    utils = require('./utils');
 
-    OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
-    ENGINE_TYPES = ['phantomjs', 'slimerjs'],
-    REGEXP_CLIP_RECT = /^(\d*),(\d*),([1-9]\d*),([1-9]\d*)$/;
+const OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
+      ENGINE_TYPES = ['phantomjs', 'slimerjs'],
+      REGEXP_CLIP_RECT = /^(\d*),(\d*),([1-9]\d*),([1-9]\d*)$/;
 
 
 /* Schemas */
@@ -44,7 +44,7 @@ function createSchema() {
 /* Functions to parse options */
 
 function parseClipRect(cr) {
-    var params = (cr || '').match(REGEXP_CLIP_RECT);
+    let params = (cr || '').match(REGEXP_CLIP_RECT);
     if (params && (params.length === 5)) {
         return {
             top: parseInt(params[1]),
@@ -61,7 +61,7 @@ function parseUrl(url) {
 }
 
 function parseHeaders(headers) {
-    var res = qs.parse(headers, {
+    let res = qs.parse(headers, {
         delimiter: ';'
     });
     return _.isEmpty(res) ? null : res;
@@ -71,7 +71,7 @@ function parseHeaders(headers) {
 /* Options reader */
 
 function readOptions(data, schema) {
-    var keys = _.keys(schema.describe().children),
+    let keys = _.keys(schema.describe().children),
         options = _.pick(data, keys);
 
     options.url = parseUrl(options.url);
@@ -94,18 +94,17 @@ function error(text) { return { error: text }; }
 function badCapturing() { return error('Can not capture site screenshot'); }
 
 function sendError(res, err) {
-    var msg = err.message || err;
+    let msg = err.message || err;
     logger.error(msg);
-    res.status(500).json(error(msg)).end();
+    try {
+        res.status(500).json(error(msg));
+    } catch (err) {}
+    res.end();
 }
 
 function isUrlAllowed(config, url) {
-    var whiteList = config.whitelist || [];
-
-    return _.some(whiteList, function(urlPattern) {
-        var pattern = new UrlPattern(urlPattern);
-        return pattern.match(url);
-    });
+    let whiteList = config.whitelist || [];
+    return _.some(whiteList, (urlPattern) => new UrlPattern(urlPattern).match(url));
 }
 
 
@@ -113,21 +112,19 @@ function isUrlAllowed(config, url) {
 
 function onImageFileSent(file, config) {
     if (config.cleanupRuntime) {
-        fs.unlink(file, function () {
-            logger.debug('Deleted file: %s', file);
-        });
+        fs.unlink(file, () => logger.debug('Deleted file: %s', file));
     }
 }
 
 function sendImageInResponse(res, config) {
-    return function (file, error) {
+    return (file, error) => {
         if (error) {
             sendError(res, badCapturing());
         } else {
             if (config.cors) {
                 enableCORS(res);
             }
-            res.sendFile(file, function (err) {
+            res.sendFile(file, (err) => {
                 if (err) {
                     sendError(res, 'Error while sending image file: ' + err.message);
                 }
@@ -138,16 +135,17 @@ function sendImageInResponse(res, config) {
 }
 
 function sendImageToUrl(res, config, options) {
-    return function (file, error) {
-        var callbackUrl = utils.fixUrl(options.callback);
+    return (file, error) => {
+        let callbackUrl = utils.fixUrl(options.callback);
         if (error) {
             request.post(callbackUrl, error(badCapturing()));
         } else {
-            var fileStream = fs.createReadStream(file);
-            fileStream.on('error', function(err) {
-                sendError(res, 'Error while reading image file: ' + err.message);
-            });
-            fileStream.pipe(request.post(callbackUrl, function(err) {
+            let fileStream = fs.createReadStream(file);
+
+            fileStream.on('error', (err) =>
+                sendError(res, 'Error while reading image file: ' + err.message));
+
+            fileStream.pipe(request.post(callbackUrl, (err) => {
                 if (err) {
                     sendError(res, 'Error while streaming image file: ' + err.message);
                 }
@@ -161,27 +159,32 @@ function sendImageToUrl(res, config, options) {
 /* Controller */
 
 function index(config) {
-    return function (req, res) {
-        var schema = createSchema(),
+    return (req, res) => {
+        let schema = createSchema(),
             data = utils.validate(req.data, schema);
 
         if (data.error) {
             res.json(error(data.error.details));
         } else {
-            var options = readOptions(data.value, schema),
+            let options = readOptions(data.value, schema),
                 siteUrl = options.url;
 
             if (!isUrlAllowed(config, siteUrl)) {
                 sendError(res, util.format('URL "%s" is not allowed', siteUrl));
             } else {
-                var callbackUrl = options.callback;
+                let callbackUrl = options.callback;
                 if (callbackUrl) {
                     res.json(message(util.format(
                         'Screenshot will be sent to "%s" when processed', callbackUrl
                     )));
 
-                    logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
-                    capture.screenshot(options, config, sendImageToUrl(res, config, options));
+                    logger.debug(
+                        'Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl
+                    );
+
+                    capture.screenshot(
+                        options, config, sendImageToUrl(res, config, options)
+                    );
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
                     capture.screenshot(options, config, sendImageInResponse(res, config));
