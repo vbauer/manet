@@ -1,17 +1,17 @@
 "use strict";
 
-var _ = require('lodash'),
-    qs = require('qs'),
-    fs = require('fs-extra'),
-    joi = require('joi'),
-    util = require('util'),
-    logger = require('winston'),
-    request = require('request'),
-    UrlPattern = require('url-pattern'),
-    capture = require('./capture'),
-    utils = require('./utils');
+const _ = require('lodash'),
+      qs = require('qs'),
+      fs = require('fs-extra'),
+      joi = require('joi'),
+      util = require('util'),
+      logger = require('winston'),
+      request = require('request'),
+      UrlPattern = require('url-pattern'),
+      capture = require('./capture'),
+      utils = require('./utils'),
 
-const OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
+      OUTPUT_FORMATS = ['jpg', 'jpeg', 'png', 'pdf', 'gif'],
       ENGINE_TYPES = ['phantomjs', 'slimerjs'],
       REGEXP_CLIP_RECT = /^(\d*),(\d*),([1-9]\d*),([1-9]\d*)$/;
 
@@ -44,7 +44,7 @@ function createSchema() {
 /* Functions to parse options */
 
 function parseClipRect(cr) {
-    let params = (cr || '').match(REGEXP_CLIP_RECT);
+    const params = (cr || '').match(REGEXP_CLIP_RECT);
     if (params && (params.length === 5)) {
         return {
             top: parseInt(params[1]),
@@ -61,7 +61,7 @@ function parseUrl(url) {
 }
 
 function parseHeaders(headers) {
-    let res = qs.parse(headers, {
+    const res = qs.parse(headers, {
         delimiter: ';'
     });
     return _.isEmpty(res) ? null : res;
@@ -71,8 +71,8 @@ function parseHeaders(headers) {
 /* Options reader */
 
 function readOptions(data, schema) {
-    let keys = _.keys(schema.describe().children),
-        options = _.pick(data, keys);
+    const keys = _.keys(schema.describe().children),
+          options = _.pick(data, keys);
 
     options.url = parseUrl(options.url);
     options.headers = parseHeaders(options.headers);
@@ -94,7 +94,7 @@ function error(text) { return { error: text }; }
 function badCapturing() { return error('Can not capture site screenshot'); }
 
 function sendError(res, err) {
-    let msg = err.message || err;
+    const msg = err.message || err;
     logger.error(msg);
     try {
         res.status(500).json(error(msg));
@@ -103,7 +103,7 @@ function sendError(res, err) {
 }
 
 function isUrlAllowed(config, url) {
-    let whiteList = config.whitelist || [];
+    const whiteList = config.whitelist || [];
     return _.some(whiteList, (urlPattern) => new UrlPattern(urlPattern).match(url));
 }
 
@@ -136,11 +136,11 @@ function sendImageInResponse(res, config) {
 
 function sendImageToUrl(res, config, options) {
     return (file, error) => {
-        let callbackUrl = utils.fixUrl(options.callback);
+        const callbackUrl = utils.fixUrl(options.callback);
         if (error) {
             request.post(callbackUrl, error(badCapturing()));
         } else {
-            let fileStream = fs.createReadStream(file);
+            const fileStream = fs.createReadStream(file);
 
             fileStream.on('error', (err) =>
                 sendError(res, 'Error while reading image file: ' + err.message));
@@ -160,19 +160,19 @@ function sendImageToUrl(res, config, options) {
 
 function index(config) {
     return (req, res) => {
-        let schema = createSchema(),
-            data = utils.validate(req.data, schema);
+        const schema = createSchema(),
+              data = utils.validate(req.data, schema);
 
         if (data.error) {
             res.json(error(data.error.details));
         } else {
-            let options = readOptions(data.value, schema),
-                siteUrl = options.url;
+            const options = readOptions(data.value, schema),
+                  siteUrl = options.url;
 
             if (!isUrlAllowed(config, siteUrl)) {
                 sendError(res, util.format('URL "%s" is not allowed', siteUrl));
             } else {
-                let callbackUrl = options.callback;
+                const callbackUrl = options.callback;
                 if (callbackUrl) {
                     res.json(message(util.format(
                         'Screenshot will be sent to "%s" when processed', callbackUrl

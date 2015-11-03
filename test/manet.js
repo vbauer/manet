@@ -1,21 +1,20 @@
 'use strict';
 
-var _ = require('lodash'),
-    assert = require('assert'),
-    http = require('http'),
-    w3cjs = require('w3cjs'),
-    querystring = require('querystring'),
-    config = require('../src/config'),
-    manet = require('../src/manet');
-
-
-process.env.cleanupStartup = true;
-process.env.silent = true;
+const _ = require('lodash'),
+      assert = require('assert'),
+      http = require('http'),
+      w3cjs = require('w3cjs'),
+      querystring = require('querystring'),
+      config = require('../src/config'),
+      manet = require('../src/manet');
 
 
 describe('manet', function () {
 
-    let conf = config.read();
+    process.env.cleanupStartup = true;
+    process.env.silent = true;
+
+    const conf = config.read();
 
     // Configure timeout = 2 min.
     this.timeout(120000);
@@ -24,7 +23,7 @@ describe('manet', function () {
     /* Common functions */
 
     function sendRequest(method, url, encoding, callback) {
-        let options = {
+        const options = {
             host: conf.host.replace('0.0.0.0', '127.0.0.1'),
             port: conf.port,
             method: method,
@@ -56,12 +55,10 @@ describe('manet', function () {
     }
 
     function checkApiCall(q, ct) {
-        let params = _.defaults(q || {}, {
-                url: 'google.com'
-            }),
-            apiUrl = '/?' + querystring.stringify(params),
-            contentType = ct || 'image/png',
-            dataType = 'binary';
+        const params = _.defaults(q || {}, { url: 'google.com' }),
+              apiUrl = '/?' + querystring.stringify(params),
+              contentType = ct || 'image/png',
+              dataType = 'binary';
 
         return (callback) =>
             sendRequest('GET', apiUrl, dataType, (d1, r1) => {

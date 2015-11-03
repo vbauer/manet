@@ -1,52 +1,51 @@
 'use strict';
 
-var _ = require('lodash'),
-    assert = require('assert'),
-    filters = require('../src/filters');
+const _ = require('lodash'),
+      assert = require('assert'),
+      filters = require('../src/filters');
 
 
 describe('filters', () => {
 
-    const URL = 'github.com';
-
-    let req = (url, param) => {
-            let r = {};
-            r[param || 'data'] = {
-                url: url
-            };
-            return r;
-        },
-        res = (value) => {
-            return {
-                sendFile: () => value
-            };
-        };
+    const URL = 'github.com',
+          req = (url, param) => {
+              const r = {};
+              r[param || 'data'] = {
+                  url: url
+              };
+              return r;
+          },
+          res = (value) => {
+              return {
+                  sendFile: () => value
+              };
+          };
 
     describe('merge', () => {
-        let next = (req) => {
+        const next = (req) => {
             return () => req.data.url;
         };
 
         it('should take url from body', () => {
-            let r = req(URL, 'body');
+            const r = req(URL, 'body');
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
         it('should take url from query', () => {
-            let r = req(URL, 'query');
+            const r = req(URL, 'query');
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
         it('should take from url query in priority', () => {
-            let r = _.defaults(req(URL, 'query'), req(URL + URL, 'body'));
+            const r = _.defaults(req(URL, 'query'), req(URL + URL, 'body'));
             assert.equal(URL, filters.merge(r, res(), next(r)));
         });
 
     });
 
     describe('usage', () => {
-        let next = _.constant,
-            usage = filters.usage({ ui: true });
+        const next = _.constant,
+              usage = filters.usage({ ui: true });
 
         it('should depend on configuration', () => {
             assert.equal(true, null === filters.usage({}));

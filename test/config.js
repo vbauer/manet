@@ -1,20 +1,19 @@
 'use strict';
 
-var _ = require('lodash'),
-    assert = require('assert'),
-    config = require('../src/config');
-
-
-process.env.silent = true;
-process.env.engine = 'phantomjs';
+const _ = require('lodash'),
+      assert = require('assert'),
+      config = require('../src/config');
 
 
 describe('config', () => {
 
+    process.env.silent = true;
+    process.env.engine = 'phantomjs';
+
     describe('read', () => {
 
         it('default configuration should exist', () => {
-            let conf = config.read();
+            const conf = config.read();
             assert.equal(false, _.isEmpty(conf));
 
             // Parameters are configured in "default.yaml" file.

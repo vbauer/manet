@@ -43,7 +43,7 @@ function screenshotServiceUrl(siteUrl) {
  * Call the Manet using the current server as a callback.
  */
 function captureScreenshot(url) {
-    let serviceUrl = screenshotServiceUrl(url);
+    const serviceUrl = screenshotServiceUrl(url);
 
     console.log('Sending request to capture screenshot from %s', url);
     http.get(serviceUrl, (res) =>
@@ -67,7 +67,7 @@ function startPoller() {
  */
 function startServer() {
     http.createServer((req, res) => {
-        let fileName = __dirname + path.sep + new Date().getTime() + '.png';
+        const fileName = __dirname + path.sep + new Date().getTime() + '.png';
 
         req.on('end', () => {
             res.writeHead(200);

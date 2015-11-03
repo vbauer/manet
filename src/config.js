@@ -1,15 +1,15 @@
 "use strict";
 
-var nconf = require('nconf'),
-    yaml = require('js-yaml'),
-    cloudEnv = require('cloud-env'),
-    logger = require('winston'),
-    joi = require('joi'),
-    path = require('path'),
-    os = require('os'),
-    utils = require('./utils');
+const nconf = require('nconf'),
+      yaml = require('js-yaml'),
+      cloudEnv = require('cloud-env'),
+      logger = require('winston'),
+      joi = require('joi'),
+      path = require('path'),
+      os = require('os'),
+      utils = require('./utils'),
 
-const DEF_CONFIG = 'config/default.yaml',
+      DEF_CONFIG = 'config/default.yaml',
       ENV_IP = 'IP',
       ENV_PORT = 'PORT';
 
@@ -86,17 +86,17 @@ function defaultConfigPath() {
 }
 
 function load() {
-    let confPath = defaultConfigPath(),
-        config = nconf.argv()
-        .env()
-        .file({
-            file: confPath,
-            format: {
-                parse: yaml.safeLoad,
-                stringify: yaml.safeDump,
-            }
-        })
-        .get();
+    const confPath = defaultConfigPath(),
+          config = nconf.argv()
+            .env()
+            .file({
+                file: confPath,
+                format: {
+                    parse: yaml.safeLoad,
+                    stringify: yaml.safeDump,
+                }
+            })
+            .get();
 
     config.cache = Math.max(config.cache, 0);
     config.storage = path.resolve(config.storage || os.tmpdir());
@@ -108,8 +108,8 @@ function load() {
 }
 
 function read() {
-    let val = utils.validate(load(), createSchema()),
-        err = val.error;
+    const val = utils.validate(load(), createSchema()),
+          err = val.error;
 
     if (err) {
         err.details.forEach((detail) => logger.error(detail.message));

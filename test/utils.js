@@ -1,8 +1,8 @@
 'use strict';
 
-var assert = require('assert'),
-    os = require('os'),
-    utils = require('../src/utils');
+const assert = require('assert'),
+      os = require('os'),
+      utils = require('../src/utils');
 
 
 describe('utils', function () {
@@ -58,7 +58,7 @@ describe('utils', function () {
     describe('filePath', () => {
 
         it('not null', () => {
-            let file = utils.filePath('.');
+            const file = utils.filePath('.');
             assert.notEqual(null, file);
             assert.notEqual('', file);
         });
@@ -74,7 +74,7 @@ describe('utils', function () {
         });
 
         it('should start fs watch dog correctly', () => {
-            let watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function () {});
+            const watchdog = utils.runFsWatchdog(os.tmpdir(), 1, function () {});
             assert.notEqual(null, watchdog);
             clearInterval(watchdog);
         });

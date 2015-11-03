@@ -1,5 +1,5 @@
 "use strict";
 
-var manet = require("./manet.js");
+const manet = require("./manet.js");
 
 manet.main();

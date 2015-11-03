@@ -1,18 +1,18 @@
 "use strict";
 
-var _ = require('lodash'),
-    express = require('express'),
-    bodyParser = require('body-parser'),
-    logger = require('winston'),
-    fs = require('fs-extra'),
-    helmet = require('helmet'),
-    passport = require('passport'),
-    config = require('./config'),
-    routes = require('./routes'),
-    filters = require('./filters'),
-    utils = require('./utils');
+const _ = require('lodash'),
+      express = require('express'),
+      bodyParser = require('body-parser'),
+      logger = require('winston'),
+      fs = require('fs-extra'),
+      helmet = require('helmet'),
+      passport = require('passport'),
+      config = require('./config'),
+      routes = require('./routes'),
+      filters = require('./filters'),
+      utils = require('./utils'),
 
-const DEF_LOGGER_LEVEL = 'info',
+      DEF_LOGGER_LEVEL = 'info',
       DEF_LOGGER_SILENT = false;
 
 
@@ -48,7 +48,7 @@ function initLogging(conf) {
 /* Termination & Errors handling */
 
 function initExitHandling() {
-    let onExit = () => process.exit(0);
+    const onExit = () => process.exit(0);
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
 }
@@ -58,12 +58,12 @@ function initExitHandling() {
 
 function cleanupFsStorage(conf) {
     if (conf.cleanupStartup) {
-        let storagePath = conf.storage,
-            files = fs.readdirSync(storagePath);
+        const storagePath = conf.storage,
+              files = fs.readdirSync(storagePath);
 
         files.forEach((file) => {
             try {
-                let filePath = utils.filePath(file, storagePath);
+                const filePath = utils.filePath(file, storagePath);
                 fs.removeSync(filePath, {force: true});
             } catch (err) {}
         });
@@ -71,10 +71,10 @@ function cleanupFsStorage(conf) {
 }
 
 function initFsWatchdog(conf) {
-    let timeout = conf.cache * 1000,
-        dir = conf.storage;
+    const timeout = conf.cache * 1000,
+          dir = conf.storage;
 
-    utils.runFsWatchdog(dir, timeout, function (file) {
+    utils.runFsWatchdog(dir, timeout, (file) => {
         return fs.unlink(file, (err) => {
             if (err) {
                 return logger.error(err);
@@ -93,15 +93,15 @@ function initFsStorage(conf) {
 /* Web application */
 
 function createWebApplication(conf) {
-    let app = express(),
-        index = routes.index(conf),
-        urlencoded = bodyParser.urlencoded({ extended: false }),
-        json = bodyParser.json(),
-        noCache = helmet.noCache(),
-        basic = filters.basic(conf),
-        usage = filters.usage(conf),
-        merge = filters.merge,
-        notNull = (f) => _.without(f, null);
+    const app = express(),
+          index = routes.index(conf),
+          urlencoded = bodyParser.urlencoded({ extended: false }),
+          json = bodyParser.json(),
+          noCache = helmet.noCache(),
+          basic = filters.basic(conf),
+          usage = filters.usage(conf),
+          merge = filters.merge,
+          notNull = (f) => _.without(f, null);
 
     filters.configureWebSecurity(conf);
 
@@ -115,10 +115,14 @@ function createWebApplication(conf) {
 }
 
 function runWebServer(conf, onStart) {
-    let app = createWebApplication(conf),
-        host = conf.host,
-        port = conf.port,
-        server = app.listen(port, host, () => onStart ? onStart(server) : null);
+    const app = createWebApplication(conf),
+          host = conf.host,
+          port = conf.port,
+          server = app.listen(port, host, () => {
+              if (onStart) {
+                  onStart(server);
+              }
+          });
 
     logger.info('Manet server started on %s:%d', host, port);
 }
@@ -127,7 +131,7 @@ function runWebServer(conf, onStart) {
 /* Initialize and run server */
 
 function main(onStart) {
-    let conf = config.read();
+    const conf = config.read();
 
     initLogging(conf);
     initExitHandling();

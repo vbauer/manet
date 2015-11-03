@@ -1,21 +1,24 @@
 "use strict";
 
-var fs = require('fs-extra'),
-    joi = require('joi'),
-    path = require('path'),
-    logger = require('winston'),
-    childProcess = require('child_process');
+const fs = require('fs-extra'),
+      joi = require('joi'),
+      path = require('path'),
+      logger = require('winston'),
+      childProcess = require('child_process'),
 
-const URL_PREFIX_HTTP = 'http://',
-      URL_PREFIX_HTTPS = 'https://';
+      URL_PREFIX_HTTP = 'http://',
+      URL_PREFIX_HTTPS = 'https://',
+      SCHEMA_CONFIG = {
+          allowUnknown: true
+      };
 
 
 /* URI & URL */
 
 function fixUrl(url) {
     if (url) {
-        let http = url.indexOf(URL_PREFIX_HTTP) >= 0,
-            https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
+        const http = url.indexOf(URL_PREFIX_HTTP) >= 0,
+              https = url.indexOf(URL_PREFIX_HTTPS) >= 0;
 
         return (http || https) ? url : (URL_PREFIX_HTTP + url);
     }
@@ -26,17 +29,15 @@ function fixUrl(url) {
 /* Validation */
 
 function validate(object, schema) {
-    return joi.validate(object, schema, {
-        allowUnknown: true
-    });
+    return joi.validate(object, schema, SCHEMA_CONFIG);
 }
 
 
 /* BASE64 functions */
 
 function encodeBase64(json) {
-    let text = JSON.stringify(json),
-        buffer = new Buffer(text, 'binary');
+    const text = JSON.stringify(json),
+          buffer = new Buffer(text, 'binary');
 
     return buffer.toString('base64');
 }
@@ -53,8 +54,8 @@ function processOldFile(filePath, timeout, callback) {
         if (err) {
             logger.error(err);
         } else {
-            let now = new Date().getTime(),
-                endTime = new Date(stat.ctime).getTime() + timeout;
+            const now = new Date().getTime(),
+                  endTime = new Date(stat.ctime).getTime() + timeout;
 
             if (now > endTime) {
                 callback(filePath);
@@ -85,13 +86,13 @@ function runFsWatchdog(dir, timeout, callback) {
 /* Functions to work with processes */
 
 function execProcess(command, options, onClose) {
-    let procStart = process.hrtime(),
-        cmd = command.join(' '),
-        opts = options || {};
+    const procStart = process.hrtime(),
+          cmd = command.join(' '),
+          opts = options || {};
 
     childProcess.exec(cmd, opts, (error, stdout, stderr) => {
-        let procEnd = process.hrtime(procStart),
-            end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
+        const procEnd = process.hrtime(procStart),
+              end = (procEnd[0] + procEnd[1] / 1e9).toFixed(2);
 
         logger.debug('Process output: %s', stdout);
         if (error) {
