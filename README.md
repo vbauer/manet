@@ -105,13 +105,13 @@ Rules of overriding:
 <dl>
 
   <dt>--host</dt>
-  <dd>Web server host (default: `"0.0.0.0"`). Usually, it is unnecessary to change this parameter.</dd>
+  <dd>Web server host (default: "0.0.0.0"). Usually, it is unnecessary to change this parameter.</dd>
 
   <dt>--port</dt>
-  <dd>Web server port number. REST API and UI will be available on this port (default: `8891`).</dd>
+  <dd>Web server port number. REST API and UI will be available on this port (default: "8891").</dd>
 
   <dt>--engine</dt>
-  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is `"phantomjs"`). Specific command will be detected by configuration file (default.yaml) using engine parameter and OS platform.</dd>
+  <dd>Default engine for screenshot capturing: "phantomjs" or "slimerjs" (default is "phantomjs"). Specific command will be detected by configuration file (default.yaml) using engine parameter and OS platform.</dd>
 
   <dt>--command</dt>
   <dd>Configuration file "default.yaml" supports specific commands for different platforms (ex: "linux": "xvfb-run -a slimerjs"). Needed command will be detected in runtime by platform/OS. This parameter allows to override command for executing SlimerJS. It allows using full power of SlimerJS command line options to configure proxy, SSL protocol, etc. More information could be found here: http://docs.slimerjs.org/current/configuration.html <br/><b>IMPORTANT:</b> This parameter overrides "--engine" parameter.</dd>
@@ -120,31 +120,31 @@ Rules of overriding:
   <dd>File storage for cache (default is global temp directory).</dd>
 
   <dt>--cache</dt>
-  <dd>Lifetime for file cache in seconds. Screenshots are cached for *60 minutes by default*, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
+  <dd>Lifetime for file cache in seconds. Screenshots are cached for <i>60 minutes by default</i>, so that frequent requests for the same screenshot don't slow the service down. You can configure longer life for cache items or make them ethereal (use zero or negative value).</dd>
 
   <dt>--cleanupStartup</dt>
-  <dd>Clean up FS storage on server startup (default is `false`). It removes all files which were stored previously.</dd>
+  <dd>Clean up FS storage on server startup (default is "false"). It removes all files which were stored previously.</dd>
 
   <dt>--cleanupRuntime</dt>
-  <dd>Clean up FS storage at server runtime (default is `false`). It removes file with captured image after sending on client.</dd>
+  <dd>Clean up FS storage at server runtime (default is "false"). It removes file with captured image after sending on client.</dd>
 
   <dt>--compress</dt>
-  <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is `false`). File sizes are significantly reduced due to this, but it requires additional processing time. Furthermore, imagemin is an optional dependency. It will be downloaded and installed in runtime during the first request, so it will take an additional time (one time).</dd>
+  <dd>Additional compression for captured screenshots using <a href="https://github.com/imagemin/imagemin">Imagemin</a> (default is "false"). File sizes are significantly reduced due to this, but it requires additional processing time. Furthermore, imagemin is an optional dependency. It will be downloaded and installed in runtime during the first request, so it will take an additional time (one time).</dd>
 
   <dt>--silent</dt>
-  <dd>Run Manet server with or without logging information (default is `false`).</dd>
+  <dd>Run Manet server with or without logging information (default is "false").</dd>
 
   <dt>--level</dt>
-  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is `"info"`). If want to investigate some problem with Manet, use "debug" level: --level=debug</dd>
+  <dd>Setting the level for your logging message. Possible values: debug, info, silly, warn, error (default is "info"). If want to investigate some problem with Manet, use "debug" level: --level=debug</dd>
 
   <dt>--cors</dt>
-  <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is `false`).</dd>
+  <dd>Enable <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing</a> (default is "false").</dd>
 
   <dt>--ui</dt>
-  <dd>Enable or disable sandbox UI (default is `true`).</dd>
+  <dd>Enable or disable sandbox UI (default is "true").</dd>
 
   <dt>--timeout</dt>
-  <dd>Number of milliseconds to wait for the program to complete before sending it `SIGTERM` (default is `60000`).</dd>
+  <dd>Number of milliseconds to wait for the program to complete before sending it "SIGTERM" (default is "60000").</dd>
 
   <dt>--options:{option}</dt>
   <dd>Default query parameters. See also "Query parameters" for more details. Example: "--options:width 101".</dd>
