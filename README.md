@@ -152,6 +152,12 @@ Rules of overriding:
   <dt>--whitelist</dt>
   <dd>List of <a href="https://github.com/snd/url-pattern">URL patterns</a> that are allowed to be processed by Manet (all URLs are permitted by default).</dd>
 
+  <dt>--security:basic:username</dt>
+  <dd>Configure user name for <a href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic authentication</a>. Basic auth will be switched on when "username" and "password" are configured.</dd>
+
+  <dt>--security:basic:password</dt>
+  <dd>Configure password for Basic authentication.</dd>
+
 </dl>
 
 ### Configuration file
@@ -192,6 +198,11 @@ commands:
 
 whitelist:
     - "*"
+
+security:
+    basic:
+#        username: admin
+#        password: admin
 ```
 
 
