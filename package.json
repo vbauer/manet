@@ -53,7 +53,7 @@
         "request": "^2.65.0",
         "body-parser": "^1.14.1",
         "helmet": "^0.14.0",
-        "passport": "^0.3.0",
+        "passport": "^0.3.2",
         "passport-http": "^0.3.0",
         "fs-extra": "^0.26.2",
         "nconf": "^0.8.2",
@@ -62,7 +62,7 @@
         "joi": "^7.0.0",
         "qs": "^6.0.0",
         "lodash": "^3.10.1",
-        "winston": "^2.0.1",
+        "winston": "^2.1.0",
         "squirrel": "^1.0.0",
         "url-pattern": "^0.10.2"
     },
