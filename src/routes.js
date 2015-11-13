@@ -91,7 +91,7 @@ function enableCORS(res) {
 
 function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
-function badCapturing() { return error('Can not capture site screenshot'); }
+function badCapturing(url) { return error('Can not capture site screenshot: ' + url); }
 
 function sendError(res, err) {
     const msg = err.message || err;
@@ -116,10 +116,10 @@ function onImageFileSent(file, config) {
     }
 }
 
-function sendImageInResponse(res, config) {
+function sendImageInResponse(res, config, options) {
     return (file, error) => {
         if (error) {
-            sendError(res, badCapturing());
+            sendError(res, badCapturing(options.url));
         } else {
             if (config.cors) {
                 enableCORS(res);
@@ -138,7 +138,7 @@ function sendImageToUrl(res, config, options) {
     return (file, error) => {
         const callbackUrl = utils.fixUrl(options.callback);
         if (error) {
-            request.post(callbackUrl, error(badCapturing()));
+            request.post(callbackUrl, error(badCapturing(options.url)));
         } else {
             const fileStream = fs.createReadStream(file);
 
@@ -187,7 +187,7 @@ function index(config) {
                     );
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
-                    capture.screenshot(options, config, sendImageInResponse(res, config));
+                    capture.screenshot(options, config, sendImageInResponse(res, config, options));
                 }
             }
 
