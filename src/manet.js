@@ -108,8 +108,8 @@ function createWebApplication(conf) {
     app.use(express.static(utils.filePath('../public')));
     app.use(passport.initialize());
 
-    app.get('/', notNull([basic, merge, usage, noCache]), index);
-    app.post('/', notNull([basic, merge, usage, urlencoded, json, noCache]), index);
+    app.get('/', notNull([noCache, basic, merge, usage]), index);
+    app.post('/', notNull([noCache, basic, urlencoded, json, merge, usage]), index);
 
     return app;
 }
