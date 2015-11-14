@@ -3,6 +3,7 @@
 const _ = require('lodash'),
       passport = require('passport'),
       passportHttp = require('passport-http'),
+      logger = require('winston'),
       utils = require('./utils');
 
 
@@ -19,6 +20,9 @@ function getBasic(conf) {
 function merge(req, res, next) {
     const query = req.query || {},
           body = req.body || {};
+
+    logger.debug('Request query parameters: %s', JSON.stringify(query));
+    logger.debug('Request body parameters: %s', JSON.stringify(body));
 
     req.data = _.defaults(query, body);
     return next();
