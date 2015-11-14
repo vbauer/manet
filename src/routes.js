@@ -36,7 +36,18 @@ function createSchema() {
         images: joi.boolean(),
         user: joi.string().trim(),
         password: joi.string().trim(),
-        callback: joi.string().trim()
+        callback: joi.string().trim(),
+        cookies: joi.array().items(
+            joi.object().keys({
+                name: joi.string().required(),
+                value: joi.string().required(),
+                domain: joi.string(),
+                path: joi.string().required(),
+                httponly: joi.boolean(),
+                secure: joi.boolean(),
+                expires: joi.string()
+            })
+        )
     });
 }
 

@@ -102,9 +102,19 @@
         return null;
     }
 
+    function pageCookies(options) {
+        return options.cookies || [];
+    }
+
     function createPage(options) {
         var page = webpage.create(),
-            clipRect = pageClipRect(options);
+            clipRect = pageClipRect(options),
+            cookies = pageCookies(options);
+
+        cookies.forEach(function(cookie) {
+            log('Use cookie: ' + JSON.stringify(cookie));
+            phantom.addCookie(cookie);
+        });
 
         page.zoomFactor = def(options.zoom, DEF_ZOOM);
         page.customHeaders = def(options.headers, DEF_HEADERS);
