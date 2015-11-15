@@ -4,6 +4,9 @@
 
     /* Modules & Constants */
 
+    var system = require('system'),
+        webpage = require('webpage');
+
     var DEF_ZOOM = 1,
         DEF_QUALITY = 1,
         DEF_DELAY = 100,
@@ -106,7 +109,7 @@
         return options.cookies || [];
     }
 
-    function createPage(options) {
+    function createPage(options, captureCallback) {
         var page = webpage.create(),
             clipRect = pageClipRect(options),
             cookies = pageCookies(options);
@@ -153,7 +156,7 @@
                 page.close();
                 options.url = url;
                 setTimeout(function() {
-                    captureScreenshot(options);
+                    captureCallback(options);
                 });
             }
         };
@@ -163,6 +166,19 @@
 
 
     /* Screenshot rendering */
+
+    function addStyles(page, styles) {
+        page.evaluate(function(styles) {
+            var style = document.createElement('style'),
+                content = document.createTextNode(styles),
+                head = document.head;
+
+            style.setAttribute('type', 'text/css');
+            style.appendChild(content);
+
+            head.insertBefore(style, head.firstChild);
+        }, styles);
+    }
 
     function renderScreenshotFile(page, options) {
         var delay = def(options.delay, DEF_DELAY),
@@ -190,7 +206,7 @@
 
     function captureScreenshot(options) {
         try {
-            var page = createPage(options);
+            var page = createPage(options, captureScreenshot);
 
             page.open(options.url, function (status) {
                 var onPageReady = function() {
@@ -226,26 +242,15 @@
         }
     }
 
-    function addStyles(page, styles) {
-        page.evaluate(function(styles) {
-            var style = document.createElement('style'),
-                content = document.createTextNode(styles),
-                head = document.head;
 
-            style.setAttribute('type', 'text/css');
-            style.appendChild(content);
+    /* Configuration reading */
 
-            head.insertBefore(style, head.firstChild);
-        }, styles);
-    }
-
-    /* Fire starter */
-
-    var system = require('system'),
-        webpage = require('webpage'),
-        base64 = argument(0),
+    var base64 = argument(0),
         outputFile = argument(1),
         options = composeOptions(base64, outputFile);
+
+
+    /* Fire starter */
 
     captureScreenshot(options);
 
