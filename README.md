@@ -218,10 +218,11 @@ REST API is available on "/" using:
 Few rules:
 
 * The `"url"` parameter must be specified.
+* It is possible to send data using query parameters or [HTTP Message Body](https://en.wikipedia.org/wiki/HTTP_message_body).
 * Query parameters will be used in priority and override others.
 
 
-### Query parameters
+### Available parameters
 
 <dl>
 
@@ -280,6 +281,9 @@ Few rules:
 
   <dt>engine</dt>
   <dd>Override default engine parameter. Possible values: `phantomjs`, `slimerjs`.</dd>
+
+  <dt>cookies</dt>
+  <dd>Configure <a href="http://phantomjs.org/api/phantom/property/cookies.html">cookies</a> that will be contained in request. HTTP message body is the easiest way for sending cookies to Manet (ex: using JSON format).</dd>
 
 </dl>
 
