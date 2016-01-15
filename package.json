@@ -52,19 +52,19 @@
         "express": "^4.13.3",
         "request": "^2.67.0",
         "body-parser": "^1.14.2",
-        "helmet": "^1.0.1",
+        "helmet": "^1.1.0",
         "passport": "^0.3.2",
         "passport-http": "^0.3.0",
-        "fs-extra": "^0.26.3",
+        "fs-extra": "^0.26.4",
         "nconf": "^0.8.2",
-        "js-yaml": "^3.4.6",
+        "js-yaml": "^3.5.2",
         "cloud-env": "^0.1.1",
-        "joi": "^7.0.1",
+        "joi": "^7.2.0",
         "qs": "^6.0.1",
-        "lodash": "^3.10.1",
+        "lodash": "^4.0.0",
         "winston": "^2.1.1",
         "squirrel": "^1.0.0",
-        "url-pattern": "^1.0.0"
+        "url-pattern": "^1.0.1"
     },
 
     "pluginDependencies": {
@@ -76,7 +76,7 @@
     },
 
     "devDependencies": {
-        "jshint": "^2.9.1-rc2",
+        "jshint": "^2.9.1",
         "mocha": "^2.3.4",
         "w3cjs": "^0.3.0"
     }

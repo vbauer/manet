@@ -89,7 +89,7 @@ function readOptions(data, schema) {
     options.headers = parseHeaders(options.headers);
     options.clipRect = parseClipRect(options.clipRect);
 
-    return _.pick(options, _.identity);
+    return _.omitBy(options, (v) => _.isUndefined(v) || _.isNull(v));
 }
 
 

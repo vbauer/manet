@@ -128,7 +128,7 @@ function screenshot(options, config, onFinish) {
               });
           };
 
-    logger.info('Capture site screenshot: %s', options.url);
+    logger.info('Capture site screenshot: "%s"', options.url);
 
     if (options.force || !conf.cache) {
         retrieveImageFromSite();
