@@ -223,7 +223,7 @@
                             return document.readyState;
                         });
 
-                        if ('complete' === readyState) {
+                        if (readyState === null || 'complete' === readyState) {
                             onPageReady();
                         } else {
                             checkReadyState();
