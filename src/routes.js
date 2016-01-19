@@ -128,8 +128,8 @@ function onImageFileSent(file, config) {
 }
 
 function sendImageInResponse(res, config, options) {
-    return (file, error) => {
-        if (error) {
+    return (file, err) => {
+        if (err) {
             sendError(res, badCapturing(options.url));
         } else {
             if (config.cors) {
@@ -146,22 +146,35 @@ function sendImageInResponse(res, config, options) {
 }
 
 function sendImageToUrl(res, config, options) {
-    return (file, error) => {
+    return (file, err) => {
         const callbackUrl = utils.fixUrl(options.callback);
-        if (error) {
+        if (err) {
             request.post(callbackUrl, error(badCapturing(options.url)));
         } else {
-            const fileStream = fs.createReadStream(file);
-
-            fileStream.on('error', (err) =>
-                sendError(res, 'Error while reading image file: ' + err.message));
-
-            fileStream.pipe(request.post(callbackUrl, (err) => {
+            fs.stat(file, function(err, stat) {
                 if (err) {
-                    sendError(res, 'Error while streaming image file: ' + err.message);
+                    request.post(callbackUrl,
+                        error('Error while detecting image file size: ' + err.message));
+                } else {
+                    const fileStream = fs.createReadStream(file),
+                          headers = { 'Content-Length': stat.size };
+
+                    fileStream.on('error', (err) =>
+                        request.post(callbackUrl,
+                            error('Error while reading image file: ' + err.message)));
+
+                    fileStream.pipe(request.post(
+                        { url: callbackUrl, headers: headers },
+                        (err) => {
+                            if (err) {
+                                request.post(callbackUrl,
+                                    error('Error while streaming image file: ' + err.message));
+                            }
+                            onImageFileSent(file, config);
+                        }
+                    ));
                 }
-                onImageFileSent(file, config);
-            }));
+            });             
         }
     };
 }
@@ -187,15 +200,11 @@ function index(config) {
                 if (callbackUrl) {
                     res.json(message(util.format(
                         'Screenshot will be sent to "%s" when processed', callbackUrl
-                    )));
+                        )));
 
-                    logger.debug(
-                        'Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl
-                    );
+                    logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
 
-                    capture.screenshot(
-                        options, config, sendImageToUrl(res, config, options)
-                    );
+                    capture.screenshot(options, config, sendImageToUrl(res, config, options));
                 } else {
                     logger.debug('Sending image (\"%s\") in response', siteUrl);
                     capture.screenshot(options, config, sendImageInResponse(res, config, options));

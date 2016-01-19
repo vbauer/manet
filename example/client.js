@@ -72,6 +72,15 @@ function startServer() {
         req.on('end', () => {
             res.writeHead(200);
             res.end();
+
+            fs.stat(fileName, function(error, stat) {
+              console.log(
+                'Stored file ' + fileName +
+                ' with size ' + stat.size +
+                ', headers: ' + JSON.stringify(req.headers)
+              );
+              fs.unlinkSync(fileName);
+            });
         });
         req.pipe(fs.createWriteStream(fileName));
     }).listen(DEF_CLIENT_PORT);
