@@ -126,7 +126,7 @@
             format: 'letter',
             orientation: 'portrait',
             margin: '0px'
-        }
+        };
         page.settings = pageSettings(options);
         if (clipRect) {
             page.clipRect = clipRect;
