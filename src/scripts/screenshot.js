@@ -122,6 +122,11 @@
         page.zoomFactor = def(options.zoom, DEF_ZOOM);
         page.customHeaders = def(options.headers, DEF_HEADERS);
         page.viewportSize = pageViewPortSize(options);
+        page.paperSize = {
+            format: 'letter',
+            orientation: 'portrait',
+            margin: '0px'
+        }
         page.settings = pageSettings(options);
         if (clipRect) {
             page.clipRect = clipRect;
