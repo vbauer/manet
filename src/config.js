@@ -39,12 +39,12 @@ function createSchema() {
         level: joi
             .string()
             .lowercase()
-            .allow('silly', 'debug', 'verbose', 'info', 'warn', 'error')
+            .valid('silly', 'debug', 'verbose', 'info', 'warn', 'error')
             .label('Logging level'),
         engine: joi
             .string()
             .lowercase()
-            .allow('phantomjs', 'slimerjs')
+            .valid('phantomjs', 'slimerjs')
             .label('Default engine'),
         timeout: joi
             .number()
