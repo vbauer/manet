@@ -116,7 +116,13 @@ describe('manet', function () {
                     js: false
                 }),
                 checkImages = checkApiCall({
-                    js: false
+                    images: false
+                }),
+                checkSelectorId = checkApiCall({
+                    selector: "#main"
+                }),
+                checkSelectorClass = checkApiCall({
+                    selector: ".content"
                 }),
                 stopServer = () => {
                     server.close();
