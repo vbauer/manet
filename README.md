@@ -343,7 +343,7 @@ GET /?url=github.com&delay=1000
 # Force page reloading. Return a screenshot without using file cache.
 GET /?url=github.com&force=true
 
-# Wait for a div with a class header to be available.
+# Wait for a div element with a class name "header" to be available.
 GET /?url=github.com&selector=div.header
 
 # Specify custom HTTP headers.
