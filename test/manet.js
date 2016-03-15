@@ -143,6 +143,8 @@ describe('manet', function () {
                     checkAgent,
                     checkJs,
                     checkImages,
+                    checkSelectorId,
+                    checkSelectorClass,
                     stopServer
                 ],
                 chainIndex = 0,

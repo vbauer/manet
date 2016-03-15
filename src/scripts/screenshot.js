@@ -229,7 +229,7 @@
                                 return document.querySelector(selector);
                             }, options.selector);
 
-                            if (element != null && typeof element === 'object') {
+                            if (element !== null && typeof element === 'object') {
                                 onPageReady();
                                 clearInterval(interval);
                             } 
