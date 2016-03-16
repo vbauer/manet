@@ -222,6 +222,22 @@
                         exit(page, e);
                     }
                 },
+                checkDomElementAvailable = function() {
+                    if (options.selector) {
+                        var interval = setInterval(function () {
+                            var element = page.evaluate(function (selector) {
+                                return document.querySelector(selector);
+                            }, options.selector);
+
+                            if (element !== null && typeof element === 'object') {
+                                onPageReady();
+                                clearInterval(interval);
+                            } 
+                        }, 250);
+                    } else {
+                        onPageReady();
+                    }
+                },
                 checkReadyState = function() {
                     setTimeout(function () {
                         var readyState = page.evaluate(function () {
@@ -229,7 +245,7 @@
                         });
 
                         if (readyState === null || 'complete' === readyState) {
-                            onPageReady();
+                            checkDomElementAvailable();
                         } else {
                             checkReadyState();
                         }

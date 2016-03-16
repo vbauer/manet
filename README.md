@@ -276,6 +276,9 @@ Few rules:
   <dt>force</dt>
   <dd>Use the force reloading of web page without using cache (default is `false`).</dd>
 
+  <dt>selector</dt>
+  <dd>Wait for the DOM element, that matches the CSS selector, to be available before taking the screenshot.</dd>
+
   <dt>callback</dt>
   <dd>Return an empty response immediately (HTTP 200 OK), then send a POST request to the callback URL when the screenshot is ready (with image in the body).</dd>
 
@@ -339,6 +342,9 @@ GET /?url=github.com&delay=1000
 
 # Force page reloading. Return a screenshot without using file cache.
 GET /?url=github.com&force=true
+
+# Wait for a div element with a class name "header" to be available.
+GET /?url=github.com&selector=div.header
 
 # Specify custom HTTP headers.
 GET /?url=google.com&headers=User-Agent=Firefox;Accept-Charset=utf-8

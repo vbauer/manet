@@ -30,6 +30,7 @@ function createSchema() {
         height: joi.number().integer().min(1),
         clipRect: joi.string().trim().regex(REGEXP_CLIP_RECT),
         zoom: joi.number().min(0),
+        selector: joi.string().trim(),
         js: joi.boolean(),
         images: joi.boolean(),
         user: joi.string().trim(),

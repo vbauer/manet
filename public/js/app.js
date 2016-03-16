@@ -8,7 +8,7 @@
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
-        'force',
+        'force', 'selector',
         'engine'
     ];
 
