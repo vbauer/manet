@@ -391,10 +391,11 @@ mocha --watch -R spec
 
 **Docker** is an open platform to build, ship, and run distributed applications, whether on laptops, data center VMs, or the cloud.
 
-Manet has few already known `Dockerfile`s:
+Manet has some already known `Dockerfile`s:
 
-* [Pietro Delsante](https://github.com/pdelsante) provides [manet-dockerfile](https://github.com/pdelsante/manet-dockerfile) to run Manet inside a Docker container.
+* [Pietro Delsante](https://github.com/pdelsante) provides the first [manet-dockerfile](https://github.com/pdelsante/manet-dockerfile) to run Manet inside a Docker container.
 * [Kris Carle](https://github.com/kriscarle) provides [fork](https://github.com/openmaphub/manet-dockerfile) of previous project with WebGL support for SlimerJS.
+* [Walter Franchetti](https://github.com/frnwtr) provides [docker-Manet](https://github.com/earlyclaim/docker-Manet) with PhantomJS and libfreetype6.
 
 ### Heroku
 
@@ -410,7 +411,7 @@ You need to create Heroku instance with as described in this documentation.
 
 * SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
 * PhantomJS author [Ariya Hidayat](https://github.com/ariya/phantomjs) and PhantomJS [community](https://github.com/ariya/phantomjs/graphs/contributors).
-* [Pietro Delsante](https://github.com/pdelsante) and [Kris Carle](https://github.com/kriscarle) for running project inside a Docker container.
+* [Pietro Delsante](https://github.com/pdelsante), [Kris Carle](https://github.com/kriscarle), and [Walter Franchetti](https://github.com/frnwtr) for running project inside a Docker container.
 * All [contributors](https://github.com/vbauer/manet/graphs/contributors) for their help and pull requests.
 
 
