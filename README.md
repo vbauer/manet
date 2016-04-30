@@ -385,6 +385,13 @@ mocha --watch -R spec
 ```
 
 
+## Alternative clients
+
+Ruby:
+
+* [manet_client](https://github.com/codextremist/manet_client) is a simple Ruby client library for Manet.
+
+
 ## Deployment options
 
 ### Docker
@@ -412,6 +419,7 @@ You need to create Heroku instance with as described in this documentation.
 * SlimerJS author [Laurent Jouanneau](https://github.com/laurentj) and SlimerJS [community](https://github.com/laurentj/slimerjs/graphs/contributors).
 * PhantomJS author [Ariya Hidayat](https://github.com/ariya/phantomjs) and PhantomJS [community](https://github.com/ariya/phantomjs/graphs/contributors).
 * [Pietro Delsante](https://github.com/pdelsante), [Kris Carle](https://github.com/kriscarle), and [Walter Franchetti](https://github.com/frnwtr) for running project inside a Docker container.
+* [Felipe JAPM](https://github.com/codextremist) for Ruby client.
 * All [contributors](https://github.com/vbauer/manet/graphs/contributors) for their help and pull requests.
 
 
