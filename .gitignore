@@ -35,5 +35,8 @@ tmp/
 *.ipr
 *.iws
 
+# Netbeans IDE
+nbproject/
+
 # Example project
 example/*.png
