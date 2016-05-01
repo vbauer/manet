@@ -3,7 +3,6 @@
 const _ = require('lodash'),
       assert = require('assert'),
       http = require('http'),
-      w3cjs = require('w3cjs'),
       querystring = require('querystring'),
       config = require('../src/config'),
       manet = require('../src/manet');
@@ -39,15 +38,6 @@ describe('manet', function () {
         }).end();
     }
 
-    function checkHtml(html) {
-        w3cjs.validate({
-            input: html,
-            callback: (res) => {
-                assert.equal(true, _.isEmpty(res.messages));
-            }
-        });
-    }
-
     function checkResponse(res, data, type) {
         assert.equal(true, data.length > 0);
         assert.equal(type, res.headers['content-type'].toLowerCase());
@@ -80,7 +70,6 @@ describe('manet', function () {
             let checkSandboxUI = (callback) =>
                 sendRequest('GET', '/', 'utf8', function (d1, r1) {
                     checkResponse(r1, d1, 'text/html; charset=utf-8');
-                    checkHtml(d1);
                     callback();
                 }),
                 checkUrl = checkApiCall(),

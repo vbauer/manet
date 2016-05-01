@@ -77,7 +77,6 @@
 
     "devDependencies": {
         "jshint": "^2.9.2",
-        "mocha": "^2.4.5",
-        "w3cjs": "^0.3.0"
+        "mocha": "^2.4.5"
     }
 }
