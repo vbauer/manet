@@ -37,7 +37,7 @@
     }
 
     function generateUrl() {
-        return '/?' + $.param(readOptions());
+        return '?' + $.param(readOptions());
     }
 
     function updateAddress() {
