@@ -52,7 +52,7 @@
         "express": "^4.13.4",
         "request": "^2.72.0",
         "body-parser": "^1.15.0",
-        "helmet": "^2.0.0",
+        "nocache": "^1.0.0",
         "passport": "^0.3.2",
         "passport-http": "^0.3.0",
         "fs-extra": "^0.30.0",
