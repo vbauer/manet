@@ -23,7 +23,7 @@ function createSchema() {
         agent: joi.string().trim(),
         headers: joi.string().trim(),
         delay: joi.number().integer().min(0),
-        format: joi.string().lowercase().trim().valid('jpg', 'jpeg', 'png', 'pdf', 'gif'),
+        format: joi.string().lowercase().trim().valid('jpeg', 'jpg', 'png', 'bmp', 'pdf', 'ppm', 'ico'),
         engine: joi.string().lowercase().trim().valid('phantomjs', 'slimerjs'),
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
@@ -173,7 +173,7 @@ function sendImageToUrl(res, config, options) {
                         }
                     ));
                 }
-            });             
+            });
         }
     };
 }

@@ -248,7 +248,49 @@ Few rules:
   <dd>Do a pause during the given amount of time (in milliseconds) after page opening (default: `100`).</dd>
 
   <dt>format</dt>
-  <dd>Indicate the file format for output image (default is `"png"`). Possible values: jpg, jpeg, png, gif, pdf</dd>
+  <dd>Indicate the file format for output image (default is `"png"`). Possible values: jpg, jpeg, png, bmp, pdf, ppm, ico.
+    <table style="text-align: center;">
+        <thead>
+            <tr>
+                <th>Format</th>
+                <th>PhantomJS</th>
+                <th>SlimerJS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>JPG</td>
+                <td>+</td>
+                <td>+</td>
+            </tr>
+            <tr>
+                <td>PNG</td>
+                <td>+</td>
+                <td>+</td>
+            </tr>
+            <tr>
+                <td>BMP</td>
+                <td>+</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>PDF</td>
+                <td>+</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>PPM</td>
+                <td>+</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>ICO</td>
+                <td>+</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+  </dd>
 
   <dt>agent</dt>
   <dd>String to define the "User-Agent" in HTTP requests. By default, it is something like:
