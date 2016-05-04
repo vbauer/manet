@@ -5,7 +5,8 @@
     /* Modules & Constants */
 
     var system = require('system'),
-        webpage = require('webpage');
+        webpage = require('webpage'),
+        fs = require('fs');
 
     var DEF_ZOOM = 1,
         DEF_QUALITY = 1,
@@ -192,16 +193,23 @@
 
         setTimeout(function () {
             try {
-                var renderOptions = {
-                    onlyViewport: !!options.height,
-                    quality: quality,
-                    format: format
-                },
-                outputFile = options.outputFile;
+                var outputFile = options.outputFile;
 
-                page.render(outputFile, renderOptions);
+                if (format === 'html') {
+                    var content = page.content;
 
-                log('Rendered screenshot: ' + outputFile);
+                    fs.write(outputFile, content, 'w');
+                } else {
+                    var renderOptions = {
+                        onlyViewport: !!options.height,
+                        quality: quality,
+                        format: format
+                    };
+
+                    page.render(outputFile, renderOptions);
+                }
+
+                log('Captured file: ' + outputFile);
                 exit(page);
             } catch (e) {
                 exit(page, e);
@@ -232,7 +240,7 @@
                             if (element !== null && typeof element === 'object') {
                                 onPageReady();
                                 clearInterval(interval);
-                            } 
+                            }
                         }, 250);
                     } else {
                         onPageReady();

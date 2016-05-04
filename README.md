@@ -269,6 +269,11 @@ Few rules:
                 <td>+</td>
             </tr>
             <tr>
+                <td>HTML</td>
+                <td>+</td>
+                <td>+</td>
+            </tr>
+            <tr>
                 <td>BMP</td>
                 <td>+</td>
                 <td>-</td>

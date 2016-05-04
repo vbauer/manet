@@ -23,8 +23,11 @@ function createSchema() {
         agent: joi.string().trim(),
         headers: joi.string().trim(),
         delay: joi.number().integer().min(0),
-        format: joi.string().lowercase().trim().valid('jpeg', 'jpg', 'png', 'bmp', 'pdf', 'ppm', 'ico'),
-        engine: joi.string().lowercase().trim().valid('phantomjs', 'slimerjs'),
+        format: joi.string().lowercase().trim().valid(
+            'jpeg', 'jpg', 'png', 'html', 'bmp', 'pdf', 'ppm', 'ico'),
+        engine: joi.string().lowercase().trim().valid(
+            'phantomjs',
+            'slimerjs'),
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
@@ -101,7 +104,7 @@ function enableCORS(res) {
 
 function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
-function badCapturing(url) { return error('Can not capture site screenshot: ' + url); }
+function badCapturing(url) { return error('Can not capture: ' + url); }
 
 function sendError(res, err) {
     const msg = err.message || err;
@@ -136,7 +139,7 @@ function sendImageInResponse(res, config, options) {
             }
             res.sendFile(file, (err) => {
                 if (err) {
-                    sendError(res, 'Error while sending image file: ' + err.message);
+                    sendError(res, 'Error while sending data file: ' + err.message);
                 }
                 onImageFileSent(file, config);
             });
@@ -153,21 +156,21 @@ function sendImageToUrl(res, config, options) {
             fs.stat(file, function(err, stat) {
                 if (err) {
                     request.post(callbackUrl,
-                        error('Error while detecting image file size: ' + err.message));
+                        error('Error while detecting file size: ' + err.message));
                 } else {
                     const fileStream = fs.createReadStream(file),
                           headers = { 'Content-Length': stat.size };
 
                     fileStream.on('error', (err) =>
                         request.post(callbackUrl,
-                            error('Error while reading image file: ' + err.message)));
+                            error('Error while reading file: ' + err.message)));
 
                     fileStream.pipe(request.post(
                         { url: callbackUrl, headers: headers },
                         (err) => {
                             if (err) {
                                 request.post(callbackUrl,
-                                    error('Error while streaming image file: ' + err.message));
+                                    error('Error while streaming file: ' + err.message));
                             }
                             onImageFileSent(file, config);
                         }
@@ -198,14 +201,14 @@ function index(config) {
                 const callbackUrl = options.callback;
                 if (callbackUrl) {
                     res.json(message(util.format(
-                        'Screenshot will be sent to "%s" when processed', callbackUrl
+                        'Data file will be sent to "%s" when processed', callbackUrl
                         )));
 
-                    logger.debug('Streaming image (\"%s\") to \"%s\"', siteUrl, callbackUrl);
+                    logger.debug('Streaming (\"%s\") to \"%s\"', siteUrl, callbackUrl);
 
                     capture.screenshot(options, config, sendImageToUrl(res, config, options));
                 } else {
-                    logger.debug('Sending image (\"%s\") in response', siteUrl);
+                    logger.debug('Sending file (\"%s\") in response', siteUrl);
                     capture.screenshot(options, config, sendImageInResponse(res, config, options));
                 }
             }
