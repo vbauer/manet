@@ -92,8 +92,11 @@ describe('manet', function () {
                 }),
                 checkQualityAndFormat = checkApiCall({
                     quality: 0.5,
-                    format: "jpg"
+                    format: 'jpg'
                 }, 'image/jpeg'),
+                checkHtmlFormat = checkApiCall({
+                    format: 'html'
+                }, 'text/html; charset=utf-8'),
                 checkDelay = checkApiCall({
                     delay: 100
                 }),
@@ -125,6 +128,7 @@ describe('manet', function () {
                     checkZoomOut,
                     checkForce,
                     checkQualityAndFormat,
+                    checkHtmlFormat,
                     checkDelay,
                     checkAgent,
                     checkJs,

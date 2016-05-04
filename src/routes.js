@@ -26,8 +26,7 @@ function createSchema() {
         format: joi.string().lowercase().trim().valid(
             'jpeg', 'jpg', 'png', 'html', 'bmp', 'pdf', 'ppm', 'ico'),
         engine: joi.string().lowercase().trim().valid(
-            'phantomjs',
-            'slimerjs'),
+            'phantomjs', 'slimerjs'),
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
