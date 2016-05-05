@@ -75,11 +75,12 @@ function initFsWatchdog(conf) {
           dir = conf.storage;
 
     utils.runFsWatchdog(dir, timeout, (file) => {
-        return fs.unlink(file, (err) => {
+        fs.unlink(file, (err) => {
             if (err) {
-                return logger.error(err);
+                logger.debug('Can not delete file "%s": %s', file, err);
+            } else {
+                logger.info('Deleted file "%s"', file);
             }
-            logger.info('Deleted file: %s', file);
         });
     });
 }
