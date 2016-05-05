@@ -61,7 +61,7 @@
         "cloud-env": "^0.2.2",
         "joi": "^8.0.5",
         "qs": "^6.1.0",
-        "lodash": "^4.11.1",
+        "lodash": "^4.11.2",
         "winston": "^2.2.0",
         "squirrel": "^1.0.0",
         "url-pattern": "^1.0.1"
