@@ -460,7 +460,7 @@ You need to create Heroku instance with as described in this documentation.
 
 [Procfile](Procfile) file for **PhantomJS** is already existed in root of the project. This file describes Heroku how to start Manet.
 
-**SlimerJS** does not work on Heroku, because it has not got a [headless mode](https://github.com/laurentj/slimerjs/issues/80) and it is quite compliated to install **xvfb** on this platform (but you can try your luck).
+**SlimerJS** does not work on Heroku, because it has not got a [headless mode](https://github.com/laurentj/slimerjs/issues/80) and it is quite complicated to install **xvfb** on this platform (but you can try your luck).
 
 
 ## Thanks to
