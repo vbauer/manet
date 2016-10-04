@@ -228,13 +228,13 @@
                 } catch (e) {
                     exit(page, e);
                 }
-            }
+            };
 
             if (options.captureOnCallback === true) {
                 page.onCallback = function(data) {
                     log('CALLBACK: '+ JSON.stringify(data));
                     addStylesAndRender();
-                }
+                };
             }
 
             page.open(options.url, function (status) {
