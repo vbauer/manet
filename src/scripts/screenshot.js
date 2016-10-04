@@ -221,16 +221,33 @@
         try {
             var page = createPage(options, captureScreenshot);
 
+            var addStylesAndRender = function() {
+                try {
+                    addStyles(page, DEF_STYLES);
+                    renderScreenshotFile(page, options);
+                } catch (e) {
+                    exit(page, e);
+                }
+            }
+
+            if (options.captureOnCallback === true) {
+                page.onCallback = function(data) {
+                    log('CALLBACK: '+ JSON.stringify(data));
+                    addStylesAndRender();
+                }
+            }
+
             page.open(options.url, function (status) {
-                var onPageReady = function() {
-                    try {
-                        addStyles(page, DEF_STYLES);
-                        renderScreenshotFile(page, options);
-                    } catch (e) {
-                        exit(page, e);
-                    }
-                },
-                checkDomElementAvailable = function() {
+                
+                if (status !== 'success') {
+                    exit();
+                }
+
+                if (options.captureOnCallback === true) {
+                    return;
+                }
+
+                var checkDomElementAvailable = function() {
                     if (options.selector) {
                         var interval = setInterval(function () {
                             var element = page.evaluate(function (selector) {
@@ -238,12 +255,12 @@
                             }, options.selector);
 
                             if (element !== null && typeof element === 'object') {
-                                onPageReady();
+                                addStylesAndRender();
                                 clearInterval(interval);
                             }
                         }, 250);
                     } else {
-                        onPageReady();
+                        addStylesAndRender();
                     }
                 },
                 checkReadyState = function() {
