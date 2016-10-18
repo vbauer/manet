@@ -326,13 +326,13 @@ Few rules:
   <dt>selector</dt>
   <dd>Wait for the DOM element, that matches the CSS selector, to be available before taking the screenshot.</dd>
   
-  <dt>selector_crop</dt>
+  <dt>selectorCrop</dt>
   <dd>Crop page by offset coordinates of selected(by CSS selector) element. (default is `false`).
       Leave `height` option empty, for this is working correctly.
   </dd>
   
-  <dt>selector_crop_padding</dt>
-  <dd>Add padding to 'selector_crop'. You can use negative values. (default is 0).</dd>
+  <dt>selectorCropPadding</dt>
+  <dd>Add padding to 'selectorCrop'. You can use negative values. (default is 0).</dd>
 
   <dt>callback</dt>
   <dd>Return an empty response immediately (HTTP 200 OK), then send a POST request to the callback URL when the screenshot is ready (with image in the body).</dd>

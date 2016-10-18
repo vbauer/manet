@@ -8,7 +8,7 @@
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
-        'force', 'selector','selector_crop','selector_crop_padding',
+        'force', 'selector','selectorCrop','selectorCropPadding',
         'engine'
     ];
 
@@ -60,16 +60,16 @@
             event.preventDefault();
         });
 
-        var store_height = false;
-        $('#selector_crop').change(function(){
+        var rememberHeight = false;
+        $('#selectorCrop').change(function(){
             if ($(this).is(':checked')) {
-                store_height = $('#height').val();
+                rememberHeight = $('#height').val();
                 $('#height').val('');
-            } else if(store_height){
-                $('#height').val(store_height);
+            } else if(rememberHeight){
+                $('#height').val(rememberHeight);
             }
             updateAddress();
-        })
+        });
         
         updateAddress();
     });
