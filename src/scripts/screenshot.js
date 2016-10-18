@@ -238,6 +238,34 @@
                             }, options.selector);
 
                             if (element !== null && typeof element === 'object') {
+
+                                if (options.selector_crop) {
+                                    var elPos = page.evaluate(function (selector) {
+                                        return document.querySelector(selector).getBoundingClientRect();
+                                    }, options.selector);
+
+                                    var cropRect = { 
+                                        top:    elPos.top, 
+                                        left:   elPos.left, 
+                                        width:  elPos.right  - elPos.left, 
+                                        height: elPos.bottom - elPos.top,
+                                    };
+
+                                    if (options.selector_crop_padding) {
+                                        cropRect.top    -= options.selector_crop_padding;
+                                        cropRect.left   -= options.selector_crop_padding;
+                                        cropRect.width  += 2*options.selector_crop_padding;
+                                        cropRect.height += 2*options.selector_crop_padding;
+                                    }
+
+                                    if (options.zoom) {
+                                        for(var k in cropRect){
+                                            cropRect[k] = cropRect[k]*options.zoom;
+                                        }
+                                    }
+                                    page.clipRect = cropRect;
+                                }
+
                                 onPageReady();
                                 clearInterval(interval);
                             }

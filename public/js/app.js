@@ -8,7 +8,7 @@
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
-        'force', 'selector',
+        'force', 'selector','selector_crop','selector_crop_padding',
         'engine'
     ];
 
@@ -60,6 +60,17 @@
             event.preventDefault();
         });
 
+        var store_height = false;
+        $('#selector_crop').change(function(){
+            if ($(this).is(':checked')) {
+                store_height = $('#height').val();
+                $('#height').val('');
+            } else if(store_height){
+                $('#height').val(store_height);
+            }
+            updateAddress();
+        })
+        
         updateAddress();
     });
 
