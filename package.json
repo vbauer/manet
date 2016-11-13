@@ -50,21 +50,21 @@
 
     "dependencies": {
         "express": "^4.14.0",
-        "request": "^2.73.0",
+        "request": "^2.78.0",
         "body-parser": "^1.15.2",
-        "nocache": "^1.0.0",
+        "nocache": "^2.0.0",
         "passport": "^0.3.2",
         "passport-http": "^0.3.0",
-        "fs-extra": "^0.30.0",
+        "fs-extra": "^1.0.0",
         "nconf": "^0.8.4",
-        "js-yaml": "^3.6.1",
+        "js-yaml": "^3.7.0",
         "cloud-env": "^0.2.2",
-        "joi": "^9.0.1",
-        "qs": "^6.2.0",
-        "lodash": "^4.13.1",
-        "winston": "^2.2.0",
+        "joi": "^9.2.0",
+        "qs": "^6.3.0",
+        "lodash": "^4.16.6",
+        "winston": "^2.3.0",
         "squirrel": "^1.0.0",
-        "url-pattern": "^1.0.1"
+        "url-pattern": "^1.0.2"
     },
 
     "pluginDependencies": {
@@ -76,7 +76,7 @@
     },
 
     "devDependencies": {
-        "jshint": "^2.9.2",
-        "mocha": "^2.5.3"
+        "jshint": "^2.9.4",
+        "mocha": "^3.1.2"
     }
 }
