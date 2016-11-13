@@ -41,7 +41,8 @@ function createSchema() {
                 secure: joi.boolean(),
                 expires: joi.string()
             })
-        )
+        ),
+        captureOnCallback: joi.boolean()
     });
 }
 

@@ -335,6 +335,9 @@ Few rules:
   <dt>cookies</dt>
   <dd>Configure <a href="http://phantomjs.org/api/phantom/property/cookies.html">cookies</a> that will be contained in request. HTTP message body is the easiest way for sending cookies to Manet (ex: using JSON format).</dd>
 
+  <dt>captureOnCallback</dt>
+  <dd>Allow the page to tell Manet when it's ready for capture. This uses <a href="http://phantomjs.org/api/webpage/handler/on-callback.html">page.onCallback</a> under the hood. (default is `false`)</dd>
+
 </dl>
 
 

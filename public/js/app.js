@@ -9,12 +9,14 @@
         'user', 'password',
         'callback', 'headers', 'clipRect',
         'force', 'selector',
-        'engine'
+        'engine',
+        'captureOnCallback'
     ];
 
     function cleanBoolValue(name, value) {
         return ((value && (name === 'js' || name === 'images')) ||
-                (!value && name === 'force')) ? null : value;
+                (!value && name === 'force') ||
+                (!value && name === 'captureOnCallback')) ? null : value;
     }
 
     function readOptions() {
