@@ -26,6 +26,8 @@ function createSchema() {
         clipRect: joi.string().trim().regex(REGEXP_CLIP_RECT),
         zoom: joi.number().min(0),
         selector: joi.string().trim(),
+        selectorCrop:joi.boolean(),
+        selectorCropPadding:joi.number().integer(),
         js: joi.boolean(),
         images: joi.boolean(),
         user: joi.string().trim(),

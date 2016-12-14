@@ -8,7 +8,7 @@
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
-        'force', 'selector',
+        'force', 'selector','selectorCrop','selectorCropPadding',
         'engine'
     ];
 
@@ -60,6 +60,17 @@
             event.preventDefault();
         });
 
+        var rememberHeight = false;
+        $('#selectorCrop').change(function(){
+            if ($(this).is(':checked')) {
+                rememberHeight = $('#height').val();
+                $('#height').val('');
+            } else if(rememberHeight){
+                $('#height').val(rememberHeight);
+            }
+            updateAddress();
+        });
+        
         updateAddress();
     });
 
