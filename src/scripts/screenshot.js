@@ -1,5 +1,5 @@
 
-(function () {
+(function () { // jshint ignore:line
 "use strict";
 
     /* Modules & Constants */
@@ -117,7 +117,7 @@
             format: options.paperFormat || DEF_PAPER_FORMAT,
             orientation: options.paperOrientation || DEF_PAPER_ORIENTATION,
             margin: '0px'
-        }
+        };
     }
 
     function createPage(options, captureCallback) {
