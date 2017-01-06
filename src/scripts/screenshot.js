@@ -13,6 +13,8 @@
         DEF_DELAY = 100,
         DEF_WIDTH = 1024,
         DEF_HEIGHT = 768,
+        DEF_PAPER_FORMAT= 'letter',
+        DEF_PAPER_ORIENTATION = 'portrait',
         DEF_JS_ENABLED = true,
         DEF_IMAGES_ENABLED = true,
         DEF_FORMAT = 'png',
@@ -110,6 +112,14 @@
         return options.cookies || [];
     }
 
+    function paperSize(options) {
+        return {
+            format: options.paperFormat || DEF_PAPER_FORMAT,
+            orientation: options.paperOrientation || DEF_PAPER_ORIENTATION,
+            margin: '0px'
+        }
+    }
+
     function createPage(options, captureCallback) {
         var page = webpage.create(),
             clipRect = pageClipRect(options),
@@ -123,11 +133,7 @@
         page.zoomFactor = def(options.zoom, DEF_ZOOM);
         page.customHeaders = def(options.headers, DEF_HEADERS);
         page.viewportSize = pageViewPortSize(options);
-        page.paperSize = {
-            format: 'letter',
-            orientation: 'portrait',
-            margin: '0px'
-        };
+        page.paperSize = paperSize(options);
         page.settings = pageSettings(options);
         if (clipRect) {
             page.clipRect = clipRect;
@@ -230,14 +236,14 @@
                         exit(page, e);
                     }
                 },
-                
+
                 cropSelectorElement = function(){
                     var cropRect = page.evaluate(function (selector) {
                         var pos = document.querySelector(selector).getBoundingClientRect();
-                        return { 
-                            top:    pos.top, 
-                            left:   pos.left, 
-                            width:  pos.right  - pos.left, 
+                        return {
+                            top:    pos.top,
+                            left:   pos.left,
+                            width:  pos.right  - pos.left,
                             height: pos.bottom - pos.top,
                         };
                     }, options.selector);
@@ -249,8 +255,8 @@
                         cropRect.height += 2*options.selectorCropPadding;
                     }
 
-                    if (options.zoom) {   
-                        for(var index in cropRect) { 
+                    if (options.zoom) {
+                        for(var index in cropRect) {
                             if (cropRect.hasOwnProperty(index)) {
                                 cropRect[index] = cropRect[index]*options.zoom;
                             }

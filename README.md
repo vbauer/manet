@@ -234,6 +234,12 @@ Few rules:
 
   <dt>height</dt>
   <dd>This property allows to change the height of the viewport. If width is defined and height is not defined, than full page will be captured.</dd>
+  
+  <dt>paperFormat</dt>
+  <dd>Paper format for PDF export (default is `letter`). Possible values: letter, A2, A3, A4, A5.</dd>  
+  
+  <dt>paperOrientation</dt>
+  <dd>Paper orientation for PDF export (default is `portrait`). Possible values: portrait, landscape.</dd>
 
   <dt>clipRect</dt>
   <dd>This property defines the rectangular area of the web page to be rasterized. Format: "top,left,width,height", example: "20,20,640,480".</dd>

@@ -23,6 +23,11 @@ function createSchema() {
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
+        paperFormat: joi.string().trim().valid(
+            'letter', 'A2', 'A3', 'A4', 'A5'),
+        paperOrientation: joi.string().lowercase().trim().valid(
+            'portrait', 'landscape'
+        ),
         clipRect: joi.string().trim().regex(REGEXP_CLIP_RECT),
         zoom: joi.number().min(0),
         selector: joi.string().trim(),

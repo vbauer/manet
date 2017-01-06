@@ -4,7 +4,7 @@
 
     var MANET_OPTIONS = [
         'url', 'agent', 'delay', 'format',
-        'width', 'height', 'zoom', 'quality',
+        'width', 'height', 'paperFormat', 'paperOrientation', 'zoom', 'quality',
         'js', 'images',
         'user', 'password',
         'callback', 'headers', 'clipRect',
@@ -70,7 +70,7 @@
             }
             updateAddress();
         });
-        
+
         updateAddress();
     });
 
