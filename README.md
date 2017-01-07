@@ -14,7 +14,6 @@
 
 *Project was named in honor of Édouard Manet, French painter (1832-1883). He was one of the first 19th-century artists to paint modern life, and a pivotal figure in the transition from Realism to Impressionism.*
 
-<img src="https://manet.herokuapp.com/?url=https%3A%2F%2Fgithub.com%2Fvbauer%2Fmanet&clipRect=955%2C15%2C995%2C686">
 
 ## Main features
 * Ready-To-Use
@@ -326,12 +325,12 @@ Few rules:
 
   <dt>selector</dt>
   <dd>Wait for the DOM element, that matches the CSS selector, to be available before taking the screenshot.</dd>
-  
+
   <dt>selectorCrop</dt>
   <dd>Crop page by offset coordinates of selected(by CSS selector) element. (default is `false`).
       Leave `height` option empty, for this is working correctly.
   </dd>
-  
+
   <dt>selectorCropPadding</dt>
   <dd>Add padding to 'selectorCrop'. You can use negative values. (default is 0).</dd>
 
@@ -479,6 +478,13 @@ You need to create Heroku instance with as described in this documentation.
 * [Pietro Delsante](https://github.com/pdelsante), [Kris Carle](https://github.com/kriscarle), [Walter Franchetti](https://github.com/frnwtr), and [Olivier Balais](https://github.com/bobey) for running project inside a Docker container.
 * [Felipe JAPM](https://github.com/codextremist) for Ruby client.
 * All [contributors](https://github.com/vbauer/manet/graphs/contributors) for their help and pull requests.
+
+
+## Self portrait
+
+One picture more than a thousand words:
+
+![](https://manet.herokuapp.com/?url=https%3A%2F%2Fgithub.com%2Fvbauer%2Fmanet&clipRect=955%2C15%2C995%2C686)
 
 
 ## License
