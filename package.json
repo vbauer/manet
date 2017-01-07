@@ -50,7 +50,7 @@
 
     "dependencies": {
         "express": "^4.14.0",
-        "request": "^2.78.0",
+        "request": "^2.79.0",
         "body-parser": "^1.15.2",
         "nocache": "^2.0.0",
         "passport": "^0.3.2",
@@ -59,12 +59,12 @@
         "nconf": "^0.8.4",
         "js-yaml": "^3.7.0",
         "cloud-env": "^0.2.2",
-        "joi": "^9.2.0",
+        "joi": "^10.1.0",
         "qs": "^6.3.0",
-        "lodash": "^4.16.6",
+        "lodash": "^4.17.4",
         "winston": "^2.3.0",
         "squirrel": "^1.0.0",
-        "url-pattern": "^1.0.2"
+        "url-pattern": "^1.0.3"
     },
 
     "pluginDependencies": {
