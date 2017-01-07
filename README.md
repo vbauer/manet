@@ -14,6 +14,7 @@
 
 *Project was named in honor of Édouard Manet, French painter (1832-1883). He was one of the first 19th-century artists to paint modern life, and a pivotal figure in the transition from Realism to Impressionism.*
 
+<img src="https://manet.herokuapp.com/?url=https%3A%2F%2Fgithub.com%2Fvbauer%2Fmanet&clipRect=955%2C15%2C995%2C686">
 
 ## Main features
 * Ready-To-Use
