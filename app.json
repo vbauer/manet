@@ -21,8 +21,5 @@
       "service",
       "server"
   ],
-  "image": "heroku/nodejs",
-  "scripts": {
-    "postdeploy": "npm install -g phantomjs && ./bin/manet --port $PORT --options:format jpg"
-  }
+  "image": "heroku/nodejs"
 }
