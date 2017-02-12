@@ -1,0 +1,23 @@
+{
+  "name": "Manet",
+  "description": "Website screenshot service powered by Node.js, SlimerJS and PhantomJS",
+  "repository": "https://github.com/vbauer/manet",
+  "logo": "https://github.com/vbauer/manet/raw/master/misc/manet.jpg",
+  "keywords": [
+      "screenshot",
+      "thumbnail",
+      "slimerjs",
+      "slimer",
+      "phantomjs",
+      "phantom",
+      "picture",
+      "image",
+      "website",
+      "screen",
+      "site",
+      "page",
+      "scr",
+      "service",
+      "server"
+  ]
+}
