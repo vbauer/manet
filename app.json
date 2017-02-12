@@ -1,6 +1,7 @@
 {
   "name": "Manet",
   "description": "Website screenshot service powered by Node.js, SlimerJS and PhantomJS",
+  "website": "https://github.com/vbauer/manet",
   "repository": "https://github.com/vbauer/manet",
   "logo": "https://github.com/vbauer/manet/raw/master/misc/manet.jpg",
   "keywords": [
@@ -19,5 +20,9 @@
       "scr",
       "service",
       "server"
-  ]
+  ],
+  "image": "heroku/nodejs",
+  "scripts": {
+    "postdeploy": "npm install -g phantomjs && ./bin/manet --port $PORT --options:format jpg"
+  }
 }
