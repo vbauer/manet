@@ -234,10 +234,10 @@ Few rules:
 
   <dt>height</dt>
   <dd>This property allows to change the height of the viewport. If width is defined and height is not defined, than full page will be captured.</dd>
-  
+
   <dt>paperFormat</dt>
   <dd>Paper format for PDF export (default is `letter`). Possible values: letter, A2, A3, A4, A5.</dd>  
-  
+
   <dt>paperOrientation</dt>
   <dd>Paper orientation for PDF export (default is `portrait`). Possible values: portrait, landscape.</dd>
 
@@ -421,6 +421,10 @@ Sandbox UI is available on "/" by direct GET request without `"url"` query param
 It is a simple playground to build HTTP requests and try them.
 
 Demo instance is available on [Heroku](https://heroku.com): [https://manet.herokuapp.com](https://manet.herokuapp.com/)
+
+You can also use "Deploy to Heroku" button to create your own Manet instance on Heroku without leaving the web browser, and with little configuration.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vbauer/manet)
 
 
 ## Development
