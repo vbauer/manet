@@ -23,6 +23,8 @@ function createSchema() {
         quality: joi.number().min(0).max(1),
         width: joi.number().integer().min(1),
         height: joi.number().integer().min(1),
+        resizeWidth: joi.number().integer().min(1),
+        resizeHeight: joi.number().integer().min(1),
         paperFormat: joi.string().trim().valid(
             'letter', 'A2', 'A3', 'A4', 'A5'),
         paperOrientation: joi.string().lowercase().trim().valid(

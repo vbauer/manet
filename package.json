@@ -56,7 +56,8 @@
         "lodash": "^4.17.4",
         "winston": "^2.3.1",
         "squirrel": "^1.0.0",
-        "url-pattern": "^1.0.3"
+        "url-pattern": "^1.0.3",
+        "sharp": "^0.18.4"
     },
     "pluginDependencies": {
         "imagemin": "^3.2.2",

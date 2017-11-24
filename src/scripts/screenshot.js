@@ -6,6 +6,7 @@
 
     var system = require('system'),
         webpage = require('webpage'),
+        sharp = require('sharp'),
         fs = require('fs');
 
     var DEF_ZOOM = 1,
@@ -213,6 +214,11 @@
                     };
 
                     page.render(outputFile, renderOptions);
+
+                    if (options.resizeWidth || options.resizeHeight) {
+                        log('Resize to ' + options.resizeWidth + 'x' + options.resizeHeight + 'px');
+                        sharp(outputFile).resize(options.resizeWidth, options.resizeHeight).toFile(outputFile);
+                    }
                 }
 
                 log('Captured file: ' + outputFile);
