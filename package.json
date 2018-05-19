@@ -41,22 +41,23 @@
         "test": "mocha"
     },
     "dependencies": {
-        "express": "^4.15.4",
-        "request": "^2.81.0",
         "body-parser": "^1.17.2",
+        "cloud-env": "^0.2.2",
+        "express": "^4.15.4",
+        "fs-extra": "^6.0.1",
+        "joi": "^13.3.0",
+        "js-yaml": "^3.9.1",
+        "lodash": "^4.17.4",
+        "nconf": "^0.10.0",
         "nocache": "^2.0.0",
+        "npm": "^6.0.1",
         "passport": "^0.4.0",
         "passport-http": "^0.3.0",
-        "fs-extra": "^4.0.1",
-        "nconf": "^0.8.4",
-        "js-yaml": "^3.9.1",
-        "cloud-env": "^0.2.2",
-        "joi": "^10.6.0",
         "qs": "^6.5.0",
-        "lodash": "^4.17.4",
-        "winston": "^2.3.1",
+        "request": "^2.81.0",
         "squirrel": "^1.0.0",
-        "url-pattern": "^1.0.3"
+        "url-pattern": "^1.0.3",
+        "winston": "^2.3.1"
     },
     "pluginDependencies": {
         "imagemin": "^3.2.2",
@@ -67,6 +68,6 @@
     },
     "devDependencies": {
         "jshint": "^2.9.5",
-        "mocha": "^3.5.0"
+        "mocha": "^5.2.0"
     }
 }
