@@ -93,12 +93,12 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
         method: 'HEAD'
     }, function (error, response) {
         if (error) {
-            onFinish(error)
+            onFinish(error);
         }
 
         if (!!options.onlySuccessfulStatusCode && response.statusCode >= 400) {
             logger.error(`URL Status code is ${response.statusCode}`);
-            return onFinish(new Error(`URL Status code is ${response.statusCode}`))
+            return onFinish(new Error(`URL Status code is ${response.statusCode}`));
         }
 
         const scriptFile = utils.filePath(SCRIPT_FILE),
@@ -120,7 +120,7 @@ function runCapturingProcess(options, config, outputFile, base64, onFinish) {
                 onFinish(error);
             }
         });
-    })
+    });
 }
 
 
