@@ -349,6 +349,9 @@ Few rules:
   <dt>cookies</dt>
   <dd>Configure <a href="http://phantomjs.org/api/phantom/property/cookies.html">cookies</a> that will be contained in request. HTTP message body is the easiest way for sending cookies to Manet (ex: using JSON format).</dd>
 
+  <dt>onlySuccessfulStatusCode</dt>
+  <dd>Take screenshot only when http status code is below 400 (a.k.a. 2xx, 3xx). (default is `false`)</dd>
+
 </dl>
 
 

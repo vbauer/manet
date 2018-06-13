@@ -12,6 +12,7 @@ const _ = require('lodash'),
 function createSchema() {
     return joi.object().keys({
         force: joi.boolean(),
+        onlySuccessfulStatusCode: joi.boolean(),
         url: joi.string().trim().required(),
         agent: joi.string().trim(),
         headers: joi.string().trim(),
