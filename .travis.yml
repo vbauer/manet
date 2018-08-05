@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-  - "5.0"
-  - "6.0"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
 before_install: npm install -g phantomjs
 script: npm run lint && npm test
