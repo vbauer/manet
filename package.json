@@ -38,7 +38,7 @@
     },
     "scripts": {
         "lint": "jshint src test example public/js/app.js",
-        "test": "mocha"
+        "test": "mocha --exit"
     },
     "dependencies": {
         "body-parser": "^1.17.2",
