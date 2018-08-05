@@ -37,7 +37,7 @@ function validate(object, schema) {
 
 function encodeBase64(json) {
     const text = JSON.stringify(json),
-          buffer = new Buffer(text, 'binary');
+          buffer = Buffer.from(text, 'binary');
 
     return buffer.toString('base64');
 }

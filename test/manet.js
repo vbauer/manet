@@ -138,8 +138,8 @@ describe('manet', function () {
                 ],
                 chainIndex = 0,
                 chainHandler = () => {
-                    if (++chainIndex < chain.length) {
-                        var callback = chain[chainIndex];
+                    if (chainIndex < chain.length) {
+                        var callback = chain[chainIndex++];
                         callback(chainHandler);
                     }
                 };

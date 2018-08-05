@@ -43,7 +43,7 @@
     "dependencies": {
         "body-parser": "^1.17.2",
         "cloud-env": "^0.2.2",
-        "express": "^4.15.4",
+        "express": "^4.16.3",
         "fs-extra": "^6.0.1",
         "joi": "^13.3.0",
         "js-yaml": "^3.9.1",
@@ -67,7 +67,7 @@
         "imagemin-svgo": "^4.1.2"
     },
     "devDependencies": {
-        "jshint": "^2.9.5",
+        "jshint": "^2.9.6",
         "mocha": "^5.2.0"
     }
 }
