@@ -33,28 +33,28 @@
         "server"
     ],
     "engines": {
-        "node": ">=5.0.0",
-        "npm": ">=3.0.0"
+        "node": ">=10.0.0",
+        "npm": ">=6.3.0"
     },
     "scripts": {
         "lint": "jshint src test example public/js/app.js",
         "test": "mocha --exit"
     },
     "dependencies": {
-        "body-parser": "^1.17.2",
+        "body-parser": "^1.18.3",
         "cloud-env": "^0.2.2",
         "express": "^4.16.3",
         "fs-extra": "^6.0.1",
-        "joi": "^13.3.0",
-        "js-yaml": "^3.9.1",
-        "lodash": "^4.17.4",
+        "joi": "^13.5.2",
+        "js-yaml": "^3.12.0",
+        "lodash": "^4.17.10",
         "nconf": "^0.10.0",
         "nocache": "^2.0.0",
         "npm": "^6.0.1",
         "passport": "^0.4.0",
         "passport-http": "^0.3.0",
         "qs": "^6.5.0",
-        "request": "^2.81.0",
+        "request": "^2.87.0",
         "squirrel": "^1.0.0",
         "url-pattern": "^1.0.3",
         "winston": "^2.3.1"
