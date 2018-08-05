@@ -53,7 +53,8 @@ function initExitHandling(server) {
             logger.info('Manet server stopped');
             process.exit(0);
         });
-    }
+    };
+
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
 }
