@@ -47,10 +47,12 @@ function initLogging(conf) {
 
 /* Termination & Errors handling */
 
-function initExitHandling() {
+function initExitHandling(server) {
     const onExit = () => {
-        logger.info('Manet server stopped');
-        process.exit(0);
+        server.close(() => {
+            logger.info('Manet server stopped');
+            process.exit(0);
+        });
     }
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
@@ -129,6 +131,8 @@ function runWebServer(conf, onStart) {
           });
 
     logger.info('Manet server started on %s:%d', host, port);
+
+    initExitHandling(server);
 }
 
 
@@ -138,7 +142,6 @@ function main(onStart) {
     const conf = config.read();
 
     initLogging(conf);
-    initExitHandling();
     initFsStorage(conf);
 
     logger.debug('Default configuration file: %s', conf.path);

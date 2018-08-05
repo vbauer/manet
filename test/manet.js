@@ -113,10 +113,7 @@ describe('manet', function () {
                 checkSelector = checkApiCall({
                     selector: "div"
                 }),
-                stopServer = () => {
-                    server.close();
-                    done();
-                },
+                stopServer = () => server.close(done),
 
                 chain = [
                     checkSandboxUI,
