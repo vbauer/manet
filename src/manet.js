@@ -48,7 +48,10 @@ function initLogging(conf) {
 /* Termination & Errors handling */
 
 function initExitHandling() {
-    const onExit = () => process.exit(0);
+    const onExit = () => {
+        logger.info('Manet server stopped');
+        process.exit(0);
+    }
     process.on('SIGTERM', onExit);
     process.on('SIGINT', onExit);
 }
