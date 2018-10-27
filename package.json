@@ -54,7 +54,7 @@
         "passport": "^0.4.0",
         "passport-http": "^0.3.0",
         "qs": "^6.5.0",
-        "request": "^2.87.0",
+        "request": "^2.88.0",
         "squirrel": "^1.0.0",
         "url-pattern": "^1.0.3",
         "winston": "^2.3.1"
