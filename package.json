@@ -38,7 +38,8 @@
     },
     "scripts": {
         "lint": "jshint src test example public/js/app.js",
-        "test": "mocha --exit"
+        "test": "mocha --exit",
+        "start": "./bin/manet"
     },
     "dependencies": {
         "body-parser": "^1.18.3",
