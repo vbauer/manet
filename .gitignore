@@ -40,3 +40,7 @@ nbproject/
 
 # Example project
 example/*.png
+
+# MacOS
+.DS_Store
+
