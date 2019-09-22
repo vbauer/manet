@@ -165,7 +165,6 @@
         page.onNavigationRequested = function(url, type, willNavigate, main) {
             var prevUrl = options.url;
             if (main && url !== prevUrl) {
-                page.close();
                 options.url = url;
                 setTimeout(function() {
                     captureCallback(options);

@@ -20,7 +20,7 @@ function enableCORS(res) {
 
 function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
-function badCapturing(url) { return error('Can not capture: ' + url); }
+function badCapturing(err, url) { return error('Can not capture: ' + url + ', cause: ' + err.message); }
 
 function sendError(res, err) {
     const msg = err.message || err;
@@ -48,7 +48,7 @@ function onImageFileSent(file, config) {
 function sendImageInResponse(res, config, options) {
     return (file, err) => {
         if (err) {
-            sendError(res, badCapturing(options.url));
+            sendError(res, badCapturing(err, options.url));
         } else {
             if (config.cors) {
                 enableCORS(res);
@@ -67,7 +67,7 @@ function sendImageToUrl(res, config, options) {
     return (file, err) => {
         const callbackUrl = utils.fixUrl(options.callback);
         if (err) {
-            request.post(callbackUrl, error(badCapturing(options.url)));
+            request.post(callbackUrl, error(badCapturing(err, options.url)));
         } else {
             fs.stat(file, function(err, stat) {
                 if (err) {
