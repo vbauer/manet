@@ -20,7 +20,9 @@ function enableCORS(res) {
 
 function message(text) { return { message: text }; }
 function error(text) { return { error: text }; }
-function badCapturing(err, url) { return error('Can not capture: ' + url + ', cause: ' + err.message); }
+function badCapturing(err, url) { 
+    return error('Can not capture: ' + url + ', cause: ' + err.message);
+}
 
 function sendError(res, err) {
     const msg = err.message || err;

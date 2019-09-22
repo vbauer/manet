@@ -68,7 +68,7 @@
         "imagemin-svgo": "^4.1.2"
     },
     "devDependencies": {
-        "jshint": "^2.9.6",
+        "jshint": "^2.10.2",
         "mocha": "^5.2.0"
     }
 }
