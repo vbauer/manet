@@ -34,7 +34,7 @@
     ],
     "engines": {
         "node": ">=8.0.0",
-        "npm": ">=6.4.0"
+        "npm": ">=6.11.3"
     },
     "scripts": {
         "lint": "jshint src test example public/js/app.js",
