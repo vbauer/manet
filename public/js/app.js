@@ -9,12 +9,12 @@
         'user', 'password',
         'callback', 'headers', 'clipRect',
         'force', 'selector','selectorCrop','selectorCropPadding',
-        'engine'
+        'engine', 'onlySuccessfulStatusCode'
     ];
 
     function cleanBoolValue(name, value) {
         return ((value && (name === 'js' || name === 'images')) ||
-                (!value && (name === 'force' || name === 'selectorCrop'))) ? null : value;
+                (!value && (name === 'force' || name === 'selectorCrop' || name === 'onlySuccessfulStatusCode'))) ? null : value;
     }
 
     function readOptions() {

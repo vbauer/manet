@@ -4,6 +4,7 @@ const _ = require('lodash'),
       fs = require('fs-extra'),
       logger = require('winston'),
       path = require('path'),
+      request = require('request'),
       squirrel = require('squirrel'),
       crypto = require('crypto'),
       utils = require('./utils'),
@@ -87,24 +88,38 @@ function minimizeImage(src, dest, cb) {
 /* Screenshot capturing runner */
 
 function runCapturingProcess(options, config, outputFile, base64, onFinish) {
-    const scriptFile = utils.filePath(SCRIPT_FILE),
-          command = cliCommand(config).split(/[ ]+/),
-          cmd = _.union(command, [scriptFile, base64, outputFile]),
-          opts = {
-              timeout: config.timeout
-          };
-
-    logger.debug(
-        'Options for script: %s, base64: %s, command: %s',
-        JSON.stringify(options), base64, JSON.stringify(cmd)
-    );
-
-    utils.execProcess(cmd, opts, (error) => {
-        if (config.compress) {
-            minimizeImage(outputFile, config.storage, () => onFinish(error));
-        } else {
+    request({
+        uri: options.url,
+        method: 'HEAD'
+    }, function (error, response) {
+        if (error) {
             onFinish(error);
         }
+
+        if (!!options.onlySuccessfulStatusCode && response.statusCode >= 400) {
+            logger.error(`URL Status code is ${response.statusCode}`);
+            return onFinish(new Error(`URL Status code is ${response.statusCode}`));
+        }
+
+        const scriptFile = utils.filePath(SCRIPT_FILE),
+            command = cliCommand(config).split(/[ ]+/),
+            cmd = _.union(command, [scriptFile, base64, outputFile]),
+            opts = {
+                timeout: config.timeout
+            };
+
+        logger.debug(
+            'Options for script: %s, base64: %s, command: %s',
+            JSON.stringify(options), base64, JSON.stringify(cmd)
+        );
+
+        utils.execProcess(cmd, opts, (error) => {
+            if (config.compress) {
+                minimizeImage(outputFile, config.storage, () => onFinish(error));
+            } else {
+                onFinish(error);
+            }
+        });
     });
 }
 
@@ -130,7 +145,7 @@ function screenshot(options, config, onFinish) {
 
     logger.info('Capture site screenshot: "%s"', options.url);
 
-    if (options.force || !conf.cache) {
+    if (options.force || !conf.cache || options.onlySuccessfulStatusCode) {
         retrieveImageFromSite();
     } else {
         fs.exists(file, (exists) =>
